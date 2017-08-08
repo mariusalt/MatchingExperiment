@@ -57,3 +57,22 @@ class Player(BasePlayer):
     	verbose_name="Please insert your weight (in kg)",
     	doc="height of participant"
     )
+
+    bmi = models.FloatField()
+    bmi_class = models.CharField()
+
+    def calculate_bmi(self):
+    	self.bmi=self.weight/(self.height**2)
+    	self.bmi=round(self.bmi,2)
+
+    def category(self):
+    	if self.bmi<18.5:
+    #		return 'underweight'
+    		self.bmi_class="underweight"
+    	elif self.bmi>=18.5 and self.bmi<=25:
+    #		return 'normal'
+    		self.bmi_class="normal"
+    	else:
+    #		return 'overweight'
+    		self.bmi_class="overweight"
+   

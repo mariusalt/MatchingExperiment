@@ -2,11 +2,12 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    BMI result
+    Page title
 {% endblock %}
 
 {% block content %}
-Your BMI is {{player.bmi}}, which is considered {{player.bmi_class}}
+Your endowment is {{ player.endowment }}.
+{% formfield player.invest %}
 
 <!--
 Documentation on how to write a django template here:

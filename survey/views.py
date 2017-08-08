@@ -8,15 +8,26 @@ class Page1(Page):
     form_model=models.Player
     form_fields=["age","gender","field_of_studies","height","weight"]
 
+    def before_next_page(self):
+    	self.player.calculate_bmi()
+    	self.player.category()
+        
+    
 
-class WaitPage(WaitPage):
 
-    def after_all_players_arrive(self):
-        pass
+
+
+
 
 
 class Page2(Page):
     pass
+
+#    def vars_for_template(self):
+ #   	return {
+  #  	    'bmi': self.player.weight/(self.player.height**2)
+   # 	}
+
 
 
 page_sequence = [
