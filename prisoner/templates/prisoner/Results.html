@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Page title
+{% endblock %}
+{% block content %}
+Your decision was to {{ player.decision }}. <br>
+The other player's decision is to {{ otherPlayerDec }}. <br>
+<br>
+You will stay {{ player.years }} years in prison.<br>
+The other player will stay {{ otherPlayerY }} in prison.<br>
+
+
+
+
+
+
+    {% next_button %}
+{% endblock %}
+
+

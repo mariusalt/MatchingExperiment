@@ -124,6 +124,12 @@ SESSION_CONFIGS = [
      'display_name': 'Our second little survey',
      'num_demo_participants': 1,
      'app_sequence': ['game1'],
+ },
+ {
+     'name': 'prisoner',
+     'display_name': 'Prisoners Dilemma',
+     'num_demo_participants': 2,
+     'app_sequence': ['prisoner'],
  }
 ]
 

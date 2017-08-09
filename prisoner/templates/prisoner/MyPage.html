@@ -1,0 +1,54 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Prisoners' Dilemma
+{% endblock %}
+
+{% block content %}
+
+
+      <table border = "1" width = "50%">
+         <thead>
+            <tr>
+               <td rowspan="2">Expected Years in Prison</td>
+               <td colspan = "4">Other Participants</td>
+            </tr>
+            <tr>
+               <td colspan = "2">stay silent</td>
+               <td colspan = "2">betray</td>
+            </tr>
+            <tr> 
+            <td rowspan = "2">You</td> 
+            <td>1</td>
+            <td>1</td>
+            <td>3</td>
+            <td>0</td>
+            </tr>
+            <tr> 
+            <td>1</td>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+         </tbody>
+         
+      </table>
+   <br>
+   <br>
+   <br>
+   <br>
+
+
+{% formfield player.decision %}
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+    {% next_button %}
+
+{% endblock %}
