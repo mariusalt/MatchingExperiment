@@ -130,6 +130,12 @@ SESSION_CONFIGS = [
      'display_name': 'Prisoners Dilemma',
      'num_demo_participants': 2,
      'app_sequence': ['prisoner'],
+ },
+ {
+     'name': 'ultimatum',
+     'display_name': 'Ultimatum Game',
+     'num_demo_participants': 2,
+     'app_sequence': ['ultimatum'],
  }
 ]
 

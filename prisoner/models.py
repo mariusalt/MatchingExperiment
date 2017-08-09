@@ -39,6 +39,9 @@ class Group(BaseGroup):
     		player1.years=2
     		player2.years=2
 
+    	#player1.others_dec=player2.decision
+    	#player2.others_des=player1.decision
+
 
 class Player(BasePlayer):
     decision = models.CharField(
@@ -49,3 +52,7 @@ class Player(BasePlayer):
     	)
 
     years = models.PositiveIntegerField()
+
+ #   others_dec = mdoels.PositiveIntegerField(
+ #   	choices=["stay silent","betray"],
+ #       )

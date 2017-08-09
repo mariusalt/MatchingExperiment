@@ -24,15 +24,18 @@ class Results(Page):
 		player1 = self.group.get_player_by_id(1)
 		player2 = self.group.get_player_by_id(2)
 
-		if self.player.id == player1.id:
-			return {'otherPlayerDec': self.group.player2.years}
-		else:
-			return {'otherPlayerDec': self.group.player1.years}
+		
 
 		if self.player.id == player1.id:
-			return {'otherPlayerY': self.group.player2.years}
+			others_decision = player2.decision
+			others_years = player2.years
+
 		else:
-			return {'otherPlayerY': self.group.player1.years}
+			others_decision = player1.decision
+			others_years = player1.years
+
+		
+		return {'otherPlayersDec': others_decision, 'otherPlayerY': others_years}
 
 
 page_sequence = [
