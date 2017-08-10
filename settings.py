@@ -136,8 +136,24 @@ SESSION_CONFIGS = [
      'display_name': 'Ultimatum Game',
      'num_demo_participants': 2,
      'app_sequence': ['ultimatum'],
+ },
+ {
+     'name': 'fortune_treat_low',
+     'display_name': 'Fortune Game with 2 Treatments (low)',
+     'num_demo_participants': 4,
+     'app_sequence': ['fortune_treat'],
+     'treatment':100
+ },
+ {
+     'name': 'fortune_treat_high',
+     'display_name': 'Fortune Game with 2 Treatments (high)',
+     'num_demo_participants': 4,
+     'app_sequence': ['fortune_treat'],
+     'treatment':1000
  }
+
 ]
+
 
 # anything you put after the below line will override
 # oTree's default settings. Use with caution.
