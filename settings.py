@@ -150,6 +150,12 @@ SESSION_CONFIGS = [
      'num_demo_participants': 4,
      'app_sequence': ['fortune_treat'],
      'treatment':1000
+ },
+ {
+     'name': 'quiz_time',
+     'display_name': 'Play Quiz (loaded)',
+     'num_demo_participants': 1,
+     'app_sequence': ['quiz_time']
  }
 
 ]
