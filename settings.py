@@ -65,7 +65,7 @@ USE_POINTS = False
 LANGUAGE_CODE = 'en'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
-INSTALLED_APPS = ['otree']
+INSTALLED_APPS = ['otree','otreechat']
 
 # SENTRY_DSN = ''
 
@@ -156,6 +156,12 @@ SESSION_CONFIGS = [
      'display_name': 'Play Quiz (loaded)',
      'num_demo_participants': 1,
      'app_sequence': ['quiz_time']
+ },
+ {
+     'name': 'chat',
+     'display_name': 'Chat',
+     'num_demo_participants': 4,
+     'app_sequence': ['chat']
  }
 
 ]

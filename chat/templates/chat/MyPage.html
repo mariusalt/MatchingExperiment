@@ -1,0 +1,32 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+{% load otreechat %}
+{% block title %}
+    Page title
+{% endblock %}
+
+{% block content %}
+<div style="width: 400px">
+    {% chat nickname=player.role channel=player.role %}
+</div>
+<style>
+    .otree-chat .messages {
+        height: 400px;
+    }
+    .otree-chat .nickname {
+        color: #0000FF;
+        font-weight: bold;
+    }
+</style>
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+    {% next_button %}
+
+{% endblock %}

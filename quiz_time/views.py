@@ -33,6 +33,14 @@ class Results(Page):
             'questions_correct': sum([p.is_correct for p in player_in_all_rounds])
         }
 
+#        inner_list[]
+#        for p in player_in_all_rounds:
+#        	inner_list.append(p.is_correct) 
+        #player_in _all_rounds looks like this
+        #[player_round1,player_round2,...]
+        #->[True,False,False,...]
+        #sum(inner-list)
+        #True can be evaluated as a 1 and Flase as a 0
 
 
 page_sequence = [
