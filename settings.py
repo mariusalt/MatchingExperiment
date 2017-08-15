@@ -162,6 +162,18 @@ SESSION_CONFIGS = [
      'display_name': 'Chat',
      'num_demo_participants': 4,
      'app_sequence': ['chat']
+ },
+ {
+     'name': 'pie_chart',
+     'display_name': 'pie_chart',
+     'num_demo_participants': 1,
+     'app_sequence': ['pie_chart']
+ },
+ {
+     'name': 'matching',
+     'display_name': 'Matching Experiment',
+     'num_demo_participants': 2,
+     'app_sequence': ['matching']
  }
 
 ]

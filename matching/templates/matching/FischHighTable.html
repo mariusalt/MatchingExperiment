@@ -1,0 +1,43 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Page title
+{% endblock %}
+
+{% block content %}
+Please insert how much you would contribute if the other player contributes:<br>
+The others contri is {{ player.others_contri }} <br>
+{% formfield player.zero %}<br>
+{% formfield player.one %}<br>
+{% formfield player.two %}<br>
+{% formfield player.three %}<br>
+{% formfield player.four %}<br>
+{% formfield player.five %}<br>
+{% formfield player.six %}<br>
+{% formfield player.seven %}<br>
+{% formfield player.eight %}<br>
+{% formfield player.nine %}<br>
+{% formfield player.ten %}<br>
+{% formfield player.eleven %}<br>
+{% formfield player.twelve %}<br>
+{% formfield player.thirteen %}<br>
+{% formfield player.fourteen %}<br>
+{% formfield player.fifteen %}<br>
+{% formfield player.sixteen %}<br>
+{% formfield player.seventeen %}<br>
+{% formfield player.eighteen %}<br>
+{% formfield player.nineteen %}<br>
+{% formfield player.twenty %}<br>
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+    {% next_button %}
+
+{% endblock %}
