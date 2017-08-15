@@ -112,13 +112,13 @@ class Player(BasePlayer):
 	one=models.PositiveIntegerField()
 	zero=models.PositiveIntegerField()
 
-	cond = models.PositiveIntegerField()
+	cond = models.PositiveIntegerField(initial=0)
 	others_contri=models.PositiveIntegerField()
 
 
 
 	def calc_con(self):
-		others_contri = self.get_others_in_group()[0].contri
+		self.others_contri = self.get_others_in_group()[0].contri
 		con_lists = [self.zero,self.one,self.two,self.three,self.four,self.five,self.six,self.seven,self.eight,self.nine,self.ten,self.eleven,self.twelve,self.thirteen,self.fourteen,self.fifteen,self.sixteen,self.seventeen,self.eighteen,self.nineteen,self.twenty]
 		for i in con_lists:
 			if i == self.others_contri:
