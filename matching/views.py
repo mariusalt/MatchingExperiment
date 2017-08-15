@@ -24,6 +24,9 @@ class FischHigh(Page):
     def contri_max(self):
         return 20
 
+    def before_next_page(self):
+        self.player.other_player()
+
 
 class FischLow(Page):
     def is_displayed(self):
@@ -35,6 +38,9 @@ class FischLow(Page):
     def contri_max(self):
         return 15
 
+    def before_next_page(self):
+        self.player.other_player()
+
 
 class FischHighTable(Page):
     def is_displayed(self):
@@ -43,7 +49,6 @@ class FischHighTable(Page):
     form_model=models.Player
     form_fields=["twenty","nineteen","eighteen","seventeen","sixteen","fifteen","fourteen","thirteen","twelve","eleven","ten","nine","eight","seven","six","five","four","three","two","one","zero"]
     def before_next_page(self):
-        self.player.other_player()
         self.player.calc_con()
 
 
@@ -53,9 +58,7 @@ class FischLowTable(Page):
 
     form_model=models.Player
     form_fields=["twenty","nineteen","eighteen","seventeen","sixteen","fifteen","fourteen","thirteen","twelve","eleven","ten","nine","eight","seven","six","five","four","three","two","one","zero"]
-    def before_next_page(self):
-        self.player.other_player()
-        self.player.calc_con()
+
 
 
 class Result2WaitPage(WaitPage):

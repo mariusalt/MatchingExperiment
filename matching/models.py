@@ -9,7 +9,7 @@ import pprint
 author = 'Marius'
 
 doc = """
-Matching experiment, different endowment, subsidizer and subsidized
+Fischbacher, different endowment
 """
 
 
@@ -54,16 +54,16 @@ class Group(BaseGroup):
 	
 
 	def calc_payoff(self):
-		subsidizer = self.get_player_by_role('subsidizer')
-		subsidized = self.get_player_by_role('subsidized')
+		rich = self.get_player_by_role('rich')
+		poor = self.get_player_by_role('poor')
 		self.project=sum([p.contri for p in self.get_players()])
 		outcome=random.choice(["unc","con"])
 		if outcome=="unc":
-			subsidizer.payoff=subsidizer.endowment-subsidizer.cond+Constants.MPCR*self.project
-			subsidized.payoff=subsidized.endowment-subsidized.contri+math.floor(Constants.MPCR*self.project*100)/100
+			rich.payoff=rich.endowment-rich.cond+Constants.MPCR*self.project
+			poor.payoff=poor.endowment-poor.contri+math.floor(Constants.MPCR*self.project*100)/100
 		else:
-			subsidizer.payoff=subsidizer.endowment-subsidizer.contri+Constants.MPCR*self.project
-			subsidized.payoff=subsidized.endowment-subsidized.cond+math.floor(Constants.MPCR*self.project*100)/100
+			rich.payoff=rich.endowment-rich.contri+Constants.MPCR*self.project
+			poor.payoff=poor.endowment-poor.cond+math.floor(Constants.MPCR*self.project*100)/100
 
 
 
@@ -78,10 +78,10 @@ class Player(BasePlayer):
 	def role(self):
 		if self.id_in_group ==1:
 			self.endowment=20
-			return "subsidizer"
+			return "rich"
 		else:
 			self.endowment=15
-			return "subsidized"
+			return "poor"
 
 
 	contri = models.PositiveIntegerField(
@@ -115,26 +115,25 @@ class Player(BasePlayer):
 	cond = models.PositiveIntegerField()
 	others_contri=models.PositiveIntegerField()
 
-	def other_player(self):
-		others_contri = self.get_others_in_group()[0].contri
 
 
 	def calc_con(self):
+		others_contri = self.get_others_in_group()[0].contri
 		con_lists = [self.zero,self.one,self.two,self.three,self.four,self.five,self.six,self.seven,self.eight,self.nine,self.ten,self.eleven,self.twelve,self.thirteen,self.fourteen,self.fifteen,self.sixteen,self.seventeen,self.eighteen,self.nineteen,self.twenty]
 		for i in con_lists:
 			if i == self.others_contri:
 				self.cond=i
 
 #		def calc_cond(self):
-	#	subsidizer = self.get_player_by_role('subsidizer')
-#		subsidized = self.get_player_by_role('subsidized')
-#		con_lists_high = [subsidizer.zero,subsidizer.one,subsidizer.two,subsidizer.three,subsidizer.four,subsidizer.five,subsidizer.six,subsidizer.seven,subsidizer.eight,subsidizer.nine,subsidizer.ten,subsidizer.eleven,subsidizer.twelve,subsidizer.thirteen,subsidizer.fourteen,subsidizer.fifteen,subsidizer.sixteen,subsidizer.seventeen,subsidizer.eighteen,subsidizer.nineteen,subsidizer.twenty]
-#		con_lists_low = [subsidized.zero,subsidized.one,subsidized.two,subsidized.three,subsidized.four,subsidized.five,subsidized.six,subsidized.seven,subsidized.eight,subsidized.nine,subsidized.ten,subsidized.eleven,subsidized.twelve,subsidized.thirteen,subsidized.fourteen,subsidized.fifteen,subsidized.sixteen,subsidized.seventeen,subsidized.eighteen,subsidized.nineteen,subsidized.twenty]
+	#	rich = self.get_player_by_role('rich')
+#		poor = self.get_player_by_role('poor')
+#		con_lists_high = [rich.zero,rich.one,rich.two,rich.three,rich.four,rich.five,rich.six,rich.seven,rich.eight,rich.nine,rich.ten,rich.eleven,rich.twelve,rich.thirteen,rich.fourteen,rich.fifteen,rich.sixteen,rich.seventeen,rich.eighteen,rich.nineteen,rich.twenty]
+#		con_lists_low = [poor.zero,poor.one,poor.two,poor.three,poor.four,poor.five,poor.six,poor.seven,poor.eight,poor.nine,poor.ten,poor.eleven,poor.twelve,poor.thirteen,poor.fourteen,poor.fifteen,poor.sixteen,poor.seventeen,poor.eighteen,poor.nineteen,poor.twenty]
 #		for i in con_lists_high:
-#			if i == subsidized.contri:
+#			if i == poor.contri:
 #				self.cond=i
 #		for i in con_lists_low:
-#			if i == subsidizer.contri:
+#			if i == rich.contri:
 #				self.cond=i
 
 
