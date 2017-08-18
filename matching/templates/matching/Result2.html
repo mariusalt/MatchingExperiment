@@ -2,11 +2,15 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Unconditional Contribution
+    Final Result
 {% endblock %}
 
 {% block content %}
-{% formfield player.contri %}
+Your payoff is in this round is {{ player.payoff }}<br>
+Group payoff in this round is {{ group.pay_proj1 }}<br>
+Your total payoff is {{ total_payoff }}
+
+
 <!--
 Documentation on how to write a django template here:
 https://docs.djangoproject.com/en/1.8/ref/templates/language/

@@ -2,32 +2,43 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Page title
+    Conditional Contribution
 {% endblock %}
 
 {% block content %}
 Please insert how much you would contribute if the other player contributes:<br>
-{% formfield player.zero %}<br>
-{% formfield player.one %}<br>
-{% formfield player.two %}<br>
-{% formfield player.three %}<br>
-{% formfield player.four %}<br>
-{% formfield player.five %}<br>
-{% formfield player.six %}<br>
-{% formfield player.seven %}<br>
-{% formfield player.eight %}<br>
-{% formfield player.nine %}<br>
-{% formfield player.ten %}<br>
-{% formfield player.eleven %}<br>
-{% formfield player.twelve %}<br>
-{% formfield player.thirteen %}<br>
-{% formfield player.fourteen %}<br>
-{% formfield player.fifteen %}<br>
-{% formfield player.sixteen %}<br>
-{% formfield player.seventeen %}<br>
-{% formfield player.eighteen %}<br>
-{% formfield player.nineteen %}<br>
-{% formfield player.twenty %}<br>
+<table style="border-collapse: collapse;border-style:hidden;" class="centerTable" width = "50%">
+         <thead>
+            <tr>
+               <td>{% formfield player.zero %}</td>
+               <td>{% formfield player.six %}</td>
+            </tr>
+            <tr>
+               <td>{% formfield player.one %}</td>
+               <td>{% formfield player.seven %}</td>
+            </tr>
+            <tr> 
+            <td>{% formfield player.two %}</td> 
+            <td>{% formfield player.eight %}</td>
+            </tr>
+            <tr> 
+            <td>{% formfield player.three %}</td>
+            <td>{% formfield player.nine %}</td>
+               <tr> 
+            <td>{% formfield player.four %}</td> 
+            <td>{% formfield player.ten%}</td>
+            </tr>
+            <tr> 
+            <td>{% formfield player.five %}</td> 
+
+            </tr>
+
+         </tbody>
+         
+      </table>
+   <br>
+
+
 <!--
 Documentation on how to write a django template here:
 https://docs.djangoproject.com/en/1.8/ref/templates/language/

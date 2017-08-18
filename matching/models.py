@@ -4,7 +4,6 @@ from otree.api import (
 )
 import math
 import random
-import pprint
 
 author = 'Marius'
 
@@ -19,24 +18,13 @@ class Constants(BaseConstants):
     num_rounds = 1
     MPCR=0.8
 
- #   high_endowment=60
- #   low_endowment=40
+    read_timeout = 60 
+    decision_timeout = 180
 
 
 class Subsession(BaseSubsession):
 	pass
-#	def before_session_starts(self):
-#		for player in self.get_players():
-#			player.treatment = "low" if player.id % 2 == 0 else "high"
-#		half split by even / odd:
 
-	
-
-
-#	def creating_session(self):
-#		endowment_urn = itertools.cycle([60, 40])
-#		for p in self.get_player_by_role():
-#			p.endowment = next(endowment_urn)
 
              
         
@@ -44,44 +32,72 @@ class Subsession(BaseSubsession):
 
 class Group(BaseGroup):
 
-
-
-#	contri = models.PositiveIntegerField(
-#    	min=0,
-#    	verbose_name="Please decide how much you would like to invest in your common project")
-
 	project = models.PositiveIntegerField()
-	
+	pay_proj = models.FloatField()
+	outcome = models.CharField(choices=['heads', 'tails'])
 
-	def calc_payoff(self):
-		rich = self.get_player_by_role('rich')
-		poor = self.get_player_by_role('poor')
-		self.project=sum([p.contri for p in self.get_players()])
-		outcome=random.choice(["unc","con"])
-		if outcome=="unc":
-			rich.payoff=rich.endowment-rich.cond+Constants.MPCR*self.project
-			poor.payoff=poor.endowment-poor.contri+math.floor(Constants.MPCR*self.project*100)/100
+	def rand(self):
+		subsidizer = self.get_player_by_role('subsidizer')
+		subsidized = self.get_player_by_role('subsidized')
+		self.outcome=random.choice(["heads","tails"])
+		if self.outcome=="heads":
+			self.project=subsidizer.cond+subsidized.contri
+			self.pay_proj=math.floor(Constants.MPCR*self.project*100)/100
 		else:
-			rich.payoff=rich.endowment-rich.contri+Constants.MPCR*self.project
-			poor.payoff=poor.endowment-poor.cond+math.floor(Constants.MPCR*self.project*100)/100
+			self.project=subsidizer.cond+subsidized.contri
+			self.pay_proj=math.floor(Constants.MPCR*self.project*100)/100
+
+#	def calc_payoff(self):
+#		subsidizer = self.get_player_by_role('subsidizer')
+#		subsidized = self.get_player_by_role('subsidized')
+#		self.outcome=random.choice(["heads","tails"])
+#		if self.outcome=="heads":
+#			self.project=subsidizer.cond+subsidized.contri
+#			self.pay_proj=math.floor(Constants.MPCR*self.project*100)/100
+#			subsidizer.payoff=subsidizer.endowment-subsidizer.cond+Constants.MPCR*self.project
+#			subsidized.payoff=subsidized.endowment-subsidized.contri+math.floor(Constants.MPCR*self.project*100)/100
+		
+#		else:
+#			self.project=subsidizer.cond+subsidized.contri
+#			self.pay_proj=math.floor(Constants.MPCR*self.project*100)/100
+#			subsidizer.payoff=subsidizer.endowment-subsidizer.contri+Constants.MPCR*self.project
+#			subsidized.payoff=subsidized.endowment-subsidized.cond+math.floor(Constants.MPCR*self.project*100)/100
+			
+
+#MatchPOINT EXPERIMENT START---------------------------------------------------------
+
+   
+	project1 = models.PositiveIntegerField()
+	pay_proj1 = models.FloatField()
 
 
+	def calc_payoff1(self):
+		subsidizer = self.get_player_by_role('subsidizer')
+		subsidized = self.get_player_by_role('subsidized')
+		self.project1 = subsidizer.contri + subsidized.contri
+		self.pay_proj1=math.floor(Constants.MPCR*self.project1*100)/100
+		subsidizer.payoff=subsidizer.endowment-subsidizer.contri1-subsidizer.t*subsidized.contri1+Constants.MPCR*self.project1
+		subsidized.payoff=subsidized.endowment-subsidized.contri1+subsidizer.t*subsidized.contri1+Constants.MPCR*self.project1
 
 
 class Player(BasePlayer):
 
 	endowment = models.PositiveIntegerField()
+
+	def define_end(self):
+		if self.id_in_group ==1:
+			self.endowment=10
+		else:
+			self.endowment=5
+
 	cond = models.PositiveIntegerField()
 
-#	treatment = models.CharField()
 
 	def role(self):
 		if self.id_in_group ==1:
-			self.endowment=20
-			return "rich"
+			return "subsidizer"
 		else:
-			self.endowment=15
-			return "poor"
+			return "subsidized"
 
 
 	contri = models.PositiveIntegerField(
@@ -90,16 +106,7 @@ class Player(BasePlayer):
     	verbose_name="Please decide how much you would like to invest in your common project")
 
 
-	twenty=models.PositiveIntegerField()
-	nineteen=models.PositiveIntegerField()
-	eighteen=models.PositiveIntegerField()
-	seventeen=models.PositiveIntegerField()
-	sixteen=models.PositiveIntegerField()
-	fifteen=models.PositiveIntegerField()
-	fourteen=models.PositiveIntegerField()
-	thirteen=models.PositiveIntegerField()
-	twelve=models.PositiveIntegerField()
-	eleven=models.PositiveIntegerField()
+
 	ten=models.PositiveIntegerField()
 	nine=models.PositiveIntegerField()
 	eight=models.PositiveIntegerField()
@@ -112,31 +119,75 @@ class Player(BasePlayer):
 	one=models.PositiveIntegerField()
 	zero=models.PositiveIntegerField()
 
-	cond = models.PositiveIntegerField()
+	cond = models.PositiveIntegerField(initial=0)
 	others_contri=models.PositiveIntegerField()
+	payoffFisch = models.FloatField()
+
+		
+	def calc_cond(self):
+		self.others_contri = self.get_others_in_group()[0].contri
+		con_lists = [self.zero,self.one,self.two,self.three,self.four,self.five,self.six,self.seven,self.eight,self.nine,self.ten]
+		self.cond=con_lists[self.others_contri]
+
+	def calc_payoff2(self):
+		if self.group.outcome=="heads":
+			if self.id_in_group ==1:
+				self.payoffFisch=self.endowment-self.cond+Constants.MPCR*self.group.project
+			if self.id_in_group ==2:
+				self.payoffFisch=self.endowment-self.contri+Constants.MPCR*self.group.project
+		
+		else:
+			if self.id_in_group ==1:
+				self.payoffFisch=self.endowment-self.contri+Constants.MPCR*self.group.project
+			if self.id_in_group ==2:
+				self.payoffFisch=self.endowment-self.cond+Constants.MPCR*self.group.project
 
 
 
-	def calc_con(self):
-		others_contri = self.get_others_in_group()[0].contri
-		con_lists = [self.zero,self.one,self.two,self.three,self.four,self.five,self.six,self.seven,self.eight,self.nine,self.ten,self.eleven,self.twelve,self.thirteen,self.fourteen,self.fifteen,self.sixteen,self.seventeen,self.eighteen,self.nineteen,self.twenty]
-		for i in con_lists:
-			if i == self.others_contri:
-				self.cond=i
+# MATCHPOINT EXPERIMENT START--------------------------------------------------
 
-#		def calc_cond(self):
-	#	rich = self.get_player_by_role('rich')
-#		poor = self.get_player_by_role('poor')
-#		con_lists_high = [rich.zero,rich.one,rich.two,rich.three,rich.four,rich.five,rich.six,rich.seven,rich.eight,rich.nine,rich.ten,rich.eleven,rich.twelve,rich.thirteen,rich.fourteen,rich.fifteen,rich.sixteen,rich.seventeen,rich.eighteen,rich.nineteen,rich.twenty]
-#		con_lists_low = [poor.zero,poor.one,poor.two,poor.three,poor.four,poor.five,poor.six,poor.seven,poor.eight,poor.nine,poor.ten,poor.eleven,poor.twelve,poor.thirteen,poor.fourteen,poor.fifteen,poor.sixteen,poor.seventeen,poor.eighteen,poor.nineteen,poor.twenty]
-#		for i in con_lists_high:
-#			if i == poor.contri:
-#				self.cond=i
-#		for i in con_lists_low:
-#			if i == rich.contri:
-#				self.cond=i
+	contri1 = models.PositiveIntegerField(
+    	min=0,
+    	widget=widgets.SliderInput(attrs={'step':'1'}),
+    	verbose_name="Please decide how much you would like to invest in your common project")
 
+
+	t = models.FloatField(
+		choices=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2,2.1,2.2,2.3,2.4,2.5],
+		widget=widgets.RadioSelect(),
+		verbose_name="decide by how many percent you would like to support the other Player's contribution"
+		)
+	total_payoff=models.FloatField()
+
+	def calc_total_payoff(self):
+		self.total_payoff = self.payoff+self.payoffFisch
 
 
 
-  
+#	payoff1 = models.FloatField()
+#	others_contri1 = models.PositiveIntegerField()
+#	others_t = models.FloatField()
+
+
+#	def calc_payoff2(self):
+#		self.others_contri1 = self.get_others_in_group()[0].contri1
+#		self.others_t = self.get_others_in_group()[0].t
+#		if self.id_in_group ==1:
+##			self.payoff1 = self.endowment-self.contri1-self.t*self.others_contri1+Constants.MPCR*self.group.project1
+#		else:
+#			self.payoff1 = self.endowment-self.contri1+self.others_t*self.contri1+Constants.MPCR*self.group.project1
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+

@@ -2,11 +2,20 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Unconditional Contribution
+    Page title
 {% endblock %}
 
 {% block content %}
-{% formfield player.contri %}
+<p>
+		{% if player.id_in_group == 1 %}
+		You are <b>Player A</b>.
+		{% else %}
+		You are <b>Player B</b>.
+		{% endif %}
+	</p>
+	<p>
+		Please wait for the other player.
+</p>
 <!--
 Documentation on how to write a django template here:
 https://docs.djangoproject.com/en/1.8/ref/templates/language/
@@ -16,6 +25,6 @@ http://getbootstrap.com/components/
 
 -->
 
-    {% next_button %}
+
 
 {% endblock %}
