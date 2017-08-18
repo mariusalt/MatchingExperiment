@@ -40,6 +40,7 @@ class Group(BaseGroup):
 		subsidizer = self.get_player_by_role('subsidizer')
 		subsidized = self.get_player_by_role('subsidized')
 		self.outcome=random.choice(["heads","tails"])
+		#heads->the conditional contribution becomes payoff relevant for the subsidizer. Tails-> vice versa
 		if self.outcome=="heads":
 			self.project=subsidizer.cond+subsidized.contri
 			self.pay_proj=math.floor(Constants.MPCR*self.project*100)/100
@@ -123,6 +124,7 @@ class Player(BasePlayer):
 	others_contri=models.PositiveIntegerField()
 	payoffFisch = models.FloatField()
 
+
 		
 	def calc_cond(self):
 		self.others_contri = self.get_others_in_group()[0].contri
@@ -135,12 +137,18 @@ class Player(BasePlayer):
 				self.payoffFisch=self.endowment-self.cond+Constants.MPCR*self.group.project
 			if self.id_in_group ==2:
 				self.payoffFisch=self.endowment-self.contri+Constants.MPCR*self.group.project
-		
 		else:
 			if self.id_in_group ==1:
 				self.payoffFisch=self.endowment-self.contri+Constants.MPCR*self.group.project
 			if self.id_in_group ==2:
 				self.payoffFisch=self.endowment-self.cond+Constants.MPCR*self.group.project
+	
+	def vars_for_template(self):
+		return {
+		'others_payoff' : self.get_others_in_group()[0].payoffFisch,
+		'deci':'conditional'}
+
+		
 
 
 

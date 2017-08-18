@@ -161,19 +161,18 @@ class Result2WaitPage(WaitPage):
 class Result1(Page):
     timeout_seconds=Constants.read_timeout
 
+
     def vars_for_template(self):
-        if self.player.id_in_group == 1:
-            if self.group.outcome == "heads":
-                return {'deci':'conditional'}
-            else:
-                return {'deci':'unconditional'}
-            return {'others_payoff': self.get_others_in_group()[0].payoffFisch}
-        if self.player.id_in_group == 2:
-            if self.group.outcome == "heads":
-                return {'deci':'unconditional'}
-            else:
-                return {'deci':'conditional'}
-            return {'others_payoff': self.get_others_in_group()[0].payoffFisch}
+        context = self.player.vars_for_template()
+        if self.player.id_in_group == 1 and self.group.outcome == "tails":
+            context.update({'deci':'unconditional'})
+        if self.player.id_in_group == 2 and self.group.outcome == "heads":
+            context.update({'deci':'unconditional'})
+        return context
+
+
+        
+
 
         
 
