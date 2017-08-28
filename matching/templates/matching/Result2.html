@@ -6,9 +6,45 @@
 {% endblock %}
 
 {% block content %}
-Your payoff is in this round is {{ player.payoff }}<br>
-Group payoff in this round is {{ group.pay_proj1 }}<br>
-Your total payoff is {{ total_payoff }}
+<table border=1 class="centerTable" width = "100%">
+         <thead>
+            <tr>
+              <td width="(100/x)%" align="center"><b>Own contribution</b></td>           
+              <td width="(100/x)%" align="center"><b>Other player's contribution</b></td>
+              <td width="(100/x)%" align="center"><b>Subsidy rate</b></td>
+              <td width="(100/x)%" align="center"><b>{% if player.endowment == 10 %}
+				Your subsidy to common project {% else %} Player A's additional subsidy {% endif %}</b></td>
+
+              <td width="(100/x)%" align="center"><b>Return from common project</b></td>
+              <td width="(100/x)%" align="center"><b>Own payoff</b></td>
+              <td width="(100/x)%" align="center"><b>Other's payoff</b></td>
+              <td width="(100/x)%" align="center"><b>Total payoff</b></td>
+
+
+            </tr>
+            <tr>
+              <td width="(100/x)%" align="center"> {% if player.endowment == 10 %}
+        {{ own_contri }} {% else %} {{ own_cond }} {% endif %} </td>
+              <td width="(100/x)%" align="center">{% if player.endowment == 10 %}
+        {{ others_cond }} {% else %} {{ others_contri1 }} {% endif %}</td>
+              <td width="(100/x)%" align="center">{% if player.endowment == 10 %}
+        {{ player.t }}% {% else %} {{ player.other_t }}% {% endif %}</td>              
+              <td width="(100/x)%" align="center">{{ group.amount_subsidy }}</td>
+              <td width="(100/x)%" align="center">{{ group.pay_proj }}</td>
+              <td width="(100/x)%" align="center">{{ player.payoff }}</td>
+              <td width="(100/x)%" align="center">{{ others_payoff1 }}</td>
+              <td width="(100/x)%" align="center">{{ total_payoff }}</td>
+
+
+            </tr>
+
+         </tbody>
+         
+      </table>
+    <br>
+    <br>
+    <br>
+
 
 
 <!--

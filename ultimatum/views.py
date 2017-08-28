@@ -55,6 +55,13 @@ class ResultsWaitPage1(WaitPage):
 class Page5(Page):
     pass
 
+class WaitToGroup(WaitPage):
+    wait_for_all_groups=True
+    def after_all_players_arrive(self):
+        self.subsession.group_randomly()
+
+
+
 page_sequence = [
     Page1,
     Page2,
@@ -62,5 +69,6 @@ page_sequence = [
     ResultsWaitPage,
     Page4,
     ResultsWaitPage1,
-    Page5
+    Page5,
+    WaitToGroup
 ]

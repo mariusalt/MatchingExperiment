@@ -5,15 +5,19 @@ from .models import Constants
 import random
 
 class Arrival(WaitPage):
-    group_by_arrival_time = True
+#    group_by_arrival_time = True
 
     title_text = "Arrival Hall"
     body_text = "For this experiment, we need groups of two. \
     Please wait for another participant to log on."
-    def after_all_players_arrive(self):
-        pass
+#    wait_for_all_groups=True
+#    def after_all_players_arrive(self):
+#        self.subsession.group_randomly(fixed_id_in_group=True)
 
 class Intro(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
     timeout_seconds=Constants.read_timeout
     def before_next_page(self):
         self.player.define_end()
@@ -21,8 +25,11 @@ class Intro(Page):
 
 
 class StartWaitPage(WaitPage):
+    def is_displayed(self):
+        return self.round_number == 1
 #    template_name = 'matching/MyWaitPage.html'
 #    title_text = "Please Wait"
+
 
     def after_all_players_arrive(self):
         pass
@@ -30,9 +37,9 @@ class StartWaitPage(WaitPage):
 
 class FischHigh(Page):
     def is_displayed(self):
-        return self.player.id_in_group == 1
-
-    timeout_seconds=Constants.read_timeout
+        return self.participant.vars['type'] == 'subsidizer' and self.round_number == 1
+    
+    timeout_seconds=Constants.decision_timeout
 
     form_model=models.Player
     form_fields=["contri"]
@@ -47,9 +54,9 @@ class FischHigh(Page):
 
 class FischLow(Page):
     def is_displayed(self):
-        return self.player.id_in_group == 2
+        return self.participant.vars['type'] == 'subsidized' and self.round_number == 1
 
-    timeout_seconds=Constants.read_timeout
+    timeout_seconds=Constants.decision_timeout
 
     form_model=models.Player
     form_fields=["contri"]
@@ -61,11 +68,15 @@ class FischLow(Page):
         if self.timeout_happened:
             self.player.contri=random.randrange(0,self.player.endowment,1)
 
+class WaitPlayer(WaitPage):
+    def is_displayed(self):
+        return self.round_number == 1
+    def after_all_players_arrive(self):
+        pass
 
 class FischHighTable(Page):
     def is_displayed(self):
-        return self.player.id_in_group == 1
-        pass
+        return self.participant.vars['type'] == 'subsidizer' and self.round_number == 1
 
     form_model=models.Player
     form_fields=["five","four","three","two","one","zero"]
@@ -85,9 +96,6 @@ class FischHighTable(Page):
 
 
     def before_next_page(self):
-        self.player.calc_cond()
-        self.group.rand()
-        self.player.calc_payoff2()
         if self.timeout_happened:
             self.player.zero=random.randrange(0,self.player.endowment,1)
             self.player.one=random.randrange(0,self.player.endowment,1)
@@ -95,6 +103,7 @@ class FischHighTable(Page):
             self.player.three=random.randrange(0,self.player.endowment,1)
             self.player.four=random.randrange(0,self.player.endowment,1)
             self.player.five=random.randrange(0,self.player.endowment,1)
+            self.player.calc_cond()
 
 
     timeout_seconds=Constants.decision_timeout
@@ -103,7 +112,7 @@ class FischHighTable(Page):
 
 class FischLowTable(Page):
     def is_displayed(self):
-        return self.player.id_in_group == 2
+        return self.participant.vars['type'] == 'subsidized' and self.round_number == 1
         
 
     form_model=models.Player
@@ -133,9 +142,6 @@ class FischLowTable(Page):
         return self.player.endowment
 
     def before_next_page(self):
-        self.player.calc_cond()
-        self.group.rand()
-        self.player.calc_payoff2()
         if self.timeout_happened:
             self.player.zero=random.randrange(0,self.player.endowment,1)
             self.player.one=random.randrange(0,self.player.endowment,1)
@@ -148,30 +154,44 @@ class FischLowTable(Page):
             self.player.eight=random.randrange(0,self.player.endowment,1)
             self.player.nine=random.randrange(0,self.player.endowment,1)
             self.player.ten=random.randrange(0,self.player.endowment,1)
+        self.player.calc_cond()
 
     timeout_seconds=Constants.decision_timeout
 
 
 class Result2WaitPage(WaitPage):
+    def is_displayed(self):
+        return self.round_number == 1
 
     def after_all_players_arrive(self):
-        pass
+        self.group.calc_payoff()
+
 
 
 class Result1(Page):
+    def is_displayed(self):
+        return self.round_number == 1
     timeout_seconds=Constants.read_timeout
+
+    def before_next_page(self):
+        self.player.condi()
 
 
     def vars_for_template(self):
         context = self.player.vars_for_template()
-        if self.player.id_in_group == 1 and self.group.outcome == "tails":
-            context.update({'deci':'unconditional'})
-        if self.player.id_in_group == 2 and self.group.outcome == "heads":
-            context.update({'deci':'unconditional'})
+        if self.participant.vars['type'] == 'subsidizer' and self.group.outcome == "heads":
+            context.update({'own_contri':self.player.cond,'others_contri_template':self.player.others_contri,'deci':'conditional'})
+
+        if self.participant.vars['type'] == 'subsidized' and self.group.outcome == "tails":
+            context.update({'own_contri':self.player.cond,'others_contri_template':self.player.others_contri,'deci':'conditional'})
         return context
 
 
         
+class WaitToGroup(WaitPage):
+    wait_for_all_groups=True
+    def after_all_players_arrive(self):
+        pass
 
 
         
@@ -179,50 +199,54 @@ class Result1(Page):
 #MATCHPOINT EXPERIMENT STARTS---------------
 
 class Intro1(Page):
+    def is_displayed(self):
+        return self.round_number == 2 and self.player.treatment=='baseline' 
     timeout_seconds=Constants.read_timeout
+    def before_next_page(self):
+        self.player.define_end()
+
+class Intro2(Page):
+    def is_displayed(self):
+        return self.round_number == 2 and self.player.treatment=='lowthres'
+    timeout_seconds=Constants.read_timeout
+    def before_next_page(self):
+        self.player.define_end()
+
+class Intro3(Page):
+    def is_displayed(self):
+        return self.round_number == 2 and self.player.treatment=='highthres'
+    timeout_seconds=Constants.read_timeout
+    def before_next_page(self):
+        self.player.define_end()
 
 class StartWaitPage1(WaitPage):
+    def is_displayed(self):
+        return self.round_number == 2 
 
     def after_all_players_arrive(self):
         pass
 
+
 class DecisionHigh(Page):
     def is_displayed(self):
-        return self.player.id_in_group == 1
+        return self.participant.vars['type'] == 'subsidizer' and self.round_number == 2
 
     timeout_seconds=Constants.decision_timeout
 
     form_model=models.Player
-    form_fields=["contri1"]
+    form_fields=["contri","t"]
 
-    def contri1_max(self):
+    def contri_max(self):
         return self.player.endowment
 
     def before_next_page(self):
         if self.timeout_happened:
             self.player.contri1=random.randrange(0,self.player.endowment,1)
 
-
-class DecisionLow(Page):
-    def is_displayed(self):
-        return self.player.id_in_group == 2
-
-    timeout_seconds=Constants.decision_timeout
-
-    form_model=models.Player
-    form_fields=["contri1"]
-
-    def contri1_max(self):
-        return self.player.endowment
-
-    def before_next_page(self):
-        if self.timeout_happened:
-            self.player.contri1=random.randrange(0,self.player.endowment,1)
-    
 
 class DecisionT(Page):
     def is_displayed(self):
-        return self.player.id_in_group == 1
+        return self.participant.vars['type'] == 'subsidizer' and self.round_number == 2
 
     timeout_seconds=Constants.decision_timeout
 
@@ -231,22 +255,98 @@ class DecisionT(Page):
 
     def before_next_page(self):
         if self.timeout_happened:
-            self.player.contri1=random.randrange(0,2.5,0.1)
+            self.player.t=70#random.randrange(0,120,10)
 
- #   def before_next_page(self):
- #       self.group.calc_payoff1()
- #       self.player.calc_payoff2()
+class TWaitPage(WaitPage):
+    def is_displayed(self):
+        return self.round_number == 2
+    def after_all_players_arrive(self):
+        pass
 
+
+class DecisionLow(Page):
+    def is_displayed(self):
+        return self.participant.vars['type'] == 'subsidized' and self.round_number == 2
+
+    timeout_seconds=Constants.decision_timeout
+
+    form_model=models.Player
+    form_fields=["t0","t10","t20","t30","t40","t50","t60","t70","t80","t90","t100","t110","t120"]
+
+    def t0_max(self):
+        return self.player.endowment
+    def t10_max(self):
+        return self.player.endowment
+    def t20_max(self):
+        return self.player.endowment
+    def t30_max(self):
+        return self.player.endowment
+    def t40_max(self):
+        return self.player.endowment
+    def t50_max(self):
+        return self.player.endowment
+    def t60_max(self):
+        return self.player.endowment
+    def t70_max(self):
+        return self.player.endowment
+    def t80_max(self):
+        return self.player.endowment
+    def t90_max(self):
+        return self.player.endowment
+    def t100_max(self):
+        return self.player.endowment
+    def t110_max(self):
+        return self.player.endowment
+    def t120_max(self):
+        return self.player.endowment
+
+    def vars_for_template(self):
+        return self.player.vars_for_template1()
+
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.t0=1#random.randrange(0,self.player.endowment,1)
+            self.player.t10=1#random.randrange(0,self.player.endowment,1)
+            self.player.t20=1#random.randrange(0,self.player.endowment,1)
+            self.player.t30=1#random.randrange(0,self.player.endowment,1)
+            self.player.t40=1#random.randrange(0,self.player.endowment,1)
+            self.player.t50=1#random.randrange(0,self.player.endowment,1)
+            self.player.t60=1#random.randrange(0,self.player.endowment,1)
+            self.player.t70=1#random.randrange(0,self.player.endowment,1)
+            self.player.t80=1#random.randrange(0,self.player.endowment,1)
+            self.player.t90=1#random.randrange(0,self.player.endowment,1)
+            self.player.t100=1#random.randrange(0,self.player.endowment,1)
+            self.player.t110=1#random.randrange(0,self.player.endowment,1)
+            self.player.t120=1#random.randrange(0,self.player.endowment,1)
+        self.player.calc_cond1()
 
 
 class Result3WaitPage(WaitPage):
+    def is_displayed(self):
+        return self.round_number == 2 and self.player.treatment=='baseline'
     def after_all_players_arrive(self):
         self.group.calc_payoff1()
 
+class Result4WaitPage(WaitPage):
+    def is_displayed(self):
+        return self.round_number == 2 and self.player.treatment=='lowthres'
+    def after_all_players_arrive(self):
+        self.group.calc_payoff2()
+
+class Result5WaitPage(WaitPage):
+    def is_displayed(self):
+        return self.round_number == 2 and self.player.treatment=='highthres'
+    def after_all_players_arrive(self):
+        self.group.calc_payoff3()
 
 class Result2(Page):
+    def is_displayed(self):
+        return self.round_number == 2
     def vars_for_template(self):
-        return {'total_payoff': self.player.payoffFisch+self.player.payoff}
+        return self.player.vars_for_result()
+#        if self.participant.vars['type'] == 'subsidized':
+ #           context.update({'own_contri':self.player.cond})
+  #          return context
 
 
 
@@ -259,15 +359,21 @@ page_sequence = [
     StartWaitPage,
     FischHigh,
     FischLow,
+    WaitPlayer,
     FischHighTable,
     FischLowTable,
     Result2WaitPage,
     Result1,
+    WaitToGroup,
     Intro1,
+    Intro2,
+    Intro3,
     StartWaitPage1,
     DecisionHigh,
+    TWaitPage,
     DecisionLow,
-    DecisionT, 
     Result3WaitPage,
+    Result4WaitPage,
+    Result5WaitPage,
     Result2
 ]

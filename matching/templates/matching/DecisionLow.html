@@ -6,8 +6,44 @@
 {% endblock %}
 
 {% block content %}
-{% formfield player.contri1 %}
+<p>The other player decided to subsidize your contribution by {{ others_t }} percent.<br>
+On this basis, please decide how much you would like to contribute to the common project.
+</p><p>&nbsp;</p>
 
+<table style="border-collapse: collapse;border-style:hidden;" class="centerTable" width = "50%">
+         <thead>
+            <tr>
+               <td>{% formfield player.t0 %}</td>
+               <td>{% formfield player.t70 %}</td>
+            </tr>
+            <tr>
+               <td>{% formfield player.t10 %}</td>
+               <td>{% formfield player.t80 %}</td>
+            </tr>
+            <tr> 
+            <td>{% formfield player.t20 %}</td> 
+            <td>{% formfield player.t90 %}</td>
+            </tr>
+            <tr> 
+            <td>{% formfield player.t30 %}</td>
+            <td>{% formfield player.t100 %}</td>
+               <tr> 
+            <td>{% formfield player.t40 %}</td> 
+            <td>{% formfield player.t110%}</td>
+            </tr>
+            <tr> 
+            <td>{% formfield player.t50 %}</td>
+            <td>{% formfield player.t120 %}</td>
+            <tr> 
+            <td>{% formfield player.t60 %}</td> 
+
+
+            </tr>
+
+         </tbody>
+         
+      </table>
+   <br>
 <!--
 Documentation on how to write a django template here:
 https://docs.djangoproject.com/en/1.8/ref/templates/language/

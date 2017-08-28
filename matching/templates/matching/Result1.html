@@ -9,19 +9,19 @@
 <table border=1 class="centerTable" width = "100%">
          <thead>
             <tr>
-              <td width="(100/x)%" align="center">Payoff relevant contribution</td>
-              <td width="(100/x)%" align="center">Own contribution</td>
-              <td width="(100/x)%" align="center">Other player's contribution</td>
-              <td width="(100/x)%" align="center">Return from common project</td>
-              <td width="(100/x)%" align="center">Own payoff</td>
-              <td width="(100/x)%" align="center">Other's payoff</td>
+              <td width="(100/x)%" align="center"><b>Payoff relevant contribution</b></td>
+              <td width="(100/x)%" align="center"><b>Own contribution</b></td>
+              <td width="(100/x)%" align="center"><b>Other player's contribution</b></td>
+              <td width="(100/x)%" align="center"><b>Return from common project</b></td>
+              <td width="(100/x)%" align="center"><b>Own payoff</b></td>
+              <td width="(100/x)%" align="center"><b>Other's payoff</b></td>
             </tr>
             <tr>
               <td width="(100/x)%" align="center"> {{ deci }}</td>
-              <td width="(100/x)%" align="center">{{ player.contri }}</td>
-              <td width="(100/x)%" align="center">{{ player.others_contri }}</td>
+              <td width="(100/x)%" align="center">{{ own_contri }}</td>
+              <td width="(100/x)%" align="center">{{ others_contri_template }}</td>
               <td width="(100/x)%" align="center">{{ group.pay_proj }}</td>
-              <td width="(100/x)%" align="center">{{ player.payoffFisch }}</td>
+              <td width="(100/x)%" align="center">{{ player.payoff }}</td>
               <td width="(100/x)%" align="center">{{ others_payoff }}</td>
             </tr>
 

@@ -19,9 +19,8 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-	pass
-	def before_session_starts(self):
-		self.group_randomly()
+	def creating_seesion(self):
+		self.group_randomly(fixed_id_in_group=True)
     
 
 

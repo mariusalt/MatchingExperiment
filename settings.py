@@ -57,8 +57,9 @@ AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
 
 # e.g. EUR, CAD, GBP, CHF, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'EUR'
-USE_POINTS = False
-
+PÓINTS_DECIMAL_PLACES =6
+USE_POINTS = True
+POINTS_CUSTOM_NAME = 'Token'
 
 # e.g. en, de, fr, it, ja, zh-hans
 # see: https://docs.djangoproject.com/en/1.9/topics/i18n/#term-language-code
@@ -134,7 +135,7 @@ SESSION_CONFIGS = [
  {
      'name': 'ultimatum',
      'display_name': 'Ultimatum Game',
-     'num_demo_participants': 2,
+     'num_demo_participants': 6,
      'app_sequence': ['ultimatum'],
  },
  {
@@ -172,7 +173,7 @@ SESSION_CONFIGS = [
  {
      'name': 'matching',
      'display_name': 'Matching Experiment',
-     'num_demo_participants': 2,
+     'num_demo_participants': 6,
      'app_sequence': ['matching']
  }
 
