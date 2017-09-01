@@ -47,9 +47,14 @@ class FischHigh(Page):
     def contri_max(self):
         return self.player.endowment
 
+<<<<<<< HEAD
     def before_next_page(self):
         if self.timeout_happened:
             self.player.contri=1
+=======
+    # def before_next_page(self):
+    #     self.player.other_player()
+>>>>>>> 73e3803dbbbe894f6eca2febfd3aeb29ddf000ca
 
 
 class FischLow(Page):
@@ -64,9 +69,14 @@ class FischLow(Page):
     def contri_max(self):
         return self.player.endowment
 
+<<<<<<< HEAD
     def before_next_page(self):
         if self.timeout_happened:
             self.player.contri=random.randrange(0,self.player.endowment,1)
+=======
+    # def before_next_page(self):
+    #     self.player.other_player()
+>>>>>>> 73e3803dbbbe894f6eca2febfd3aeb29ddf000ca
 
 class WaitPlayer(WaitPage):
     def is_displayed(self):
@@ -79,6 +89,7 @@ class FischHighTable(Page):
         return self.participant.vars['type'] == 'subsidizer' and self.round_number == 1
 
     form_model=models.Player
+<<<<<<< HEAD
     form_fields=["five","four","three","two","one","zero"]
 
     def zero_max(self):
@@ -95,6 +106,10 @@ class FischHighTable(Page):
         return self.player.endowment
 
 
+=======
+    form_fields=["twenty","nineteen","eighteen","seventeen","sixteen","fifteen","fourteen","thirteen","twelve","eleven","ten","nine","eight","seven","six","five","four","three","two","one","zero"]
+    
+>>>>>>> 73e3803dbbbe894f6eca2febfd3aeb29ddf000ca
     def before_next_page(self):
         if self.timeout_happened:
             self.player.zero=random.randrange(0,self.player.endowment,1)
@@ -156,7 +171,14 @@ class FischLowTable(Page):
             self.player.ten=random.randrange(0,self.player.endowment,1)
         self.player.calc_cond()
 
+<<<<<<< HEAD
     timeout_seconds=Constants.decision_timeout
+=======
+    # soll für den zweiten Spieler die Contribution nicht berechnet werden?
+    # sonst hier auch noch einfügen:
+    # def before_next_page(self):
+    #     self.player.calc_con()
+>>>>>>> 73e3803dbbbe894f6eca2febfd3aeb29ddf000ca
 
 
 class Result2WaitPage(WaitPage):
