@@ -5,8 +5,60 @@
     Subsidy rate
 {% endblock %}
 
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		padding-top: 80px;
+		font-size: 22px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 10%px;
+    	width: 200px;
+    	top:50px;
+    	padding: 10px;
+	}
+	.round{
+		position: absolute;
+		font-family: "Arial", Times, serif;
+    	right: 720px;
+    	width: 100px;
+    	top:50px;
+    	padding: 10px;
+    	border-radius: 8px;
+    	border: 0.1px solid  	#FFDEAD;
+    	color:  	#CD853F;
+    	background-color:  	 	#FFFFE0;
+    	text-align: center;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	</style>
+{% endblock %}
+
 {% block content %}
-{% formfield player.t %}
+<div class="round">
+<p>Runde 2</p>
+</div>
+
+<div class="cont">
+{% for field in form %}
+    <div class="input-group">
+      {{field}}  <span class="input-group-addon">%</span>
+    {% formfield player.t %}
+    </div>
+  {% endfor %}
+
+
+
 
 <!--
 Documentation on how to write a django template here:
@@ -16,7 +68,7 @@ Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
 http://getbootstrap.com/components/
 
 -->
-
+</div>
     {% next_button %}
 
 {% endblock %}

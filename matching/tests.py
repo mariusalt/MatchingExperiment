@@ -11,22 +11,22 @@ class PlayerBot(Bot):
         yield (views.Intro)
 
         if self.participant.vars['type'] == 'subsidizer':
-        	yield (views.FischHigh, {'contri':1})
+        	yield (views.FischHigh, {'contri':5})
 #        	yield SubmissionMustFail(views.FischHigh,{'contri':-27})
         else:
-        	yield (views.FischLow, {'contri':0})
+        	yield (views.FischLow, {'contri':3})
 #        	yield SubmissionMustFail(views.FischLow,{'contri':-27})
 
         if self.participant.vars['type'] == 'subsidizer':
         	yield (views.FischHighTable, {'zero':7,'one':2,'two':7,'three':6,'four':1,'five':0})
         else:
-        	yield (views.FischLowTable, {'zero':3,'one':2,'two':4,'three':5,'four':2,'five':0,'six':5,'seven':4,'eight':5,'nine':2,'ten':2})
+        	yield (views.FischLowTable, {'zero':3,'one':2,'two':4,'three':2,'four':2,'five':0,'six':5,'seven':4,'eight':5,'nine':2,'ten':2})
        		
         if self.group.outcome == 'tails':
         	if self.participant.vars['type'] == 'subsidizer':
-        		assert self.player.payoff == 9
+        		assert self.player.payoff == 11
         	else:
-        		assert self.player.payoff == 8
+        		assert self.player.payoff == 9
  #       if self.group.outcome == 'tails':
   #      	if self.participant.vars['type'] == 'subsidizer':
    #     		assert self.player.payoff == 9.6

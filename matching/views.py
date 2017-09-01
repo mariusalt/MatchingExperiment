@@ -103,7 +103,7 @@ class FischHighTable(Page):
             self.player.three=random.randrange(0,self.player.endowment,1)
             self.player.four=random.randrange(0,self.player.endowment,1)
             self.player.five=random.randrange(0,self.player.endowment,1)
-            self.player.calc_cond()
+        self.player.calc_cond()
 
 
     timeout_seconds=Constants.decision_timeout
@@ -165,6 +165,7 @@ class Result2WaitPage(WaitPage):
 
     def after_all_players_arrive(self):
         self.group.calc_payoff()
+
 
 
 
@@ -327,11 +328,13 @@ class Result3WaitPage(WaitPage):
     def after_all_players_arrive(self):
         self.group.calc_payoff1()
 
+
 class Result4WaitPage(WaitPage):
     def is_displayed(self):
         return self.round_number == 2 and self.player.treatment=='lowthres'
     def after_all_players_arrive(self):
         self.group.calc_payoff2()
+
 
 class Result5WaitPage(WaitPage):
     def is_displayed(self):
@@ -339,17 +342,34 @@ class Result5WaitPage(WaitPage):
     def after_all_players_arrive(self):
         self.group.calc_payoff3()
 
+
 class Result2(Page):
     def is_displayed(self):
         return self.round_number == 2
+
+    timeout_seconds=Constants.read_timeout
+
     def vars_for_template(self):
         return self.player.vars_for_result()
-#        if self.participant.vars['type'] == 'subsidized':
- #           context.update({'own_contri':self.player.cond})
-  #          return context
+    def before_next_page(self):
+        self.player.total_payoff()
 
+class Questionnaire(Page):
+    def is_displayed(self):
+        return self.round_number == 2
 
+    form_model = models.Player
+    form_fields = ['age', 'gender', 'education', 'studies', 'occupation']
 
+    timeout_seconds = Constants.read_timeout
+
+    def error_message(self, values):
+        if values['education'] >= 3 and not values['studies']:
+            return 'Bitte teilen Sie uns ihr Studienfach mit.'
+
+class Thanks(Page):
+    def is_displayed(self):
+        return self.round_number == 2
 
 
 
@@ -375,5 +395,7 @@ page_sequence = [
     Result3WaitPage,
     Result4WaitPage,
     Result5WaitPage,
-    Result2
+    Result2,
+    Questionnaire,
+    Thanks
 ]

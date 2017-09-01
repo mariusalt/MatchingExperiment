@@ -2,7 +2,7 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Beginn Runde 2
+    Questionnaire
 {% endblock %}
 
 {% block styles %}
@@ -24,10 +24,6 @@
     	top:50px;
     	padding: 10px;
 	}
-	.cont{
-		padding-top: 50px ;
-		padding-bottom: 50px ;
-	}
 	.round{
 		position: absolute;
 		font-family: "Arial", Times, serif;
@@ -41,19 +37,26 @@
     	background-color:  	#FFFFE0;
     	text-align: center;
     }
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
 	</style>
 {% endblock %}
 
 {% block content %}
-<div class="round">
-<p>Runde 2</p>
-</div>
-
 <div class="cont">
-<p>In Runde 2 wird das Matchpoint-Spiel gespielt.
-</p><p>&nbsp;</p>
-<p>Du bist im high-threshold treatment.
-</p><p>&nbsp;</p>
+
+<p>Bitte teilen Sie uns folgende Angaben über sich selbst mit.</p>
+
+
+{% for field in form %}
+<br>
+<br>
+<br>
+    {% formfield field %}
+{% endfor %}
+
 <!--
 Documentation on how to write a django template here:
 https://docs.djangoproject.com/en/1.8/ref/templates/language/
@@ -63,6 +66,7 @@ http://getbootstrap.com/components/
 
 -->
 </div>
+
     {% next_button %}
 
 {% endblock %}

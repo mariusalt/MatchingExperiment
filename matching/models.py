@@ -19,8 +19,8 @@ class Constants(BaseConstants):
     num_rounds = 2
     MPCR=0.8
 
-    read_timeout = 3 
-    decision_timeout = 40
+    read_timeout = 6 
+    decision_timeout = 6
 
 
 class Subsession(BaseSubsession):
@@ -119,12 +119,12 @@ class Group(BaseGroup):
 	def calc_payoff2(self):
 		subsidizer = self.get_player_by_role('subsidizer')
 		subsidized = self.get_player_by_role('subsidized')
-		if subsidizer.t <= 20:
+		if subsidized.cond <= 2:
 			self.project = subsidizer.contri + subsidized.cond
 			self.pay_proj=math.floor(Constants.MPCR*self.project*100)/100
 			subsidizer.payoff=subsidizer.endowment-subsidizer.contri+Constants.MPCR*self.project
 			subsidized.payoff=subsidized.endowment-subsidized.cond+Constants.MPCR*self.project
-		if subsidizer.t > 20:
+		if subsidized.cond > 2:
 			self.amount_subsidy = round((subsidizer.t/100)*subsidized.cond,2)
 			self.project = subsidizer.contri + subsidized.cond+self.amount_subsidy
 			self.pay_proj=math.floor(Constants.MPCR*self.project*100)/100
@@ -134,12 +134,12 @@ class Group(BaseGroup):
 	def calc_payoff3(self):
 		subsidizer = self.get_player_by_role('subsidizer')
 		subsidized = self.get_player_by_role('subsidized')
-		if subsidizer.t <= 50:
+		if subsidized.cond <= 3:
 			self.project = subsidizer.contri + subsidized.cond
 			self.pay_proj=math.floor(Constants.MPCR*self.project*100)/100
 			subsidizer.payoff=subsidizer.endowment-subsidizer.contri+Constants.MPCR*self.project
 			subsidized.payoff=subsidized.endowment-subsidized.cond+Constants.MPCR*self.project
-		if subsidizer.t > 50:
+		if subsidized.cond > 3:
 			self.amount_subsidy = round((subsidizer.t/100)*subsidized.cond,2)
 			self.project = subsidizer.contri + subsidized.cond+self.amount_subsidy
 			self.pay_proj=math.floor(Constants.MPCR*self.project*100)/100
@@ -172,7 +172,7 @@ class Player(BasePlayer):
 	contri = models.PositiveIntegerField(
     	min=0,
     	widget=widgets.SliderInput(attrs={'step':'1'}),
-    	verbose_name="Please decide how much you would like to invest in your common project")
+    	verbose_name="Ihr unbedingter Beitrag zum Projekt")
 
 
 
@@ -220,6 +220,13 @@ class Player(BasePlayer):
 		'others_payoff' : self.get_others_in_group()[0].payoff,
 		'deci':'unconditional'}
 
+	sum_payoff=models.CurrencyField(initial=0)
+	sum_pay_euro=models.FloatField()
+
+	def total_payoff(self):
+		self.sum_payoff=self.in_round(1).payoff+self.payoff
+		self.sum_pay_euro=c(self.sum_payoff.to_real_world_currency(self.session))
+
 		
 
 
@@ -227,11 +234,9 @@ class Player(BasePlayer):
 # MATCHPOINT EXPERIMENT START--------------------------------------------------
 
 	t = models.PositiveIntegerField(
-		choices=[0,10,20,30,40,50,60,70,80,90,100,110,120],
-		widget=widgets.RadioSelect(),
-		verbose_name="decide by how many percent you would like to support the other Player's contribution"
+		choices=[[0,"0%"],[10,"10%"],[20,"20%"],[30,"30%"],[40,"40%"],[50,"50%"],[60,"60%"],[70,"70%"],[80,"80%"],[90,"90%"],[100,"100%"],[110,"110%"],[120,"120%"]],
 		)
-	total_payoff=models.FloatField()
+	
 
 	t0 = models.PositiveIntegerField()
 	t10 = models.PositiveIntegerField()
@@ -268,10 +273,38 @@ class Player(BasePlayer):
 		'others_payoff1' : self.get_others_in_group()[0].payoff,
 		'others_contri1': self.get_others_in_group()[0].contri,
 		'others_cond':self.get_others_in_group()[0].cond,
-		'total_payoff': self.in_round(1).payoff+self.payoff}
-#		'real_payoff':self.payoffFisch.to_real_world_currency(self.session)+self.payoff.to_real_world_currency(self.session)}
+		'total_payoff': self.in_round(1).payoff+self.payoff,
+		'real_payoff':(self.in_round(1).payoff+self.payoff).to_real_world_currency(self.session)}
 
 
+#------------------Questionnaire--------------------------------
+
+
+	age = models.PositiveIntegerField(verbose_name="Wie alt sind Sie?")
+	gender = models.CharField(
+		choices=['weiblich', 'männlich', 'weitere', 'keine Angabe'],
+		verbose_name="Bitte geben Sie ihr Geschlecht an.",
+		widget=widgets.RadioSelectHorizontal)
+
+	education = models.PositiveIntegerField(
+		choices=[
+			[1, 'Keinen Schulabschluss'], 
+			[2, 'Hauptschulabschluss'],
+			[3, 'Mittlere Reife'],
+			[4, "Abitur"],
+			[5, "Abgeschlossene Ausbildung"],
+			[6, "Univeritäts- / Fachhochschulabschluss"],
+			[7, "Promotion"],
+			[9, "Keine Angabe"]
+		 ],
+		 verbose_name="Was ist Ihr höchster Bildungsabschluss?",
+		 widget=widgets.RadioSelect)
+	
+	studies = models.CharField(
+		blank=True, 
+		verbose_name="Falls Sie oder studiert haben, was ist Ihr Studienfach?")
+
+	occupation = models.CharField(verbose_name="Welchen Beruf üben Sie aus?")
 
 
 

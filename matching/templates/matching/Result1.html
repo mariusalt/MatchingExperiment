@@ -5,16 +5,61 @@
     Result
 {% endblock %}
 
+{% block styles %}
+  <style type="text/css">
+  .page-header {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin-top: 0px !important;
+    margin-bottom: 10px !important;
+  }
+  .otree-title{
+    padding-top: 80px;
+    font-size: 22px;
+  }
+  .round{
+    position: absolute;
+    font-family: "Arial", Times, serif;
+      right: 36%;
+      width: 90px;
+      top:50px;
+      padding: 10px;
+      color:  #CD853F;
+      border-radius: 8px;
+      border: 0.1px solid   #FFDEAD;
+      background-color:   #FFFFE0;
+      text-align: center;
+  }
+
+  .otree-timer{
+    position: absolute;
+      right: 20%;
+      width: 15%;
+      top:50px;
+      padding: 10px;
+  }
+  .cont{
+    padding-top: 50px ;
+    padding-bottom: 50px ;
+  }
+  </style>
+{% endblock %}
+
 {% block content %}
+<div class="round">
+<p>Runde 1</p>
+</div>
+
+<div class="cont">
 <table border=1 class="centerTable" width = "100%">
          <thead>
             <tr>
-              <td width="(100/x)%" align="center"><b>Payoff relevant contribution</b></td>
-              <td width="(100/x)%" align="center"><b>Own contribution</b></td>
-              <td width="(100/x)%" align="center"><b>Other player's contribution</b></td>
-              <td width="(100/x)%" align="center"><b>Return from common project</b></td>
-              <td width="(100/x)%" align="center"><b>Own payoff</b></td>
-              <td width="(100/x)%" align="center"><b>Other's payoff</b></td>
+              <td width="(100/x)%" align="center"><b>Auszahlungsrelevanter Beitrag</b></td>
+              <td width="(100/x)%" align="center"><b>Eigener Beitrag</b></td>
+              <td width="(100/x)%" align="center"><b>Beitrag des anderen Spielers</b></td>
+              <td width="(100/x)%" align="center"><b>Ertrag aus gemeinsamen Projekt</b></td>
+              <td width="(100/x)%" align="center"><b>Eigene Auszahlung</b></td>
+              <td width="(100/x)%" align="center"><b>Auszahlung des anderen Spielers</b></td>
             </tr>
             <tr>
               <td width="(100/x)%" align="center"> {{ deci }}</td>
@@ -29,8 +74,7 @@
          
       </table>
     <br>
-    <br>
-    <br>
+</div>
 
 <!--
 Documentation on how to write a django template here:

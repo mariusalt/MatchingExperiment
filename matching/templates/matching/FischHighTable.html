@@ -5,30 +5,86 @@
     Conditional Contribution
 {% endblock %}
 
+{% block styles %}
+  <style type="text/css">
+
+  .page-header {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin-top: 0px !important;
+    margin-bottom: 10px !important;
+  }
+  .otree-title{
+    padding-top: 80px;
+    font-size: 22px;
+  }
+  .otree-timer{
+    position: absolute;
+      right: 20%;
+      width: 15%;
+      top:50px;
+      padding: 10px;
+  }
+  .round{
+    position: absolute;
+    font-family: "Arial", Times, serif;
+      right: 36%;
+      width: 90px;
+      top:50px;
+      padding: 10px;
+      color:  #CD853F;
+      border-radius: 8px;
+      border: 0.1px solid   #FFDEAD;
+      background-color:   #FFFFE0;
+      text-align: center;
+  }
+  .cont{
+    padding-top: 50px ;
+    padding-bottom: 50px ;
+  }
+  td {
+  text-align: center;
+  vertical-align: middle;
+  }
+  </style>
+{% endblock %}
+
 {% block content %}
-Please insert how much you would contribute if the other player contributes:<br>
-<table style="border-collapse: collapse;border-style:hidden;" class="centerTable" width = "50%">
-         <thead>
-            <tr>
-               <td>{% formfield player.zero %}</td>
-               <td>{% formfield player.three %}</td>
+<div class="round">
+<p>Runde 1</p>
+</div>
 
-            </tr>
-            <tr> 
-            <td>{% formfield player.one %}</td> 
-            <td>{% formfield player.four %}</td>
+<div class="cont">
+<p>Geben Sie in den Feldern ein, welchen Beitrag zum Projekt Sie leisten, wenn die andere Person den Beitrag geleistet hat, die links vom Eingabefeld steht.<br>
+Wenn Sie alles eingegeben haben, drücken Sie "Weiter".
+</p><p>&nbsp;</p>
+<br>
+<p>Ihr bedingter Beitrag zum Projekt (Beitragstabelle)</p>
 
-               <tr> 
-            <td>{% formfield player.two %}</td> 
-            <td>{% formfield player.five %}</td> 
-
-            </tr>
-
-         </tbody>
-         
-      </table>
+<table class="centerTable" style="border-collapse: collapse; border-style: hidden;" width="60%">
+  <thead>
+    <tr>
+      <td valign="top"><p>0&nbsp;&nbsp;&nbsp;</p> </td>
+      <td valign="bottom"><p>{% formfield player.zero with label="" %}</p></td>
+      <td valign="top"><p>3&nbsp;&nbsp;&nbsp; </p></td>
+      <td valign="bottom"><p>{% formfield player.three with label="" %}</p></td>
+    </tr>
+    <tr>
+      <td valign="top"><p>1&nbsp;&nbsp;&nbsp;</p> </td>
+      <td valign="bottom"><p>{% formfield player.one with label="" %}</p></td>
+      <td valign="top"><p>4&nbsp;&nbsp;&nbsp; </p></td>
+      <td valign="bottom"><p>{% formfield player.four with label="" %}</p></td>
+    </tr>
+    <tr>
+      <td valign="top"><p>2&nbsp;&nbsp;&nbsp;</p> </td>
+      <td valign="bottom"><p>{% formfield player.two with label="" %}</p></td>
+      <td valign="top"><p>5&nbsp;&nbsp;&nbsp; </p></td>
+      <td valign="bottom"><p>{% formfield player.five with label="" %}</p></td>
+    </tr>
+  </thead>
+</table>
    <br>
-
+</div>
 
 <!--
 Documentation on how to write a django template here:
