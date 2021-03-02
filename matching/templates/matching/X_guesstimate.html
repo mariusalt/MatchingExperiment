@@ -1,0 +1,145 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Zusatzaufgabe
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		padding-top: 80px;
+		font-size: 22px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.round{
+		position: absolute;
+		font-family: "Arial", Times, serif;
+    	right: 36%;
+    	width: 90px;
+    	top:50px;
+    	padding: 10px;
+    	color:  #CD853F;
+    	border-radius: 8px;
+    	border: 0.1px solid  	#FFDEAD;
+    	background-color:  	#FFFFE0;
+    	text-align: center;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	</style>
+	<style media="screen">
+      .input-group {
+        max-width: 100px;
+      }
+    
+
+	</style>
+{% endblock %}
+
+{% block content %}
+<div class="round">
+<p>Zusatz</p>
+</div>
+
+<div class="cont">
+{% if player.id_in_group == 1 %}
+<p>Erinnern Sie sich an die Entscheidungssituation in Teil II. Wir bitten Sie, den unbedingten Beitrag von Spieler 2 in Teil II einzuschätzen.</p>
+
+<p>Ergänzend zu Ihrer Vergütung in Teil I und Teil II, erhalten Sie in Abhängigkeit der Präzision Ihrer Einschätzung eine zusätzliche Vergütung. Durch Ihre Einschätzung ergeben sich zwei Möglichkeiten für die Vergütung:</p>
+<p>&nbsp;</p>
+<table border=1 class="centerTable" width = "100%">
+         <thead>
+            <tr>
+              <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">Schätzen Sie den unbedingten Beitrag von Spieler 2 exakt richtig ein oder weichen davon nur 1 LD ab, erhalten Sie weitere 9 LD vergütet.</td>
+     		</tr>
+     		<tr>
+				<td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">Vergütung Zusatzaufgabe = 9 LD</td>
+			</tr>
+         </tbody>
+         
+     </table>
+
+<table border=1 class="centerTable" width = "100%">
+         <thead>
+            <tr>
+              <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">Weicht Ihre Einschätzung über 1 LD vom unbedingten Beitrag von Spieler 2 ab, wird Ihre zusätzliche Vergütung als Betrag der folgenden Gleichung berechnet</td>
+     		</tr>
+     		<tr>
+				<td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">Vergütung Zusatzaufgabe = 6 <strong>:</strong>  (unbedingter Beitrag Spieler 2 – geschätzter Beitrag)</td>
+			</tr>
+         </tbody>
+         
+     </table>
+<p>&nbsp;</p>
+
+<p>Bitte geben Sie Ihre Einschätzung für den unbedingten Beitrag von Spieler 2 in dem untenstehenden Feld ein. Sie können jeden Betrag zwischen {% if player.treatment == "base" %} 0 und 30 LD in Werten von [0, 1, 2,&hellip;, 30] {% else %} 0 und 20 LD in Werten von [0, 1, 2,&hellip;, 20]{% endif %}  angeben.</p>
+<p>&nbsp;</p>
+<p>Spieler 2 hat einen unbedingten Beitrag gewählt von:</p>
+<div class="input-group">
+	{{ form.guess }} <span class="input-group-addon">LD</span>
+</div> 
+{% else %}
+<p>Erinnern Sie sich an die Entscheidungssituation in Teil II. Wir bitten Sie, den unbedingten Faktor von Spieler 1 in Teil II einzuschätzen.</p>
+
+<p>Ergänzend zu Ihrer Vergütung in Teil I und Teil II, erhalten Sie in Abhängigkeit der Präzision Ihrer Einschätzung eine zusätzliche Vergütung. Durch Ihre Einschätzung ergeben sich zwei Möglichkeiten für die Vergütung:</p>
+<p>&nbsp;</p>
+<table border=1 class="centerTable" width = "100%">
+         <thead>
+            <tr>
+              <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">Schätzen Sie den unbedingten Faktor von Spieler 1 exakt richtig ein oder weichen davon nur um 10% ab, erhalten Sie weitere 9 LD vergütet.</td>
+     		</tr>
+     		<tr>
+				<td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">Vergütung Zusatzaufgabe = 9 LD</td>
+			</tr>
+         </tbody>
+         
+     </table>
+
+<table border=1 class="centerTable" width = "100%">
+         <thead>
+            <tr>
+              <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">Weicht Ihre Einschätzung über 10% vom unbedingten Faktor von Spieler 1 ab, wird Ihre zusätzliche Vergütung als Betrag der folgenden Gleichung berechnet</td>
+     		</tr>
+     		<tr>
+				<td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">Vergütung Zusatzaufgabe = 6 <strong>:</strong>  ((unbedingter Faktor Spieler 1 – geschätzter Faktor) <strong>:</strong>  10)</td>
+			</tr>
+         </tbody>
+         
+     </table>
+
+
+<p>Bitte geben Sie Ihre Einschätzung für den unbedingten Faktor von Spieler 1 in dem untenstehenden Feld ein. Sie können jeden Faktor zwischen 0 und 300% in Werten von [0%, 10%, 20%,…, 300%] angeben.</p>
+<p>&nbsp;</p>
+<p>Spieler 1 hat einen unbedingten Faktor gewählt von</p> 
+<div class="input-group">
+	{{ form.guess }} <span class="input-group-addon">%</span>
+</div> 
+{{ form.guess.errors }}
+{% endif %}
+</div>
+
+
+
+
+</div>
+
+
+
+    {% next_button %}
+
+{% endblock %}

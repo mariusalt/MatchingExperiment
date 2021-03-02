@@ -1,0 +1,204 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Vergütung Teil II
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+<div class="cont">
+
+<p>F&uuml;r die individuelle <strong>Verg&uuml;tung in Teil II</strong> (in LD) wird zuf&auml;llig ausgew&auml;hlt, ob von Spieler 1 der unbedingte Faktor oder von Spieler 2 der unbedingte Beitrag herangezogen wird. Darauf basierend wird der bedingte Faktor/bedingte Beitrag des anderen Spielers ausgew&auml;hlt und die Verg&uuml;tung in Teil II f&uuml;r beide Spieler berechnet. Durch die zuf&auml;llige Auswahl ergeben sich zwei M&ouml;glichkeiten f&uuml;r die Verg&uuml;tung:</p>
+<p>Wird der <strong>unbedingte Faktor von Spieler 1</strong> zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt, ergibt sich die <strong>Verg&uuml;tung in Teil II</strong> folgenderma&szlig;en:</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil II f&uuml;r Spieler 1</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (40
+              {% endif %}
+               &ndash; unbedingter Beitrag Spieler 1) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 1 + bedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p>
+              {% if player.treatment == "base" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "baseline" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "lowthres" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 4 LD oder mehr beitr&auml;gt: 
+              {% elif player.treatment == "highthres" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 12 LD oder mehr beitr&auml;gt: 
+              {% endif %}</p>
+              <p>Unbedingter Beitrag Spieler 1 = (unbedingter Faktor (%) Spieler 1 <strong>&middot; </strong>bedingter Beitrag Spieler 2)</p>              
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil II f&uuml;r Spieler 2</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (20
+              {% endif %}
+              &ndash; bedingter Beitrag Spieler 2) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 1 + bedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p>
+              {% if player.treatment == "base" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "baseline" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "lowthres" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 4 LD oder mehr beitr&auml;gt: 
+              {% elif player.treatment == "highthres" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 12 LD oder mehr beitr&auml;gt: 
+              {% endif %}</p>
+              <p>Unbedingter Beitrag Spieler 1 = (unbedingter Faktor (%) Spieler 1 <strong>&middot; </strong> bedingter Beitrag Spieler 2)</p>              
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+
+<p>Wird der <strong>unbedingte Beitrag von Spieler 2</strong> zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt, ergibt sich die <strong>Verg&uuml;tung in Teil II</strong> folgenderma&szlig;en:</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil II f&uuml;r Spieler 1</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (40
+              {% endif %}
+               &ndash; bedingter Beitrag Spieler 1) + 0,7 <strong>&middot; </strong>(bedingter Beitrag Spieler 1 + unbedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p>
+              {% if player.treatment == "base" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "baseline" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "lowthres" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 4 LD oder mehr beitr&auml;gt: 
+              {% elif player.treatment == "highthres" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 12 LD oder mehr beitr&auml;gt: 
+              {% endif %}</p>
+              <p>Bedingter Beitrag Spieler 1 = (bedingter Faktor (%) Spieler 1 <strong>&middot; </strong> unbedingter Beitrag Spieler 2)</p>              
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil II f&uuml;r Spieler 2</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (20
+              {% endif %}
+               &ndash; unbedingter Beitrag Spieler 2) + 0,7 <strong>&middot; </strong>(bedingter Beitrag Spieler 1 + unbedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p>
+              {% if player.treatment == "base" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "baseline" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "lowthres" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 4 LD oder mehr beitr&auml;gt: 
+              {% elif player.treatment == "highthres" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 12 LD oder mehr beitr&auml;gt: 
+              {% endif %}</p>
+              <p>Bedingter Beitrag Spieler 1 = (bedingter Faktor (%) Spieler 1 <strong>&middot; </strong> unbedingter Beitrag Spieler 2)</p>              
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+
+
+<p>Nach der Zusatzaufgabe, werden Sie dar&uuml;ber informiert, ob der unbedingte Faktor von Spieler 1 oder der unbedingte Beitrag von Spieler 2 ausgew&auml;hlt wurde. Danach werden Sie &uuml;ber Ihre Verg&uuml;tung und die Ihres Mitspielers aus Teil II informiert.</p>
+<p>Die individuelle <strong>Auszahlung</strong> in Euro setzt sich bei jedem Spieler aus der Verg&uuml;tung in Teil I, der Verg&uuml;tung in Teil II und der Verg&uuml;tung der Zusatzaufgabe zusammen.</p>
+<p>&nbsp;</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p><strong>Auszahlung in EUR</strong> = (Verg&uuml;tung Teil I in LD + Verg&uuml;tung Teil II in LD + Verg&uuml;tung Zusatzaufgabe in LD) <strong>:</strong> 6</p>          
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+</div>
+
+   {% next_button %}
+
+{% endblock %}

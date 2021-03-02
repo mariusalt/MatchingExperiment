@@ -1,0 +1,86 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Regeln des Experiments Teil II
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+<div class="cont">
+<p>Ihre Aufgabe in Teil II, wie die Ihres Mitspielers, ist es Ihre Anfangsausstattung aufzuteilen. Sie k&ouml;nnen dabei zwischen Ihrem privaten Konto oder der Investition in ein gemeinsames Projekt entscheiden. Jeder LD, den Sie nicht in das gemeinsame Projekt investieren, wird automatisch Ihrem privaten Konto gutgeschrieben. Jeder LD, den Sie oder Ihr Mitspieler in das gemeinsame Projekt investieren, kommt jedem Gruppenmitglied in gleicher H&ouml;he zu gute. Ihre Verg&uuml;tung in Teil II setzt sich wie folgt zusammen:</p>
+<p>&nbsp;</p>
+
+<table border=1 class="centerTable" width = "100%">
+         <thead>
+            <tr>
+              <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px"><p><strong>Verg&uuml;tung Teil II</strong> = (Anfangsausstattung &ndash; Beitrag zum gemeinsamen Projekt) + 0,7 <strong>&middot; </strong>(Beitrag Spieler 1 + Beitrag Spieler 2 zum gemeinsamen Projekt)</p></td> 
+          </tr>
+         </tbody>  
+</table>
+
+ 
+<p>&nbsp;</p>
+<p>Wie in Teil I, werden Sie und Ihr Mitspieler in Teil II des Experiments gebeten <strong>zwei</strong> Entscheidungen zu treffen: eine &uuml;ber Ihren <strong>unbedingten Faktor/unbedingten Beitrag</strong> und eine &uuml;ber Ihren <strong>bedingten</strong> <strong>Faktor/ bedingten</strong> <strong>Beitrag</strong> zum gemeinsamen Projekt.</p>
+
+<p>{% if player.treatment == "base" %}
+	Die Anfangsausstattung von Spieler 1 und Spieler 2 betr&auml;gt 30 LD. 
+	{% else %}
+	Die Anfangsausstattung von Spieler 1 betr&auml;gt 40 LD und die von Spieler 2 betr&auml;gt 20 LD. 
+	{% endif %} In Teil II des Experiments unterscheidet sich die Entscheidungssituationen von <strong>Spieler 1 </strong>und <strong>Spieler 2</strong>. Die Entscheidungssituationen beider Spieler werden im Folgenden erkl&auml;rt.</p>
+
+
+
+</div>
+	
+
+
+    {% next_button %}
+
+{% endblock %}

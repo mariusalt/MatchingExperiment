@@ -1,35 +1,119 @@
 from otree.api import Currency as c, currency_range
-from . import views
+from . import pages
 from ._builtin import Bot
 from .models import Constants
 from otree.api import Bot, SubmissionMustFail
+import random
 
 
 class PlayerBot(Bot):
 
     def play_round(self):
-        yield (views.Intro)
+        if self.round_number ==1:
+            yield (pages.Intro)
 
-        if self.participant.vars['type'] == 'subsidizer':
-        	yield (views.FischHigh, {'contri':5})
-#        	yield SubmissionMustFail(views.FischHigh,{'contri':-27})
-        else:
-        	yield (views.FischLow, {'contri':3})
-#        	yield SubmissionMustFail(views.FischLow,{'contri':-27})
+        if self.participant.vars['type'] == 'subsidizer' and self.round_number == 1:
+        	yield (pages.FischHigh, {'contri':random.randrange(0,self.player.endowment,1)})
+#        	yield SubmissionMustFail(pages.FischHigh,{'contri':-27})
+        if self.participant.vars['type'] == 'subsidized' and self.round_number == 1:
+        	yield (pages.FischLow, {'contri':random.randrange(0,self.player.endowment,1)})
+#        	yield SubmissionMustFail(pages.FischLow,{'contri':-27})
 
-        if self.participant.vars['type'] == 'subsidizer':
-        	yield (views.FischHighTable, {'zero':7,'one':2,'two':7,'three':6,'four':1,'five':0})
-        else:
-        	yield (views.FischLowTable, {'zero':3,'one':2,'two':4,'three':2,'four':2,'five':0,'six':5,'seven':4,'eight':5,'nine':2,'ten':2})
+        if self.participant.vars['type'] == 'subsidizer' and self.round_number == 1:
+        	yield (pages.FischHighTable, {'zero':random.randrange(0,self.player.endowment,1),'one':random.randrange(0,self.player.endowment,1),'two':random.randrange(0,self.player.endowment,1),'three':random.randrange(0,self.player.endowment,1),'four':random.randrange(0,self.player.endowment,1),'five':random.randrange(0,self.player.endowment,1)})
+        if self.participant.vars['type'] == 'subsidized' and self.round_number == 1:
+        	yield (pages.FischLowTable, {'zero':random.randrange(0,self.player.endowment,1),'one':random.randrange(0,self.player.endowment,1),'two':random.randrange(0,self.player.endowment,1),'three':random.randrange(0,self.player.endowment,1),'four':random.randrange(0,self.player.endowment,1),'five':random.randrange(0,self.player.endowment,1),'six':random.randrange(0,self.player.endowment,1),'seven':random.randrange(0,self.player.endowment,1),'eight':random.randrange(0,self.player.endowment,1),'nine':random.randrange(0,self.player.endowment,1),'ten':random.randrange(0,self.player.endowment,1)})
        		
         if self.group.outcome == 'tails':
         	if self.participant.vars['type'] == 'subsidizer':
-        		assert self.player.payoff == 11
+        		assert self.player.payoff == self.player.endowment-self.player.contri+self.group.pay_proj
         	else:
-        		assert self.player.payoff == 9
- #       if self.group.outcome == 'tails':
-  #      	if self.participant.vars['type'] == 'subsidizer':
-   #     		assert self.player.payoff == 9.6
-    #    	else:
-     #   		assert self.player.payoff == 12.6
+        		assert self.player.payoff == self.player.endowment-self.player.cond+self.group.pay_proj
+
+            
+        if self.group.outcome == 'heads':
+            if self.participant.vars['type'] == 'subsidizer':
+                assert self.player.payoff == self.player.endowment-self.player.cond+self.group.pay_proj
+            else:
+                assert self.player.payoff == self.player.endowment-self.player.contri+self.group.pay_proj
+
+        if self.round_number ==1:
+            yield (pages.Result1)
+
+        if self.player.treatment=='lowthres' and self.round_number == 2:
+            yield (pages.Intro2)
+        elif self.player.treatment=='highthres' and self.round_number == 2:
+            yield (pages.Intro3)
+        elif self.player.treatment=='baseline' and self.round_number == 2:
+            yield (pages.Intro1)
+
+        if self.participant.vars['type'] == 'subsidizer' and self.round_number == 2:
+            yield (pages.DecisionHigh, {'contri':random.randrange(0,self.player.endowment,1),'t':random.randrange(0,120,10)})
+
+        if self.participant.vars['type'] == 'subsidized' and self.round_number == 2:
+            yield (pages.DecisionLow, {"t0":random.randrange(0,self.player.endowment,1),"t10":random.randrange(0,self.player.endowment,1),"t20":random.randrange(0,self.player.endowment,1),"t30":random.randrange(0,self.player.endowment,1),"t40":random.randrange(0,self.player.endowment,1),"t50":random.randrange(0,self.player.endowment,1),"t60":random.randrange(0,self.player.endowment,1),"t70":random.randrange(0,self.player.endowment,1),"t80":random.randrange(0,self.player.endowment,1),"t90":random.randrange(0,self.player.endowment,1),"t100":random.randrange(0,self.player.endowment,1),"t110":random.randrange(0,self.player.endowment,1),"t120":random.randrange(0,self.player.endowment,1)})
+ 
+        if self.player.treatment=='baseline' and self.round_number == 2:
+            if self.participant.vars['type'] == 'subsidizer':
+                assert self.player.payoff == self.player.endowment-self.player.contri-self.group.amount_subsidy+self.group.pay_proj
+            if self.participant.vars['type'] == 'subsidized':
+                assert self.player.payoff == self.player.endowment-self.player.cond+self.group.pay_proj
+            
+        if self.player.treatment=='lowthres' and self.round_number == 2:
+            if self.participant.vars['type'] == 'subsidizer':
+                assert self.player.payoff == self.player.endowment-self.player.contri-self.group.amount_subsidy+self.group.pay_proj
+            if self.participant.vars['type'] == 'subsidized':
+                assert self.player.payoff == self.player.endowment-self.player.cond+self.group.pay_proj
+
+        if self.player.treatment=='highthres' and self.round_number == 2:
+            if self.participant.vars['type'] == 'subsidizer':
+                assert self.player.payoff == self.player.endowment-self.player.contri-self.group.amount_subsidy+self.group.pay_proj
+            if self.participant.vars['type'] == 'subsidized':
+                assert self.player.payoff == self.player.endowment-self.player.cond+self.group.pay_proj
+
+        if self.round_number ==2:
+            yield (pages.Result2)
+
+        if self.player.treatment=='baseline' and self.round_number == 2:
+            if self.participant.vars['type'] == 'subsidizer' and self.group.outcome == 'tails':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+            if self.participant.vars['type'] == 'subsidized' and self.group.outcome == 'tails':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+            if self.participant.vars['type'] == 'subsidizer' and self.group.outcome == 'heads':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+            if self.participant.vars['type'] == 'subsidized' and self.group.outcome == 'heads':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+        if self.player.treatment=='lowthres' and self.round_number == 2:
+            if self.participant.vars['type'] == 'subsidizer' and self.group.outcome == 'tails':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+            if self.participant.vars['type'] == 'subsidized' and self.group.outcome == 'tails':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+            if self.participant.vars['type'] == 'subsidizer' and self.group.outcome == 'heads':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+            if self.participant.vars['type'] == 'subsidized' and self.group.outcome == 'heads':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+        if self.player.treatment=='highthres' and self.round_number == 2:
+            if self.participant.vars['type'] == 'subsidizer' and self.group.outcome == 'tails':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+            if self.participant.vars['type'] == 'subsidized' and self.group.outcome == 'tails':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+            if self.participant.vars['type'] == 'subsidizer' and self.group.outcome == 'heads':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+
+            if self.participant.vars['type'] == 'subsidized' and self.group.outcome == 'heads':
+                assert self.player.sum_payoff == sum([p.payoff for p in self.player.in_all_rounds()])
+            
+
+        if self.round_number == 2:
+            yield (pages.Questionnaire, {'gender':'männlich','age':40,'education':3,'studies':'VWL','occupation':'Researcher'})
 

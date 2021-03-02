@@ -1,8 +1,8 @@
 {% extends "global/Page.html" %}
-{% load staticfiles otree_tags %}
+{% load staticfiles otree %}
 
 {% block title %}
-    Questionnaire
+   Fragebogen
 {% endblock %}
 
 {% block styles %}
@@ -41,30 +41,655 @@
 		padding-top: 50px ;
 		padding-bottom: 50px ;
 	}
+  .errorlist
+    {
+        color: red;
+    }
+  
 	</style>
+{% endblock %}
+{% block scripts %}
+<script language="javascript" type="text/javascript">  
+  document.getElementById("other").style.display="none";
+      function show()
+    {
+        var table = document.getElementById("other");
+     if (table.style.display === "none") {
+        table.style.display = "block";
+      } 
+    } 
+    function hide()
+    {
+        var table = document.getElementById("other");
+     if (table.style.display === "block")
+     {
+        table.style.display = "none";
+      }
+    } 
+
+    document.getElementById("other1").style.display="none";
+      function show1()
+    {
+        var tr = document.getElementById("other1");
+     if (tr.style.display === "none") {
+        tr.style.display = "block";
+      } 
+    } 
+    function hide1()
+    {
+        var tr = document.getElementById("other1");
+     if (tr.style.display === "block")
+     {
+        tr.style.display = "none";
+      }
+    } 
+
+    document.getElementById("other2").style.display="none";
+      function show2()
+    {
+        var tr = document.getElementById("other2");
+     if (tr.style.display === "none") {
+        tr.style.display = "block";
+      } 
+    } 
+    function hide2()
+    {
+        var tr = document.getElementById("other2");
+     if (tr.style.display === "block")
+     {
+        tr.style.display = "none";
+      }
+    } 
+    </script>
 {% endblock %}
 
 {% block content %}
+<!--  
+  document.getElementById("other").style.display="none";
+      function showhide()
+    {
+        var td = document.getElementById("other");
+    if (td.style.display === "none") {
+        td.style.display = "block";
+      } else {
+        td.style.display = "none";
+      }
+    } 
+-->
+    </script>
 <div class="cont">
 
-<p>Bitte teilen Sie uns folgende Angaben über sich selbst mit.</p>
-
-
-{% for field in form %}
+<p><p>Wir bitten Sie den folgenden Fragebogen auszuf&uuml;llen. Nachdem jeder Teilnehmer den Fragebogen ausgef&uuml;llt hat, werden wir Sie einzeln f&uuml;r die Auszahlung aufrufen.</p></p>
 <br>
 <br>
 <br>
-    {% formfield field %}
-{% endfor %}
+<p><b>1.</b>	Die Personen A, B und C besitzen gemeinsam ein Unternehmen. Da A, B und C in verschiedenem Maße zum Unternehmen beitragen, haben sie unterschiedliche Vergütungen vereinbart. Dementsprechend beziehen Sie monatlich jeweils 1.500 €, 2.000 € und 2.500 €. Alle drei Personen haben noch andere Einkommensquellen. Durch eine unerwartete Verschlechterung der wirtschaftlichen Lage beträgt der Ihnen zustehende Anteil am Ertrag Ihres Betriebes für einen bestimmten Monat lediglich 4.500 €, zu wenig also, um die drei Unternehmensleiter zu vergüten. Welches ist Ihrer Meinung nach die gerechteste Aufteilung der Summe von 4.500 € auf die Personen A, B und C?</p>
+<br>
+<br>
+<table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input onclick="hide()" type="radio" name="equity1" value="1" required></p></td>
+            <td valign="center" align="center" width="(40/x)%"><p>A: 1.500</p> </td>
+            <td valign="center" align="center" width="(40/x)%"><p>B: 1.500</p> </td>
+            <td valign="center" align="center" width="(40/x)%"><p>C: 1.500</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input onclick="hide()" type="radio" name="equity1" value="2" required></p></td>
+            <td valign="center" align="center"><p>A: 1.250</p> </td>   
+            <td valign="center" align="center"><p>B: 1.500</p> </td>  
+            <td valign="center" align="center"><p>C: 1.750</p> </td>           
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input onclick="hide()" type="radio" name="equity1" value="3" required></p></td>
+            <td valign="center" align="center"><p>A: 1.125</p> </td>       
+            <td valign="center" align="center"><p>B: 1.500</p> </td>    
+            <td valign="center" align="center"><p>C: 1.875</p> </td>            
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide()" type="radio" name="equity1" value="4" required></p></td>
+            <td valign="center" align="center"><p>A: 1.050</p> </td>
+            <td valign="center" align="center"><p>B: 1.500</p> </td>
+            <td valign="center" align="center"><p>C: 1.950</p> </td>
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide()" type="radio" name="equity1" value="5" required></p></td>
+            <td valign="center" align="center"><p>A: 1.000</p> </td>
+            <td valign="center" align="center"><p>B: 1.500</p> </td>
+            <td valign="center" align="center"><p>C: 2.000</p> </td>            
+          </tr>
+          <tr>
+          <td valign="center" align="center" ><p><input onclick="show()" type="radio" name="equity1" value="6" required></p></td>
+          <td valign="center" align="center" ><p>Andere</p> </td>   
+          <td valign="center" align="center"><p></p> </td>
+          <td valign="center" align="center"><p></p> </td> 
+          </tr>
+          </thead>
+    </table> 
+<table id="other" class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+        <thead>
+          <tr >
+          <td valign="center" align="center" width="(40/x)%"><p>A:</p> </td>
+          <td valign="center" align="center" width="(40/x)%"><input  type="text" name="equity1_A"></div>
+          <td valign="center" align="center" width="(40/x)%"><p>B:</p> </td>
+          <td valign="center" align="center" width="(40/x)%"><input  type="text" name="equity1_B"></div>
+          <td valign="center" align="center" width="(40/x)%"><p>C:</p> </td>
+          <td valign="center" align="center" width="(40/x)%"><input  type="text" name="equity1_C"></div>
+          </tr>
+        </thead>
+    </table>  
+          
+{{ form.equity1.errors }}
+{{ form.e1.errors }}
+<br>
+<br>
+<br>
+<br>
+<br>
 
-<!--
-Documentation on how to write a django template here:
-https://docs.djangoproject.com/en/1.8/ref/templates/language/
+    <p><b>2.</b>	Stellen Sie sich nun bitte vor, dass die monatlichen Vergütungen, die A, B und C vereinbart haben, 1.000 €, 2.000 € beziehungsweise 3.000 € betragen. Welches ist Ihrer Meinung nach die gerechteste Aufteilung der Summe von 4.500 € auf die Personen A, B und C?</p>
+    <br>
+<br>
+<table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input onclick="hide1()" type="radio" name="equity2" value="1" required></p></td>
+            <td valign="center" align="center" width="(40/x)%"><p>A: 1.000</p> </td>
+            <td valign="center" align="center" width="(40/x)%"><p>B: 1.750</p> </td>
+            <td valign="center" align="center" width="(40/x)%"><p>C: 1.750</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input onclick="hide1()" type="radio" name="equity2" value="2" required></p></td>
+            <td valign="center" align="center"><p>A: 1.000</p> </td>   
+            <td valign="center" align="center"><p>B: 1.500</p> </td>  
+            <td valign="center" align="center"><p>C: 2.000</p> </td>           
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input onclick="hide1()" type="radio" name="equity2" value="3" required></p></td>
+            <td valign="center" align="center"><p>A: 750</p> </td>       
+            <td valign="center" align="center"><p>B: 1.500</p> </td>    
+            <td valign="center" align="center"><p>C: 2.250</p> </td>            
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide1()" type="radio" name="equity2" value="4" required></p></td>
+            <td valign="center" align="center"><p>A: 666</p> </td>
+            <td valign="center" align="center"><p>B: 1.416</p> </td>
+            <td valign="center" align="center"><p>C: 2.416</p> </td>
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide1()" type="radio" name="equity2" value="5" required></p></td>
+            <td valign="center" align="center"><p>A: 500</p> </td>
+            <td valign="center" align="center"><p>B: 1.500</p> </td>
+            <td valign="center" align="center"><p>C: 2.500</p> </td>            
+          </tr>
+          <tr>
+          <td valign="center" align="center" ><p><input onclick="show1()" type="radio" name="equity2" value="6" required></p></td>
+          <td valign="center" align="center"><p>Andere</p> </td>   
+          <td valign="center" align="center"><p></p> </td> 
+          <td valign="center" align="center"><p></p> </td> 
+          </tr>
+          </thead>
+    </table> 
+<table id="other1" class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+        <thead>
+          <tr >
+          <td valign="center" align="center" width="(40/x)%"><p>A:</p> </td>
+          <td valign="center" align="center" width="(40/x)%"><input  type="text" name="equity2_A" ></div>
+          <td valign="center" align="center" width="(40/x)%"><p>B:</p> </td>
+          <td valign="center" align="center" width="(40/x)%"><input  type="text" name="equity2_B" ></div>
+          <td valign="center" align="center" width="(40/x)%"><p>C:</p> </td>
+          <td valign="center" align="center" width="(40/x)%"><input  type="text" name="equity2_C" ></div>
+          </tr>
+        </thead>
+    </table>  
+    {{ form.equity2.errors }}
+    {{ form.e2.errors }}
+<br>
+<br>
+<br>
+<br>
+<br>
+<p><b>3.</b>	Stellen Sie sich nun bitte vor, dass die monatlichen Vergütungen, die A, B und C vereinbart haben, 500 €, 2.000 € beziehungsweise 3.500 € betragen. Welches ist Ihrer Meinung nach die gerechteste Aufteilung der Summe von 4.500 € auf die Personen A, B und C?</p>
+<br>
+<br>
+<table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input onclick="hide2()" type="radio" name="equity3" value="1" required/></p></td>
+            <td valign="center" align="center" width="(40/x)%"><p>A: 500</p> </td>
+            <td valign="center" align="center" width="(40/x)%"><p>B: 2.000</p> </td>
+            <td valign="center" align="center" width="(40/x)%"><p>C: 2.000</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input onclick="hide2()" type="radio" name="equity3"  value="2" required/></p></td>
+            <td valign="center" align="center"><p>A: 500</p> </td>   
+            <td valign="center" align="center"><p>B: 1.625</p> </td>  
+            <td valign="center" align="center"><p>C: 2.375</p> </td>           
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input onclick="hide2()" type="radio" name="equity3" value="3" required/></p></td>
+            <td valign="center" align="center"><p>A: 450</p> </td>       
+            <td valign="center" align="center"><p>B: 1.600</p> </td>    
+            <td valign="center" align="center"><p>C: 2.450</p> </td>            
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide2()" type="radio" name="equity3" value="4" required/></p></td>
+            <td valign="center" align="center"><p>A: 400</p> </td>
+            <td valign="center" align="center"><p>B: 1.500</p> </td>
+            <td valign="center" align="center"><p>C: 2.600</p> </td>
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide2()" type="radio" name="equity3" value="5" required/></p></td>
+            <td valign="center" align="center"><p>A: 375</p> </td>
+            <td valign="center" align="center"><p>B: 1.500</p> </td>
+            <td valign="center" align="center"><p>C: 2.625</p> </td>            
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide2()" type="radio" name="equity3" value="6" required/></p></td>
+            <td valign="center" align="center"><p>A: 333</p> </td>
+            <td valign="center" align="center"><p>B: 1.333</p> </td>
+            <td valign="center" align="center"><p>C: 2.833</p> </td>            
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide2()" type="radio" name="equity3" value="7" required/></p></td>
+            <td valign="center" align="center"><p>A: 250</p> </td>
+            <td valign="center" align="center"><p>B: 1.375</p> </td>
+            <td valign="center" align="center"><p>C: 2.875</p> </td>            
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide2()" type="radio" name="equity3" value="8" required/></p></td>
+            <td valign="center" align="center"><p>A: 166</p> </td>
+            <td valign="center" align="center"><p>B: 1.416</p> </td>
+            <td valign="center" align="center"><p>C: 2.916</p> </td>            
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p><input onclick="hide2()" type="radio" name="equity3" value="9" required/></p></td>
+            <td valign="center" align="center"><p>A: 0</p> </td>
+            <td valign="center" align="center"><p>B: 1.500</p> </td>
+            <td valign="center" align="center"><p>C: 3.000</p> </td>            
+          </tr>
+          <tr>
+          <td valign="center" align="center" ><p><input onclick="show2()" type="radio" name="equity3" value="6" required></p></td>
+          <td valign="center" align="center"><p>Andere</p> </td> 
+          <td valign="center" align="center"><p></p> </td>
+          <td valign="center" align="center"><p></p> </td>   
+          </tr>
+          </thead>
+    </table> 
+<table id="other2" class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+        <thead>
+          <tr >
+          <td valign="center" align="center" width="(40/x)%"><p>A:</p> </td>
+          <td valign="center" align="center" width="(40/x)%"><input  type="text" name="equity3_A"></div>
+          <td valign="center" align="center" width="(40/x)%"><p>B:</p> </td>
+          <td valign="center" align="center" width="(40/x)%"><input  type="text" name="equity3_B"></div>
+          <td valign="center" align="center" width="(40/x)%"><p>C:</p> </td>
+          <td valign="center" align="center" width="(40/x)%"><input  type="text" name="equity3_C"></div>
+          </tr>
+        </thead>
+    </table>  
+    {{ form.equity3.errors }}
+    {{ form.e3.errors }}
+<br>
+<br>
+<br>
+<br>
+<p><b>4.</b>	Wie schätzen Sie sich persönlich ein: Sind Sie im Allgemeinen ein risikobereiter Mensch oder versuchen Sie, Risiken zu vermeiden? Bitte kreuzen Sie ein Kästchen auf der Skala an, wobei der Wert 0 bedeutet: 'gar nicht risikobereit' und der Wert 10: 'sehr risikobereit'. Mit den Werten dazwischen können Sie Ihre Einschätzung abstufen.</p>
+<br>
+<br>
+<table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "70%">
+         <thead>
+            <tr>
+            <td valign="bottom" align="center" width="(70/x)%"><p></p></td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>0</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>1</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>2</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>3</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>4</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>5</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>6</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>7</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>8</p> </td>
+           <td valign="bottom" align="center" width="(70/x)%"><p>9</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p>10</p> </td>
+            <td valign="bottom" align="center" width="(70/x)%"><p></p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p>gar nicht risikobereit</p></td>
+            <td valign="center" align="center"><input type="radio" name="risk" value="0" id="1" required/></td>   
+            <td valign="center" align="center"><input type="radio" name="risk" value="1" id="2" required/></td>  
+            <td valign="center" align="center"><input type="radio" name="risk" value="2" id="3" required/></td>  
+            <td valign="center" align="center"><input type="radio" name="risk" value="3" id="4" required/></td>   
+            <td valign="center" align="center"><input type="radio" name="risk" value="4" id="5" required/></td>  
+            <td valign="center" align="center"><input type="radio" name="risk" value="5" id="6" required/></td>    
+            <td valign="center" align="center"><input type="radio" name="risk" value="6" id="7" required/></td>   
+            <td valign="center" align="center"><input type="radio" name="risk" value="7" id="8" required/></td>  
+            <td valign="center" align="center"><input type="radio" name="risk" value="8" id="9" required/></td>    
+            <td valign="center" align="center"><input type="radio" name="risk" value="9" id="10" required/></td>   
+            <td valign="center" align="center"><input type="radio" name="risk" value="10" id="11" required/></td>  
+            <td valign="center" align="center"><p>sehr risikobereit</p> </td>             
+          </tr>
+        </thead>
+    </table>  
+       {{ form.risk.errors }}
+<br>
+<br>
+<br>
+<br>
+<br>
+<p><b>5.</b>	Wie ist Ihre Meinung zu den folgenden Aussagen? Im Allgemeinen kann den meisten Menschen vertraut werden.</p>
+	<br>
+  <br>
+  <table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input type="radio" name="trust1" value="1" required/></p></td>
+            <td valign="center" align="left" width="(40/x)%"><p>Stimme voll zu</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust1"  value="2" required/></p></td>
+            <td valign="center" align="left"><p>Stimme eher zu</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust1"  value="3" required/></p></td>
+            <td valign="center" align="left"><p>Lehne eher ab</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust1"  value="4" required/></p></td>
+            <td valign="center" align="left"><p>Lehne voll ab</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust1"  value="5" required/></p></td>
+            <td valign="center" align="left"><p>Keine Angabe</p> </td>            
+          </tr>
+        </thead>
+    </table>  
+       {{ form.trust1.errors }}
+      
+<br>
+<br>
+<br>
+<br>
+<br>
+<p><b>6.</b>	Wenn man mit Fremden zu tun hat, ist es besser, vorsichtig zu sein, bevor man ihnen vertraut.</p>
+	<br>
+<br>
+    <table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input type="radio" name="trust2" value="4" required/></p></td>
+            <td valign="center" align="left" width="(40/x)%"><p>Stimme voll zu</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust2"  value="3" required/></p></td>
+            <td valign="center" align="left"><p>Stimme eher zu</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust2"  value="2" required/></p></td>
+            <td valign="center" align="left"><p>Lehne eher ab</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust2"  value="1" required/></p></td>
+            <td valign="center" align="left"><p>Lehne voll ab</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust2"  value="5" required/></p></td>
+            <td valign="center" align="left"><p>Keine Angabe</p> </td>            
+          </tr>
+        </thead>
+    </table>  
+       {{ form.trust2.errors }}
+<br>
+<br>
+<br>
+<br>
+<br>	
+<p><b>7.</b>	Heutzutage kann man sich auf niemanden mehr verlassen.</p>
+	<br>
+<br>
+	  <table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input type="radio" name="trust3" value="4" required/></p></td>
+            <td valign="center" align="left" width="(40/x)%"><p>Stimme voll zu</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust3"  value="3" required/></p></td>
+            <td valign="center" align="left"><p>Stimme eher zu</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust3"  value="2" required/></p></td>
+            <td valign="center" align="left"><p>Lehne eher ab</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust3"  value="1" required/></p></td>
+            <td valign="center" align="left"><p>Lehne voll ab</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="trust3"  value="5" required/></p></td>
+            <td valign="center" align="left"><p>Keine Angabe</p> </td>            
+          </tr>
+        </thead>
+    </table>  
+       {{ form.trust3.errors }}
+<br>
+<br>
+<br>	
+<br>
+<br>
+<p><b>8.</b>	Wie hilfreich finden Sie Tabellen und Diagramme beim Lesen von Nachrichten?</p>
+<br>
+<br>
+	<table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input type="radio" name="graphs" value="1" required/></p></td>
+            <td valign="center" align="left" width="(40/x)%"><p>Sehr hilfreich</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input type="radio" name="graphs"  value="2" required/></p></td>
+            <td valign="center" align="left"><p>Hilfreich</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="graphs"  value="3" required/></p></td>
+            <td valign="center" align="left"><p>Wenig hilfreich</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="graphs"  value="4" required/></p></td>
+            <td valign="center" align="left"><p>Überhaupt nicht hilfreich</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="graphs"  value="5" required/></p></td>
+            <td valign="center" align="left"><p>Keine Angabe</p> </td>            
+          </tr>
+        </thead>
+    </table>  
+       {{ form.graphs.errors }}
+<br>
+<br> 
+<br>
+<br>
+<br>
+<p><b>9.</b>	Wie sicher sind Sie im Umgang mit Prozentzahlen?</p>
+<br>
+<br>
+	<table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input type="radio" name="percent" value="1" required/></p></td>
+            <td valign="center" align="left" width="(40/x)%"><p>Sehr sicher</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input type="radio" name="percent"  value="2" required/></p></td>
+            <td valign="center" align="left"><p>Sicher</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="percent"  value="3" required/></p></td>
+            <td valign="center" align="left"><p>Unsicher</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="percent"  value="4" required/></p></td>
+            <td valign="center" align="left"><p>Sehr unsicher</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="percent"  value="5" required/></p></td>
+            <td valign="center" align="left"><p>Keine Angabe</p> </td>            
+          </tr>
+        </thead>
+    </table>  
+       {{ form.percent.errors }}
+<br>
+<br>
+<br>
+<br>
+<br>	
+<p><b>10.</b>	Wie schwer fällt es Ihnen ein Trinkgeld von 15% zu berechnen?</p>
+<br>
+<br>
+	<table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input type="radio" name="tipp" value="1" required/></p></td>
+            <td valign="center" align="left" width="(40/x)%"><p>Sehr leicht</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input type="radio" name="tipp"  value="2" required/></p></td>
+            <td valign="center" align="left"><p>Leicht</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="tipp"  value="3" required/></p></td>
+            <td valign="center" align="left"><p>Schwer</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="tipp"  value="4" required/></p></td>
+            <td valign="center" align="left"><p>Sehr schwer</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="tipp"  value="5" required/></p></td>
+            <td valign="center" align="left"><p>Keine Angabe</p> </td>            
+          </tr>
+        </thead>
+    </table>  
+       {{ form.tipp.errors }}
+<br>
+<br>
+<br>
+<br>
+<br>		
+<p><b>11.</b>	Stellen Sie sich vor, Sie benötigen Mehl. Es gibt in Ihrer Nähe zwei Supermärkte, diese verlangen ursprünglich für ein Kilogramm Mehl derselben Qualität den gleichen Preis. Aufgrund eines aktuellen Angebots bietet Supermarkt 1 einen Rabatt von 20% auf ein Kilogramm Mehl an. In Supermarkt 2 wird 20% mehr Verpackungsinhalt zum ursprünglichen Preis aktuelle angeboten. In welchem Supermarkt ist der Preis pro Kilogramm Mehl geringer?</p>
 
-Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
-http://getbootstrap.com/components/
+<br>
+<br>
+<table style="border-collapse: collapse; border-style: hidden;"  width = "60%">
+         <thead>
+            <tr>
+            <td valign="left" align="center" width="20%"><p><input type="radio" name="supermarket" value="1" required takes_context='True'/></p></td>
+            <td valign="left" align="left" width="60%"><p>Supermarkt 1</p> </td>
+            </tr>
+           <tr>
+            <td valign="left" align="center"><p><input type="radio" name="supermarket"  value="2" takes_context='True' required/></p></td>
+            <td valign="left" align="left"><p>Supermarkt 2</p> </td>            
+          </tr>
+          <tr>
+            <td valign="left" align="center"><p><input type="radio" name="supermarket"  value="3" takes_context='True' required/></p></td>
+            <td valign="left" align="left"><p>Der Preis pro Kilogramm Mehl ist bei beiden Supermärkten gleich</p> </td>            
+          </tr>
+        </thead>
+    </table>  
+       {{ form.supermarket.errors }} 
+<br>
+<br>
+<br>
+<br>
+<br>	
+<p><b>12.</b>	Bitte geben Sie Ihr Geschlecht an.</p>
+	<br>
+<br>
+	{% formfield player.gender label="" %}
+<br>
+<br><br>
+<br>
+<br>		
+<p><b>13.</b>	Wie alt sind Sie?</p>
+	<br>
+<br>
+	{% formfield player.age label="" %}
+<br>
+<br><br>
+<br>
+<br>	
+<p><b>14.</b>	Fühlen Sie sich einer Religionsgemeinschaft zugehörig?</p>
+	<br>
+<br>
+	{% formfield player.religion label="" %}
+<br>
+<br>
+<br>		
+<br>
+<br>
+<p><b>15.</b>	Was ist Ihre Staatsangehörigkeit?</p>
+	<br>
+<br>
+	{% formfield player.nationality label="" %}
+<br>
+<br>
+<br>
+<br>
+<br>
+	<p><b>16.</b>	Welche Muttersprache(n) sprechen Sie?</p>
+	<br>
+<br>
+	{% formfield player.language label="" %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<p><b>17.</b>	Welche Partei würden Sie wählen, wenn am nächsten Sonntag Bundestagswahl wäre?</p>
+	<br>
+<br>
+  <table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "40%">
+         <thead>
+            <tr>
+            <td valign="center" align="center" width="(40/x)%"><p><input type="radio" name="party" value="1" required/></p></td>
+            <td valign="center" align="left" width="(40/x)%"><p>CDU/CSU</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p><input type="radio" name="party"  value="2" required/></p></td>
+            <td valign="center" align="left"><p>SPD</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="party"  value="3" required/></p></td>
+            <td valign="center" align="left"><p>AFD</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="party"  value="8" required/></p></td>
+            <td valign="center" align="left"><p>FDP</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="party"  value="4" required/></p></td>
+            <td valign="center" align="left"><p>Bündnis 90/Die Grünen</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="party"  value="5" required/></p></td>
+            <td valign="center" align="left"><p>Die Linke</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="party"  value="6" required/></p></td>
+            <td valign="center" align="left"><p>andere</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p><input type="radio" name="party"  value="7" required/></p></td>
+            <td valign="center" align="left"><p>Keine Angabe</p> </td>            
+          </tr>
+        </thead>
+    </table>  
+       {{ form.party.errors }}
+<br>
+<br>
+<br>
+<br>
 
--->
 </div>
 
     {% next_button %}

@@ -1,0 +1,104 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Entscheidungssituation Teil II Spieler 1
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	img {
+    display: block;
+    margin: 0 auto;
+    }
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+<div class="cont">
+	
+<p><strong><em>Unbedingter Faktor Spieler 1</em></strong></p>
+<p>{% if player.treatment == "base" %} 
+Spieler 1 hat eine Anfangsausstattung von 30 LD. Beim <strong>unbedingten Faktor</strong> entscheidet Spieler 1, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%].
+
+{% else %} Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>unbedingten Faktor</strong> entscheidet Spieler 1, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%].
+{% endif %} 
+</p>
+<p><em>Beispielsweise tr&auml;gt Spieler 1 bei einem Prozentsatz von 50 halb so viel zum gemeinsamen Projekt bei wie Spieler 2. Bei einem Prozentsatz von 100 tr&auml;gt Spieler 1 die gleiche H&ouml;he zum gemeinsamen Projekt bei wie Spieler 2. Bei einem Prozentsatz von 200 tr&auml;gt Spieler 1 doppelt so viel zum gemeinsamen Projekt bei wie Spieler 2. Bei einem Prozentsatz von 300 tr&auml;gt Spieler 1 dreimal so viel zum gemeinsamen Projekt bei wie Spieler 2. Übersteigt der Beitrag von Spieler 1 seine Anfangsausstattung, wird dies durch die Vergütung aus dem gemeinsamen Projekt gedeckt. </em></p>
+
+
+<p><strong><em>Bedingter Faktor Spieler 1</em></strong></p>
+{% if player.treatment == "base" %} 
+Spieler 1 hat eine Anfangsausstattung von 30 LD. Beim <strong>bedingten Faktor </strong>entscheidet Spieler 1, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 2 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 1 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 1 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 an, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%]. Spieler 1 muss f&uuml;r jeden m&ouml;glichen Beitrag  von Spieler 2 einen Faktor im entsprechenden Eingabefeld als Prozentsatz angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 1 </strong>sieht wie folgt aus:
+<p>&nbsp;</p>
+<img src="{% static "matching/base.png" %}" align="middle"/>
+<p>&nbsp;</p>
+
+{% elif player.treatment == "baseline" %} 
+Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>bedingten Faktor </strong>entscheidet Spieler 1, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 2 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 1 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 1 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 an, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%]. Spieler 1 muss f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 einen Faktor im entsprechenden Eingabefeld als Prozentsatz angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 1 </strong>sieht wie folgt aus:
+<p>&nbsp;</p>
+<img src="{% static "matching/baseline.png" %}" align="middle"/>
+<p>&nbsp;</p>
+
+
+{% elif player.treatment == "lowthres" %} 
+Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>bedingten Faktor </strong>entscheidet Spieler 1, mit welchem Faktor er den Beitrag ab 4 LD von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 2 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 1 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 1 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 an, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%]. Spieler 1 muss f&uuml;r jeden m&ouml;glichen Beitrag ab 4 LD von Spieler 2 einen Faktor im entsprechenden Eingabefeld als Prozentsatz angeben. Der Beitrag von Spieler 1 wird nur geleistet, wenn Spieler 2 einen Beitrag von 4 LD oder mehr leistet. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 1 </strong>sieht wie folgt aus:
+<p>&nbsp;</p>
+<img src="{% static "matching/richlow.png" %}" align="middle"/>
+<p>&nbsp;</p>
+
+{% else %} 
+Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>bedingten Faktor </strong>entscheidet Spieler 1, mit welchem Faktor er den Beitrag ab 12 LD von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 2 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 1 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 1 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 an, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%]. Spieler 1 muss f&uuml;r jeden m&ouml;glichen Beitrag ab 12 LD von Spieler 2 einen Faktor im entsprechenden Eingabefeld als Prozentsatz angeben. Der Beitrag von Spieler 1 wird nur geleistet, wenn Spieler 2 einen Beitrag von 12 LD oder mehr leistet. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 1 </strong>sieht wie folgt aus:
+<p>&nbsp;</p>
+<img src="{% static "matching/richhigh.png" %}" align="middle"/>
+<p>&nbsp;</p>
+{% endif %} 
+
+</div>
+	
+
+
+    {% next_button %}
+
+{% endblock %}

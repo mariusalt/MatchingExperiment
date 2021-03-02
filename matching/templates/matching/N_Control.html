@@ -1,0 +1,799 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Kontrollfragen
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	#cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	.calc{
+		position: fixed;
+    	right: 3%;
+    	width: 15%;
+    	top:60%;
+    	padding: 10px;
+	}
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	#button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #c7cbd6;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #c7cbd6;
+	box-shadow:inset 0px 1px 0px 0px #c7cbd6;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #b7bac2), color-stop(1, #7c858f));
+	background:-moz-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:-webkit-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:-o-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:-ms-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:linear-gradient(to bottom, #b7bac2 5%, #7c858f 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b7bac2', endColorstr='#7c858f',GradientType=0);
+	background-color:#b7bac2;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #7c7f87;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	padding:5px 76px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #1c2847;
+	}
+	#button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7c858f), color-stop(1, #b7bac2));
+	background:-moz-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:-webkit-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:-o-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:-ms-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:linear-gradient(to bottom, #7c858f 5%, #b7bac2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c858f', endColorstr='#b7bac2',GradientType=0);
+	background-color:#7c858f;
+	}
+	#button:active {
+	position:relative;
+	top:1px;
+	}
+	.errorlist
+    {
+        color: red;
+    }
+	</style>
+	<style media="screen">
+      .input-group {
+        max-width: 100px;
+      }
+    
+
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+<script language="javascript" type="text/javascript">  
+
+
+	    function update(value){
+
+	        document.getElementById("screen").value += value;
+
+	    }
+     
+
+	    function result(){
+
+	        document.getElementById("screen").value = eval(document.getElementById("screen").value);
+
+	    }
+
+	     
+	    
+
+
+	    function del(){
+
+	        document.getElementById("screen").value = '';
+
+	    }
+
+	    document.getElementById("cont").style.display="none";
+	    function showhide()
+ 		{
+       	var div = document.getElementById("cont");
+		if (div.style.display === "none") {
+        div.style.display = "block";
+    	} else {
+        div.style.display = "none";
+    	}
+		} 
+
+
+		</script>
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+
+<div id='button' onclick="showhide()">Instruktionen</div>
+<div id="cont">
+<p>Ihre Aufgabe in Teil II, wie die Ihres Mitspielers, ist es Ihre Anfangsausstattung aufzuteilen. Sie k&ouml;nnen dabei zwischen Ihrem privaten Konto oder der Investition in ein gemeinsames Projekt entscheiden. Jeder LD, den Sie nicht in das gemeinsame Projekt investieren, wird automatisch Ihrem privaten Konto gutgeschrieben. Jeder LD, den Sie oder Ihr Mitspieler in das gemeinsame Projekt investieren, kommt jedem Gruppenmitglied in gleicher H&ouml;he zu gute. Ihre Verg&uuml;tung in Teil II setzt sich wie folgt zusammen:</p>
+<p>&nbsp;</p>
+
+<table border=1 class="centerTable" width = "100%">
+         <thead>
+            <tr>
+              <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px"><p><strong>Verg&uuml;tung Teil II</strong> = (Anfangsausstattung &ndash; Beitrag zum gemeinsamen Projekt) + 0,7 <strong>&middot; </strong>(Beitrag Spieler 1 + Beitrag Spieler 2 zum gemeinsamen Projekt)</p></td> 
+          </tr>
+         </tbody>  
+</table>
+
+ 
+<p>&nbsp;</p>
+<p>Wie in Teil I, werden Sie und Ihr Mitspieler in Teil II des Experiments gebeten <strong>zwei</strong> Entscheidungen zu treffen: eine &uuml;ber Ihren <strong>unbedingten Faktor/unbedingten Beitrag</strong> und eine &uuml;ber Ihren <strong>bedingten</strong> <strong>Faktor/ bedingten</strong> <strong>Beitrag</strong> zum gemeinsamen Projekt.</p>
+
+<p>{% if player.treatment == "base" %}
+	Die Anfangsausstattung von Spieler 1 und Spieler 2 betr&auml;gt 30 LD. 
+	{% else %}
+	Die Anfangsausstattung von Spieler 1 betr&auml;gt 40 LD und die von Spieler 2 betr&auml;gt 20 LD. 
+	{% endif %} 
+	<p>In Teil II des Experiments unterscheidet sich die Entscheidungssituationen von <strong>Spieler 1 </strong>und <strong>Spieler 2</strong>. Die Entscheidungssituationen beider Spieler werden im Folgenden erkl&auml;rt.</p>
+<p>&nbsp;</p>
+<p><strong><em>Unbedingter Faktor Spieler 1</em></strong></p>
+<p>{% if player.treatment == "base" %} 
+Spieler 1 hat eine Anfangsausstattung von 30 LD. Beim <strong>unbedingten Faktor</strong> entscheidet Spieler 1, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%].
+
+{% else %} Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>unbedingten Faktor</strong> entscheidet Spieler 1, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%].
+{% endif %} 
+</p>
+<p><em>Beispielsweise tr&auml;gt Spieler 1 bei einem Prozentsatz von 50 halb so viel zum gemeinsamen Projekt bei wie Spieler 2. Bei einem Prozentsatz von 100 tr&auml;gt Spieler 1 die gleiche H&ouml;he zum gemeinsamen Projekt bei wie Spieler 2. Bei einem Prozentsatz von 200 tr&auml;gt Spieler 1 doppelt so viel zum gemeinsamen Projekt bei wie Spieler 2. Bei einem Prozentsatz von 300 tr&auml;gt Spieler 1 dreimal so viel zum gemeinsamen Projekt bei wie Spieler 2. Übersteigt der Beitrag von Spieler 1 seine Anfangsausstattung, wird dies durch die Vergütung aus dem gemeinsamen Projekt gedeckt.</em></p>
+
+
+<p><strong><em>Bedingter Faktor Spieler 1</em></strong></p>
+{% if player.treatment == "base" %} 
+Spieler 1 hat eine Anfangsausstattung von 30 LD. Beim <strong>bedingten Faktor </strong>entscheidet Spieler 1, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 2 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 1 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 1 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 an, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%]. Spieler 1 muss f&uuml;r jeden m&ouml;glichen Beitrag  von Spieler 2 einen Faktor im entsprechenden Eingabefeld als Prozentsatz angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 1 </strong>sieht wie folgt aus:
+
+<!--Tabelle anzeigen -->
+
+
+{% elif player.treatment == "baseline" %} 
+Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>bedingten Faktor </strong>entscheidet Spieler 1, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 2 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 1 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 1 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 an, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%]. Spieler 1 muss f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 einen Faktor im entsprechenden Eingabefeld als Prozentsatz angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 1 </strong>sieht wie folgt aus:
+<!--Tabelle anzeigen -->
+
+
+
+{% elif player.treatment == "lowthres" %} 
+Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>bedingten Faktor </strong>entscheidet Spieler 1, mit welchem Faktor er den Beitrag ab 4 LD von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 2 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 1 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 1 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 an, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%]. Spieler 1 muss f&uuml;r jeden m&ouml;glichen Beitrag ab 4 LD von Spieler 2 einen Faktor im entsprechenden Eingabefeld als Prozentsatz angeben. Der Beitrag von Spieler 1 wird nur geleistet, wenn Spieler 2 einen Beitrag von 4 LD oder mehr leistet. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 1 </strong>sieht wie folgt aus:
+<!--Tabelle anzeigen -->
+
+
+{% else %} 
+Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>bedingten Faktor </strong>entscheidet Spieler 1, mit welchem Faktor er den Beitrag ab 12 LD von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 2 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 1 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 1 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 an, mit welchem Faktor er den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chte. Dieser Faktor wird in Prozents&auml;tzen angegeben und kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%]. Spieler 1 muss f&uuml;r jeden m&ouml;glichen Beitrag ab 12 LD von Spieler 2 einen Faktor im entsprechenden Eingabefeld als Prozentsatz angeben. Der Beitrag von Spieler 1 wird nur geleistet, wenn Spieler 2 einen Beitrag von 12 LD oder mehr leistet. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 1 </strong>sieht wie folgt aus:
+<!--Tabelle anzeigen -->
+{% endif %} 
+<p>&nbsp;</p>
+<p><strong><em>Unbedingter Beitrag Spieler 2</em></strong></p>
+<p>{% if player.treatment == "base" %} 
+Spieler 2 hat eine Anfangsausstattung von 30 LD. Beim <strong>unbedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zu einem gemeinsamen Projekt beitragen m&ouml;chte. Der Beitrag zum gemeinsamen Projekt kann zwischen 0 und 30 LD liegen in Werten von [0, 1, 2,&hellip;, 30].</p>
+{% else %} 
+Spieler 2 hat eine Anfangsausstattung von 20 LD. Beim <strong>unbedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zu einem gemeinsamen Projekt beitragen m&ouml;chte. Der Beitrag zum gemeinsamen Projekt kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20].</p>
+{% endif %} 
+
+<p><strong><em>Bedingter Beitrag Spieler 2</em></strong></p>
+{% if player.treatment == "base" %} <p>
+Spieler 2 hat eine Anfangsausstattung von 30 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, mit welchem Faktor Spieler 1 seinen Beitrag zum gemeinsamen Projekt unterst&uuml;tzt. Die Aufgabe von Spieler 2 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 2 f&uuml;r jeden m&ouml;glichen Prozentsatz von Spieler 1 an, welchen Beitrag er in LD zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 30 LD liegen in Werten von [0, 1, 2,&hellip;, 30]. Spieler 2 muss f&uuml;r jeden m&ouml;glichen Faktor von Spieler 1 einen Beitrag im entsprechenden Eingabefeld angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 2 </strong>sieht wie folgt aus:
+<!--Tabelle einfügen-->
+</p>
+{% elif player.treatment == "baseline" %} 
+<p>Spieler 2 hat eine Anfangsausstattung von 20 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, mit welchem Faktor Spieler 1 seinen Beitrag zum gemeinsamen Projekt unterst&uuml;tzt. Die Aufgabe von Spieler 2 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 2 f&uuml;r jeden m&ouml;glichen Prozentsatz von Spieler 1 an, welchen Beitrag er in LD zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20]. Spieler 2 muss f&uuml;r jeden m&ouml;glichen Faktor von Spieler 1 einen Beitrag im entsprechenden Eingabefeld angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 2 </strong>sieht wie folgt aus:
+<!--Tabelle einfügen-->
+</p>
+{% elif player.treatment == "lowthres" %} 
+Spieler 2 hat eine Anfangsausstattung von 20 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, mit welchem Faktor Spieler 1 seinen Beitrag ab 4 LD zum gemeinsamen Projekt unterst&uuml;tzt. Die Aufgabe von Spieler 2 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 2 f&uuml;r jeden m&ouml;glichen Prozentsatz von Spieler 1 an, welchen Beitrag er in LD zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20]. Spieler 2 muss f&uuml;r jeden m&ouml;glichen Faktor von Spieler 1 einen Beitrag im entsprechenden Eingabefeld angeben. Der Beitrag von Spieler 1 wird nur geleistet, wenn Spieler 2 einen Beitrag von 4 LD oder mehr leistet. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 2 </strong>sieht wie folgt aus:
+<!--Tabelle einfügen-->
+
+{% else %}
+<p>Spieler 2 hat eine Anfangsausstattung von 20 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, mit welchem Faktor Spieler 1 seinen Beitrag ab 12 LD zum gemeinsamen Projekt unterst&uuml;tzt. Die Aufgabe von Spieler 2 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 2 f&uuml;r jeden m&ouml;glichen Prozentsatz von Spieler 1 an, welchen Beitrag er in LD zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20]. Spieler 2 muss f&uuml;r jeden m&ouml;glichen Faktor von Spieler 1 einen Beitrag im entsprechenden Eingabefeld angeben. Der Beitrag von Spieler 1 wird nur geleistet, wenn Spieler 2 einen Beitrag von 12 LD oder mehr leistet. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 2 </strong>sieht wie folgt aus:
+<!--Tabelle einfügen-->
+</p>
+{% endif %} 
+<p>&nbsp;</p>
+<p>F&uuml;r die individuelle <strong>Verg&uuml;tung in Teil II</strong> (in LD) wird zuf&auml;llig ausgew&auml;hlt, ob von Spieler 1 der unbedingte Faktor oder von Spieler 2 der unbedingte Beitrag herangezogen wird. Darauf basierend wird der bedingte Faktor/bedingte Beitrag des anderen Spielers ausgew&auml;hlt und die Verg&uuml;tung in Teil II f&uuml;r beide Spieler berechnet. Durch die zuf&auml;llige Auswahl ergeben sich zwei M&ouml;glichkeiten f&uuml;r die Verg&uuml;tung:</p>
+<p>Wird der <strong>unbedingte Faktor von Spieler 1</strong> zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt, ergibt sich die <strong>Verg&uuml;tung in Teil II</strong> folgenderma&szlig;en:</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil II f&uuml;r Spieler 1</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (40
+              {% endif %}
+               &ndash; unbedingter Beitrag Spieler 1) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 1 + bedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p>
+              {% if player.treatment == "base" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "baseline" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "lowthres" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 4 LD oder mehr beitr&auml;gt: 
+              {% elif player.treatment == "highthres" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 12 LD oder mehr beitr&auml;gt: 
+              {% endif %}</p>
+              <p>Unbedingter Beitrag Spieler 1 = (unbedingter Faktor (%) Spieler 1 <strong>&middot; </strong>bedingter Beitrag Spieler 2)</p>              
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil II f&uuml;r Spieler 2</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (20
+              {% endif %}
+              &ndash; bedingter Beitrag Spieler 2) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 1 + bedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p>
+              {% if player.treatment == "base" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "baseline" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "lowthres" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 4 LD oder mehr beitr&auml;gt: 
+              {% elif player.treatment == "highthres" %} Der unbedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 12 LD oder mehr beitr&auml;gt: 
+              {% endif %}</p>
+              <p>Unbedingter Beitrag Spieler 1 = (unbedingter Faktor (%) Spieler 1 <strong>&middot; </strong> bedingter Beitrag Spieler 2)</p>              
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+
+<p>Wird der <strong>unbedingte Beitrag von Spieler 2</strong> zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt, ergibt sich die <strong>Verg&uuml;tung in Teil II</strong> folgenderma&szlig;en:</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil II f&uuml;r Spieler 1</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (40
+              {% endif %}
+               &ndash; bedingter Beitrag Spieler 1) + 0,7 <strong>&middot; </strong>(bedingter Beitrag Spieler 1 + unbedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p>
+              {% if player.treatment == "base" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "baseline" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "lowthres" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 4 LD oder mehr beitr&auml;gt: 
+              {% elif player.treatment == "highthres" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 12 LD oder mehr beitr&auml;gt: 
+              {% endif %}</p>
+              <p>Bedingter Beitrag Spieler 1 = (bedingter Faktor (%) Spieler 1 <strong>&middot; </strong> unbedingter Beitrag Spieler 2)</p>              
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil II f&uuml;r Spieler 2</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (20
+              {% endif %}
+               &ndash; unbedingter Beitrag Spieler 2) + 0,7 <strong>&middot; </strong>(bedingter Beitrag Spieler 1 + unbedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p>
+              {% if player.treatment == "base" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "baseline" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen: 
+              {% elif player.treatment == "lowthres" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 4 LD oder mehr beitr&auml;gt: 
+              {% elif player.treatment == "highthres" %} Der bedingte Beitrag von Spieler 1 setzt sich wie folgt zusammen, wenn Spieler 2 12 LD oder mehr beitr&auml;gt: 
+              {% endif %}</p>
+              <p>Bedingter Beitrag Spieler 1 = (bedingter Faktor (%) Spieler 1 <strong>&middot; </strong> unbedingter Beitrag Spieler 2)</p>              
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+
+
+<p>Nach der Zusatzaufgabe, werden Sie dar&uuml;ber informiert, ob der unbedingte Faktor von Spieler 1 oder der unbedingte Beitrag von Spieler 2 ausgew&auml;hlt wurde. Danach werden Sie &uuml;ber Ihre Verg&uuml;tung und die Ihres Mitspielers aus Teil II informiert.</p>
+<p>Die individuelle <strong>Auszahlung</strong> in Euro setzt sich bei jedem Spieler aus der Verg&uuml;tung in Teil I, der Verg&uuml;tung in Teil II und der Verg&uuml;tung der Zusatzaufgabe zusammen.</p>
+<p>&nbsp;</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+              <p><strong>Auszahlung in EUR</strong> = (Verg&uuml;tung Teil I in LD + Verg&uuml;tung Teil II in LD + Verg&uuml;tung Zusatzaufgabe in LD) <strong>:</strong> 6</p>          
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+</div>
+	
+
+<div class="qs">
+<p>Bitte beantworten Sie die folgenden Kontrollfragen zu Teil II. Sie dienen Ihrem Verst&auml;ndnis der Entscheidungssituation in Teil II. Teil II beginnt, wenn alle Teilnehmer die Kontrollfragen erfolgreich beantwortet haben. Sie können als Hilfestellung auf "Instruktionen" klicken, um nochmals die ausführliche Erklärung nachzulesen. Falls Sie Fragen haben, melden Sie sich bitte per Handzeichen.</p>
+<p>&nbsp;</p>
+<p>1. Angenommen Sie sind Spieler 1 und Ihr unbedingter Beitrag wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Ihr unbedingter Faktor betr&auml;gt 100%. Der bedingte Beitrag Ihres Mitspielers (Spieler 2) zum gemeinsamen Projekt betr&auml;gt 20 LD. Wie hoch ist Ihre individuelle Verg&uuml;tung und die Ihres Mitspielers?</p>
+	
+               <p>Ihre individuelle Vergütung:</p> 
+				<div class="input-group">
+               {{ form.Q1_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q1_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "baseline" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+               </ul>	
+               <br>
+               <p>Vergütung Ihres Mitspielers:</p> 
+               <div class="input-group">
+               {{ form.Q1_2 }}<span class="input-group-addon">LD</span>
+               </div>
+               {{ form.Q1_2.errors }}
+               <br>	
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "baseline" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 2 = (30 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+               </ul>
+              
+      <p>&nbsp;</p>
+<p>2. Angenommen Sie sind Spieler 1 und der unbedingte Beitrag Ihres Mitspielers (Spieler 2) wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Der unbedingte Beitrag Ihres Mitspielers betr&auml;gt 20 LD zum gemeinsamen Projekt. Mit welchem Faktor in % erzielen Sie Ihre h&ouml;chste individuelle Verg&uuml;tung?</p>
+	
+               <p>Faktor in %:</p> 
+				<div class="input-group">
+               {{ form.Q2_1 }}<span class="input-group-addon">%</span>
+               </div> 
+               {{ form.Q2_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "baseline" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1 = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				 Tipp: Berechnung der Vergütung Teil II Spieler 1 = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten Beitrag und einen Beitrag in Höhe Ihrer Anfangsausstattung und entscheiden Sie dann mit welchem Faktor in % Sie die höchste individuelle Vergütung erzielen.
+                {% elif player.treatment == "baseline" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten Beitrag und einen Beitrag in Höhe Ihrer Anfangsausstattung und entscheiden Sie dann mit welchem Faktor in % Sie die höchste individuelle Vergütung erzielen.
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten Beitrag und einen Beitrag in Höhe Ihrer Anfangsausstattung und entscheiden Sie dann mit welchem Faktor in % Sie die höchste individuelle Vergütung erzielen.
+                {% else %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten Beitrag und einen Beitrag in Höhe Ihrer Anfangsausstattung und entscheiden Sie dann mit welchem Faktor in % Sie die höchste individuelle Vergütung erzielen.
+                {% endif %}
+                </li>
+               </ul>
+       <p>&nbsp;</p>
+
+<p>3. Angenommen Sie sind Spieler 1 und der unbedingte Beitrag Ihres Mitspielers (Spieler 2) wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Der unbedingte Beitrag Ihres Mitspielers betr&auml;gt 20 LD zum gemeinsamen Projekt. Mit welchem Faktor in % erzielen Sie die h&ouml;chste Verg&uuml;tung f&uuml;r Ihre Gruppe?</p>
+	
+               <p>Faktor in %:</p> 
+				<div class="input-group">
+               {{ form.Q3_1 }}<span class="input-group-addon">%</span>
+               </div> 
+               {{ form.Q3_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+				Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2).  
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				 Tipp: Berechnung der Vergütung Teil II Spieler 1 = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				 Tipp: Berechnung der Vergütung Teil II Spieler 2 = (30 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten Beitrag und Ihren höchsten Beitrag und entscheiden Sie dann mit welchem Faktor in % Sie die höchste Vergütung für die Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% elif player.treatment == "baseline" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten Beitrag und Ihren höchsten Beitrag und entscheiden Sie dann mit welchem Faktor in % Sie die höchste Vergütung für die Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten Beitrag und Ihren höchsten Beitrag und entscheiden Sie dann mit welchem Faktor in % Sie die höchste Vergütung für die Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% else %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten Beitrag und Ihren höchsten Beitrag und entscheiden Sie dann mit welchem Faktor in % Sie die höchste Vergütung für die Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% endif %}
+                </li>
+               </ul>
+                      	      
+       <p>&nbsp;</p>
+<p>4. Angenommen Sie sind Spieler 2 und der unbedingte Beitrag Ihres Mitspielers (Spieler 1) wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Der unbedingte Faktor Ihres Mitspielers betr&auml;gt 100%. Mit welchem Beitrag in LD zum gemeinsamen Projekt erzielen Sie Ihre h&ouml;chste individuelle Verg&uuml;tung?</p>
+	
+               <p>Ihr Beitrag in LD:</p> 
+				<div class="input-group">
+               {{ form.Q4_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q4_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+				Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2).  
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				 Tipp: Berechnung der Vergütung Teil II Spieler 2 = (30 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste individuelle Vergütung erzielen.
+                {% elif player.treatment == "baseline" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste individuelle Vergütung erzielen.
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste individuelle Vergütung erzielen.
+                {% else %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste individuelle Vergütung erzielen.
+                {% endif %}
+                </li>
+               </ul>
+
+      <p>&nbsp;</p>
+<p>5. Angenommen Sie sind Spieler 2 und der unbedingte Beitrag Ihres Mitspielers (Spieler 1) wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Der unbedingte Faktor Ihres Mitspielers betr&auml;gt 100%. Mit welchem Beitrag in LD zum gemeinsamen Projekt erzielen Sie die h&ouml;chste Verg&uuml;tung f&uuml;r Ihre Gruppe?</p>
+	
+               <p>Ihr Beitrag in LD:</p> 
+				<div class="input-group">
+               {{ form.Q5_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q5_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+				Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2).  
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				 Tipp: Berechnung der Vergütung Teil II Spieler 1 = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				 Tipp: Berechnung der Vergütung Teil II Spieler 2 = (30 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste Vergütung für die Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% elif player.treatment == "baseline" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste Vergütung für die Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste Vergütung für die Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% else %}
+                Tipp: Berechnen Sie mit den Formeln Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste Vergütung für die Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% endif %}
+                </li>
+               </ul>              
+ <p>&nbsp;</p>
+
+ <p>6. Angenommen Sie sind Spieler 1 und der unbedingte Beitrag Ihres Mitspielers (Spieler 2) wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Der unbedingte Beitrag Ihres Mitspielers zum gemeinsamen Projekt betr&auml;gt dessen gesamte Anfangsausstattung. Ihr bedingter Faktor betr&auml;gt 300%. Wie hoch ist Ihre individuelle Verg&uuml;tung? Beachten Sie, Ihre Vergütung setzt sich aus dem privaten Konto und aus dem gemeinsamen Projekt zusammen.</p>
+	
+               <p>Ihre individuelle Vergütung:</p> 
+				<div class="input-group">
+               {{ form.Q6_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q6_1.errors }}
+               <br> 
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "baseline" %}
+				Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% endif %}
+                </li>
+               </ul>                                         
+      <p>&nbsp;</p>         
+
+
+<p>7. Angenommen Sie sind Spieler 1 und Ihr unbedingter Beitrag wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Ihr unbedingter Faktor betr&auml;gt 50%. Der bedingte Beitrag Ihres Mitspielers (Spieler 2) zum gemeinsamen Projekt betr&auml;gt 2 LD. Wie hoch ist Ihre individuelle Verg&uuml;tung? Runden Sie bitte ggf. zur n&auml;chsten ganzstelligen Zahl ab.</p>
+	
+               <p>Ihre individuelle Vergütung:</p> 
+				<div class="input-group">
+               {{ form.Q7_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q7_1.errors }}
+               <br>
+               <ul class="li">
+               <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "baseline" %}
+				Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% elif player.treatment == "lowthres" %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung des Beitrags Teil II von Spieler 1  = (Faktor Spieler 1 in % · Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+				{% elif player.treatment == "baseline" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% elif player.treatment == "lowthres" %}
+				Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil II Spieler 1 = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% endif %}
+                </li>
+               </ul>
+               <br>  
+      <p>&nbsp;</p>  
+
+ 
+
+</div>
+
+<aside class="calc">
+
+	              <FORM NAME="myForm">
+
+	            <TABLE BORDER=2>
+
+	                <TR>
+
+	                    <TD align="center">
+	                        <INPUT TYPE="text" ID="screen" NAME="screen" style="width:99%"><br>
+
+	                </TD>
+
+	                </TR>
+
+	                <TR>
+
+	                    <TD>
+                          <INPUT TYPE="button" NAME="c" VALUE="  c  " onclick="del();">
+
+                          <INPUT TYPE="button" NAME="("   VALUE="  (  " onclick="update('(')">
+
+                          <INPUT TYPE="button" NAME=")" VALUE="  )  " onclick="update(')')">
+
+                          <br>
+
+	                        <INPUT TYPE="button" NAME="7"   VALUE="  7  " onclick="update(7)">
+
+	                        <INPUT TYPE="button" NAME="8"   VALUE="  8  " onclick="update(8)">
+
+	                        <INPUT TYPE="button" NAME="9" VALUE="  9  " onclick="update(9)">
+
+	                        <INPUT TYPE="button" NAME="+"  VALUE="  +  " onclick="update('+')">
+
+	                        <br>
+
+	                        <INPUT TYPE="button" NAME="4"  VALUE="  4  " onclick="update(4)">
+
+	                        <INPUT TYPE="button" NAME="5"  VALUE="  5  " onclick="update(5)">
+
+	                        <INPUT TYPE="button" NAME="6"   VALUE="  6  " onclick="update(6)">
+
+	                        <INPUT TYPE="button" NAME="-" VALUE="  -  " onclick="update('-')">
+
+	                        <br>
+
+	                        <INPUT TYPE="button" NAME="1" VALUE="  1  " onclick="update(1)">
+
+	                        <INPUT TYPE="button" NAME="2" VALUE="  2  " onclick="update(2)">
+
+	                        <INPUT TYPE="button" NAME="3"  VALUE="  3  " onclick="update(3)">
+
+	                        <INPUT TYPE="button" NAME="*" VALUE="  x  " onclick="update('*')">
+
+
+	                        <br>
+
+	                        <INPUT TYPE="button" NAME="." VALUE="  .  " onclick="update('.');">
+
+	                        <INPUT TYPE="button" NAME="0"  VALUE="  0  " onclick="update(0)">
+
+	                        <INPUT TYPE="button" NAME="="  VALUE="  =  " onclick="result();">
+
+	                        <INPUT TYPE="button" NAME="/"   VALUE="  /  " onclick="update('/')">
+
+	                    </TD>
+
+	                </TR>
+
+	            </TABLE>
+
+	        </FORM>
+
+	    </aside>
+
+    {% next_button %}
+
+{% endblock %}

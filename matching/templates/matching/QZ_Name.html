@@ -1,0 +1,76 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Weitere auszahlungsrelevante Informationen
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+<div class="cont">
+<p>Bitte geben Sie Ihre Platznummer für die Auszahlung ein. Diese Angabe wird lediglich für die Auszahlung verwendet und vertraulich behandelt.</p>
+</div>
+<br>
+<table style="border-collapse: collapse; border-style: hidden;"  width = "60%">
+         <thead>
+            <tr>
+            <td valign="left" align="center"><p>Platznummer</p> </td>
+            <td valign="left" align="left">{% formfield player.seat label="" %}</td>            
+          </tr>
+        </thead>
+    </table>  
+	
+	
+
+<br>
+<br>
+<br>
+
+    {% next_button %}
+
+{% endblock %}

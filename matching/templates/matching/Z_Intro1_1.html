@@ -1,0 +1,263 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Introduction
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	#cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	.calc{
+		position: fixed;
+    	right: 3%;
+    	width: 15%;
+    	top:60%;
+    	padding: 10px;
+	}
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	#button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #c7cbd6;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #c7cbd6;
+	box-shadow:inset 0px 1px 0px 0px #c7cbd6;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #b7bac2), color-stop(1, #7c858f));
+	background:-moz-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:-webkit-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:-o-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:-ms-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:linear-gradient(to bottom, #b7bac2 5%, #7c858f 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b7bac2', endColorstr='#7c858f',GradientType=0);
+	background-color:#b7bac2;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #7c7f87;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	padding:5px 76px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #1c2847;
+	}
+	#button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7c858f), color-stop(1, #b7bac2));
+	background:-moz-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:-webkit-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:-o-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:-ms-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:linear-gradient(to bottom, #7c858f 5%, #b7bac2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c858f', endColorstr='#b7bac2',GradientType=0);
+	background-color:#7c858f;
+	}
+	#button:active {
+	position:relative;
+	top:1px;
+	}
+	</style>
+	<style media="screen">
+      .input-group {
+        max-width: 100px;
+      }
+    
+
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+<script language="javascript" type="text/javascript">  
+
+
+	    function update(value){
+
+	        document.getElementById("screen").value += value;
+
+	    }
+     
+
+	    function result(){
+
+	        document.getElementById("screen").value = eval(document.getElementById("screen").value);
+
+	    }
+
+	     
+	    
+
+
+	    function reset(){
+
+	        document.getElementById("screen").value = '';
+
+	    }
+
+	    document.getElementById("cont").style.display="none";
+	    function showhide()
+ 		{
+       	var div = document.getElementById("cont");
+		if (div.style.display === "none") {
+        div.style.display = "block";
+    	} else {
+        div.style.display = "none";
+    	}
+		} 
+
+
+		</script>
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+
+<div id='button' onclick="showhide()">Intro</div>
+<div id="cont">
+<p>Welcome!</p>
+
+<p>Thank you very much for participating in this experiment....
+	</p><p>&nbsp;</p>
+
+	<p><b>Roles</b><br>
+	You have been matched with another participant. One of you will take on the role of Player A, while the other one will be Player B. Whether you take part as Player A or Player B is randomly determined by the computer. <b>While Player A starts with an endowment of 10 Tokens, Player B is endowed with 5 Tokens </b>
+	</p><p>&nbsp;</p>
+
+
+	<p><b>Rounds</b><br>
+	First round Fischbacher. Second round PGG with Subsidy option<p>
+	
+	<p>
+	{% if player.id_in_group == 1 %}
+		In this game you are <b>PlayerA</b> and you are endowed with <b>10</b> Tokens.
+	{% else %}
+		In this game you are <b>PlayerB</b> and you are endowed with <b>5</b> Tokens.
+	{% endif %}
+	</p>
+
+	<p>
+	In the second round, {% if player.id_in_group == 1 %} you will have the chance to subsidize the other player{% else %} the other player will tell you by how much he/she wants to subsidize your contribution to a common project{% endif %}. This will be fun!
+	</p>
+</div>
+	
+<div class="qs">
+<p><b>Kontrollfragen</b></p><br>
+<p>1. Angenommen Sie sind Spieler 1 und Ihr unbedingter Beitrag wird zufällig für die Berechnung ausgewählt. Ihr unbedingter Faktor beträgt 100%. Der bedingte Beitrag Ihres Mitspielers (Spieler 2) zum gemeinsamen Projekt beträgt 20 LD. Wie hoch ist die individuelle Vergütung? Wie hoch ist Ihre individuelle Auszahlung, wenn Ihre Vergütung in Teil I 5 LD waren?"</p>
+
+               <p>Ihre individuelle Vergütung:</p> 
+               <div class="input-group">
+    			{% formfield player.Q1_1 label="" %}<span class="input-group-addon">%</span>
+				</div>
+
+            
+               <p>Vergütung Ihres Mitspielers:</p>
+              <p>{% formfield player.Q1_2 label="" %}<span class='qs-addon'>LD</span></p>
+
+      
+               <p>Ihre individuelle Auszahlung:</p> 
+              <p>{% formfield player.Q1_3 label="" %}</p><span class='qs-addon'>LD</span>
+
+</div>
+
+
+<aside class="calc">
+
+	              <FORM NAME="myForm">
+
+	            <TABLE BORDER=2>
+
+	                <TR>
+
+	                    <TD align="center">
+	                        <INPUT TYPE="text" ID="screen" NAME="screen" style="width:99%"><br>
+
+	                </TD>
+
+	                </TR>
+
+	                <TR>
+
+	                    <TD>
+
+	                        <INPUT TYPE="button" NAME="7"   VALUE="  7  " onclick="update(7)">
+
+	                        <INPUT TYPE="button" NAME="8"   VALUE="  8  " onclick="update(8)">
+
+	                        <INPUT TYPE="button" NAME="9" VALUE="  9  " onclick="update(9)">
+
+	                        <INPUT TYPE="button" NAME="+"  VALUE="  +  " onclick="update('+')">
+
+	                        <br>
+
+	                        <INPUT TYPE="button" NAME="4"  VALUE="  4  " onclick="update(4)">
+
+	                        <INPUT TYPE="button" NAME="5"  VALUE="  5  " onclick="update(5)">
+
+	                        <INPUT TYPE="button" NAME="6"   VALUE="  6  " onclick="update(6)">
+
+	                        <INPUT TYPE="button" NAME="-" VALUE="  -  " onclick="update('-')">
+
+	                        <br>
+
+	                        <INPUT TYPE="button" NAME="1" VALUE="  1  " onclick="update(1)">
+
+	                        <INPUT TYPE="button" NAME="2" VALUE="  2  " onclick="update(2)">
+
+	                        <INPUT TYPE="button" NAME="3"  VALUE="  3  " onclick="update(3)">
+
+	                        <INPUT TYPE="button" NAME="*" VALUE="  x  " onclick="update('*')">
+
+	                        <br>
+
+	                        <INPUT TYPE="button" NAME="c" VALUE="  c  " onclick="reset();">
+
+	                        <INPUT TYPE="button" NAME="0"  VALUE="  0  " onclick="update(0)">
+
+	                        <INPUT TYPE="button" NAME="="  VALUE="  =  " onclick="result();">
+
+	                        <INPUT TYPE="button" NAME="/"   VALUE="  /  " onclick="update('/')">
+
+	                    </TD>
+
+	                </TR>
+
+	            </TABLE>
+
+	        </FORM>
+
+	    </aside>
+
+    {% next_button %}
+
+{% endblock %}

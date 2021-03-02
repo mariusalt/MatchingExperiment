@@ -24,7 +24,7 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    def before_session_starts(self):
+    def creating_session(self):
         if self.round_number == 1:
             self.session.vars['questions'] = Constants.questions
             ## ALTERNATIVE DESIGN:
@@ -52,9 +52,9 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     question_id = models.PositiveIntegerField()
-    question = models.CharField()
-    solution = models.CharField()
-    submitted_answer = models.CharField(widget=widgets.RadioSelect())
+    question = models.StringField()
+    solution = models.StringField()
+    submitted_answer = models.StringField(widget=widgets.RadioSelect())
     is_correct = models.BooleanField()
  #   correct_answers=models.IntegerField(
   #  	default=0

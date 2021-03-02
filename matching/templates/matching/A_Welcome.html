@@ -1,0 +1,66 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Herzlich willkommen!
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+<div class="cont">
+<p>Vielen Dank f&uuml;r Ihre Teilnahme. Bitte sprechen Sie nicht miteinander und lassen Sie s&auml;mtliche elektronischen Ger&auml;te wie Handys, Smartphones o.&auml;. w&auml;hrend der gesamten Veranstaltung ausgeschaltet. Bitte lesen Sie die Instruktionen aufmerksam durch und melden Sie sich per Handzeichen, wenn Sie Fragen haben.</p>
+<p>Sie nehmen an einem Experiment zum individuellen Entscheidungsverhalten teil und erhalten am Ende der Veranstaltung eine individuelle Auszahlung anonym in bar. Ihre Auszahlung richtet sich nach Ihren Entscheidungen, den Entscheidungen Ihrer Mitspieler und einer Zufallskomponente. W&auml;hrend des gesamten Experiments wird Ihre Verg&uuml;tung in LaborDollar (LD) berechnet. Am Ende des Experiments werden die LaborDollar in Euro umgerechnet. Die Umrechnungsrate betr&auml;gt:</p>
+<p style="text-align: center;"><strong>6 LD = 1 Euro.</strong></p>
+<p>Ihre Entscheidungen im Experiment treffen Sie <strong>anonym</strong>. Nur der Experimentator erf&auml;hrt Ihre Identit&auml;t, wobei Ihre Angaben vertraulich behandelt werden.</p>
+</div>
+	
+
+
+    {% next_button %}
+
+{% endblock %}

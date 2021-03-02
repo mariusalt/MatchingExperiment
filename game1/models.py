@@ -43,7 +43,7 @@ class Player(BasePlayer):
     	)
 
     payoff = models.CurrencyField()
-    decision = models.CharField()
+    decision = models.StringField()
 
 
     def calculate_payoff(self):

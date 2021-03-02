@@ -1,0 +1,261 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Bedingter Beitrag
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.bottom {
+   border-bottom: thin solid;
+   border-color: black;
+  }
+	.otree-title{
+		padding-top: 80px;
+		font-size: 22px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.round{
+		position: absolute;
+		font-family: "Arial", Times, serif;
+    	right: 36%;
+    	width: 90px;
+    	top:50px;
+    	padding: 10px;
+    	color:  #CD853F;
+    	border-radius: 8px;
+    	border: 0.1px solid  	#FFDEAD;
+    	background-color:  	#FFFFE0;
+    	text-align: center;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+	</style>
+{% endblock %}
+
+{% block content %}
+<div class="round">
+<p>Teil II</p>
+</div>
+
+<div class="cont">
+
+<p>{% if player.treatment == "base" %}
+<p>Ihre Anfangsausstattung beträgt 30 LD. Bitte geben Sie an, welchen Beitrag Sie in LD zum gemeinsamen Projekt leisten möchten. Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 30 LD liegen in Werten von [0, 1, 2,&hellip;, 30].
+</p><p>&nbsp;</p> 
+
+{% else %}
+
+{% if player.treatment == "lowthres" %}
+
+<p>Ihre Anfangsausstattung beträgt 20 LD. Bitte geben Sie in der Beitragstabelle f&uuml;r jeden m&ouml;glichen Faktor (%) von Spieler 1 an, welchen Beitrag Sie in LD zum gemeinsamen Projekt leisten m&ouml;chten. Der Beitrag von Spieler 1 wird nur geleistet, wenn Sie einen Beitrag von 4 LD oder mehr leisten. Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20].
+</p><p>&nbsp;</p> 
+
+{% else %} 
+{% if player.treatment == "highthres" %}
+<p>Ihre Anfangsausstattung beträgt 20 LD. Bitte geben Sie in der Beitragstabelle f&uuml;r jeden m&ouml;glichen Faktor (%) von Spieler 1 an, welchen Beitrag Sie in LD zum gemeinsamen Projekt leisten m&ouml;chten. Der Beitrag von Spieler 1 wird nur geleistet, wenn Sie einen Beitrag von 12 LD oder mehr leisten. Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20].
+</p><p>&nbsp;</p> 
+
+<p>{% else %} Ihre Anfangsausstattung beträgt 20 LD. Bitte geben Sie an, welchen Beitrag Sie in LD zum gemeinsamen Projekt leisten möchten. Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20]. 
+</p><p>&nbsp;</p> 
+
+{% endif %} 
+{% endif %} 
+{% endif %} 
+
+Bitte drücken Sie nach Ihrer Eingabe "Weiter".
+</p><p>&nbsp;</p>
+<br>
+<p>Ihr bedingter Beitrag zum Projekt (Beitragstabelle)</p>
+<table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "90%">
+         <thead>            
+            <tr>
+               <td valign="bottom" class="bottom"><p>Möglicher Faktor in % Ihres Mitspielers&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom" class="bottom" colspan="2"><p>Ihr bedingter Beitrag</p></td>
+               <td valign="bottom" class="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom" class="bottom"><p>Möglicher Faktor in % Ihres Mitspielers&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom" class="bottom" colspan="2"><p>Ihr bedingter Beitrag</p></td>
+               <td valign="bottom" class="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom" class="bottom"><p>Möglicher Faktor in % Ihres Mitspielers&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom" class="bottom" colspan="2"><p>Ihr bedingter Beitrag</p></td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>0%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom" width="15"><p>{% formfield player.t0 label="" %}</p></td>
+               <td valign="center" width="30%"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom" ><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center"  align="center"><p>100%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom" width="15"><p>{% formfield player.t100 label="" %}</p></td>
+               <td valign="center" width="30%"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom" ><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>200%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom" width="15"><p>{% formfield player.t200 label="" %}</p></td>
+               <td valign="center" width="30%"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>10%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>{% formfield player.t10 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>110%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t110 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>210%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t210 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>20%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>{% formfield player.t20 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>120%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t120 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>220%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t220 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>30%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>{% formfield player.t30 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>130%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t130 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>230%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t230 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>40%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>{% formfield player.t40 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>140%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t140 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>240%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t240 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>50%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>{% formfield player.t50 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>150%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t150 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>250%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t250 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>60%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>{% formfield player.t60 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>160%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t160 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>260%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t260 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>70%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>{% formfield player.t70 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>170%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t170 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>270%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t270 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>80%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>{% formfield player.t80 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>180%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t180 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>280%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t280 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>90%&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>{% formfield player.t90 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>190%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t190 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom"><p>&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="center" align="center"><p>290%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t290 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+            <tr>
+               <td valign="center"><p></p> </td>
+               <td valign="bottom"><p></p></td>
+               <td valign="center"><p></p></td>
+               <td valign="bottom"><p></p></td>
+               <td valign="center"><p></p> </td>
+               <td valign="bottom"><p></p></td>
+               <td valign="center"><p></p></td>
+               <td valign="bottom"><p></p></td>
+               <td valign="center" align="center"><p>300%&nbsp;&nbsp;&nbsp; </p></td>
+               <td valign="bottom"><p>{% formfield player.t300 label="" %}</p></td>
+               <td valign="center"><p>LD&nbsp;&nbsp;&nbsp;</p> </td>
+
+            </tr>
+         </thead>         
+      </table>
+   <br>
+</div>
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+    {% next_button %}
+
+{% endblock %}

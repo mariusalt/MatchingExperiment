@@ -44,7 +44,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    decision = models.CharField(
+    decision = models.StringField(
     	choices=["stay silent","betray"],
     	widget=widgets.RadioSelect(),
     	verbose_name="Make a choice",

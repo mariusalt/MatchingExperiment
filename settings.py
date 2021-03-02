@@ -59,7 +59,7 @@ AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
 REAL_WORLD_CURRENCY_CODE = 'EUR'
 POINTS_DECIMAL_PLACES =2
 USE_POINTS = True
-POINTS_CUSTOM_NAME = 'Token'
+POINTS_CUSTOM_NAME = 'LD'
 
 # e.g. en, de, fr, it, ja, zh-hans
 # see: https://docs.djangoproject.com/en/1.9/topics/i18n/#term-language-code
@@ -104,8 +104,9 @@ mturk_hit_settings = {
 # the session config can be accessed from methods in your apps as self.session.config,
 # e.g. self.session.config['participation_fee']
 
+
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 0.500,
+    'real_world_currency_per_point': 0.2,
     'participation_fee': 0.00,
     'doc': "",
     'mturk_hit_settings': mturk_hit_settings,
@@ -113,15 +114,9 @@ SESSION_CONFIG_DEFAULTS = {
 
 
 SESSION_CONFIGS = [
- {
-     'name': 'survey',
-     'display_name': 'Our first little survey',
-     'num_demo_participants': 1,
-     'app_sequence': ['survey'],
-     'participation_fee': 3.00,
- },
+
   {
-     'name': 'game1',
+    'name': 'game1',
      'display_name': 'Our second little survey',
      'num_demo_participants': 1,
      'app_sequence': ['game1'],
@@ -138,26 +133,26 @@ SESSION_CONFIGS = [
      'num_demo_participants': 6,
      'app_sequence': ['ultimatum'],
  },
- {
-     'name': 'fortune_treat_low',
-     'display_name': 'Fortune Game with 2 Treatments (low)',
-     'num_demo_participants': 4,
-     'app_sequence': ['fortune_treat'],
-     'treatment':100
- },
- {
-     'name': 'fortune_treat_high',
-     'display_name': 'Fortune Game with 2 Treatments (high)',
-     'num_demo_participants': 4,
-     'app_sequence': ['fortune_treat'],
-     'treatment':1000
- },
- # {
- #     'name': 'quiz_time',
- #     'display_name': 'Play Quiz (loaded)',
- #     'num_demo_participants': 1,
- #     'app_sequence': ['quiz_time']
- # },
+# {
+#     'name': 'fortune_treat_low',
+#     'display_name': 'Fortune Game with 2 Treatments (low)',
+#     'num_demo_participants': 4,
+#     'app_sequence': ['fortune_treat'],
+#     'treatment':100
+# },
+# {
+#     'name': 'fortune_treat_high',
+#     'display_name': 'Fortune Game with 2 Treatments (high)',
+#     'num_demo_participants': 4,
+#     'app_sequence': ['fortune_treat'],
+#     'treatment':1000
+# },
+  {
+      'name': 'quiz_time',
+      'display_name': 'Play Quiz (loaded)',
+      'num_demo_participants': 1,
+      'app_sequence': ['quiz_time']
+  },
  {
      'name': 'chat',
      'display_name': 'Chat',
@@ -173,12 +168,31 @@ SESSION_CONFIGS = [
  {
      'name': 'matching',
      'display_name': 'Matching Experiment',
-     'num_demo_participants': 6,
+     'num_demo_participants': 20,
      'app_sequence': ['matching']
+ },
+ {
+     'name': 'pebs',
+     'display_name': 'PEBS Experiment',
+     'num_demo_participants': 1,
+     'app_sequence': ['pebs']
  }
 
 ]
 
+ROOM_DEFAULTS = {}
+ROOMS=[
+{
+    'name': 'UWM',
+    'display_name': 'UWE',
+    'participant_label_file':'umw.txt',
+    
+},
+{
+    'name':'lab',
+    'display_name':'Experimental Economics Lab',
+},
+]
 
 # anything you put after the below line will override
 # oTree's default settings. Use with caution.

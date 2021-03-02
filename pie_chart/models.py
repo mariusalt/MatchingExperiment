@@ -27,7 +27,7 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     p1_share=models.PositiveIntegerField(
     	max=Constants.pie_size,
-    	widget=widgets.SliderInput(attrs={'step':'1'})
+    	widget=widgets.Slider(attrs={'step':'1'})
     	)
     p2_share = models.PositiveIntegerField(
     	max=Constants.pie_size)

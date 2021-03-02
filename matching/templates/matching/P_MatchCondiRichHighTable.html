@@ -1,0 +1,132 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Bedingter Faktor
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.bottom {
+   border-bottom: thin solid;
+   border-color: black;
+  }
+	.otree-title{
+		padding-top: 80px;
+		font-size: 22px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.round{
+		position: absolute;
+		font-family: "Arial", Times, serif;
+    	right: 36%;
+    	width: 90px;
+    	top:50px;
+    	padding: 10px;
+    	color:  #CD853F;
+    	border-radius: 8px;
+    	border: 0.1px solid  	#FFDEAD;
+    	background-color:  	#FFFFE0;
+    	text-align: center;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+	</style>
+{% endblock %}
+
+{% block content %}
+<div class="round">
+<p>Teil II</p>
+</div>
+
+<div class="cont">
+<p>Ihre Anfangsausstattung betr&auml;gt&nbsp; 40 LD. Bitte geben Sie in der Beitragstabelle f&uuml;r jeden m&ouml;glichen Beitrag ab 12 LD von Spieler 2 an, mit welchem Faktor in % Sie den Beitrag von Spieler 2 zum gemeinsamen Projekt unterst&uuml;tzen m&ouml;chten. Der Prozentsatz kann zwischen 0 und 300% liegen in Werten von [0%, 10%, 20%,&hellip;, 300%].</p>
+<p> Bitte drücken Sie nach Ihrer Eingabe "Weiter".
+</p><p>&nbsp;</p>
+<br>
+<table class="centerTable" style="border-collapse: collapse; border-style: hidden;"  width = "30%">
+         <thead>
+            <tr>
+               <td valign="bottom" class="bottom"><p>Möglicher Beitrag Ihres Mitspielers&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom" colspan="2"  class="bottom"><p>Ihr bedingter Faktor in %</p></td>
+            </tr>
+            <tr>
+               <td valign="center" align="center"><p>12&nbsp;&nbsp;&nbsp;</p> </td>
+               <td valign="bottom" width="15%"><p>{% formfield player.twelve label="" %} </p></td>
+               <td valign="center" width="30%"><p>%&nbsp;&nbsp;&nbsp;</p> </td>
+            </tr>
+           <tr>
+            <td valign="center" align="center"><p>13&nbsp;&nbsp;&nbsp;</p> </td>
+            <td valign="bottom"><p>{% formfield player.thirteen label="" %}</p></td>
+            <td valign="center"><p>%&nbsp;&nbsp;&nbsp;</p> </td>            
+          </tr>
+          <tr>
+            <td valign="center" align="center"><p>14&nbsp;&nbsp;&nbsp;</p> </td>
+            <td valign="bottom"><p>{% formfield player.fourteen label="" %}</p></td>
+            <td valign="center"><p>%&nbsp;&nbsp;&nbsp;</p> </td>               
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p>15&nbsp;&nbsp;&nbsp;</p> </td>
+            <td valign="bottom"><p>{% formfield player.fifteen label="" %}</p></td>
+            <td valign="center"><p>%&nbsp;&nbsp;&nbsp;</p> </td>
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p>16&nbsp;&nbsp;&nbsp;</p> </td>
+            <td valign="bottom"><p>{% formfield player.sixteen label="" %}</p></td>
+            <td valign="center"><p>%&nbsp;&nbsp;&nbsp;</p> </td>            
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p>17&nbsp;&nbsp;&nbsp;</p> </td>
+            <td valign="bottom"><p>{% formfield player.seventeen label="" %}</p></td>
+            <td valign="center"><p>%&nbsp;&nbsp;&nbsp;</p> </td>            
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p>18&nbsp;&nbsp;&nbsp;</p> </td>
+            <td valign="bottom"><p>{% formfield player.eighteen label="" %}</p></td>
+            <td valign="center"><p>%&nbsp;&nbsp;&nbsp;</p> </td>                         
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p>19&nbsp;&nbsp;&nbsp;</p> </td>
+            <td valign="bottom"><p>{% formfield player.nineteen label="" %}</p></td>
+            <td valign="center"><p>%&nbsp;&nbsp;&nbsp;</p> </td>                           
+          </tr>
+          <tr> 
+            <td valign="center" align="center"><p>20&nbsp;&nbsp;&nbsp;</p> </td>
+            <td valign="bottom"><p>{% formfield player.twenty label="" %}</p></td>
+            <td valign="center"><p>%&nbsp;&nbsp;&nbsp;</p> </td>                               
+          </tr>
+        </thead>
+    </table>   
+   <br>
+</div>
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+    {% next_button %}
+
+{% endblock %}

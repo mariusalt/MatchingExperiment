@@ -1,0 +1,85 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Unbedingter Beitrag
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		padding-top: 80px;
+		font-size: 22px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.round{
+		position: absolute;
+		font-family: "Arial", Times, serif;
+    	right: 36%;
+    	width: 90px;
+    	top:50px;
+    	padding: 10px;
+    	color:  #CD853F;
+    	border-radius: 8px;
+    	border: 0.1px solid  	#FFDEAD;
+    	background-color:  	#FFFFE0;
+    	text-align: center;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	</style>
+	<style media="screen">
+      .input-group {
+        max-width: 100px;
+      }
+    
+
+	</style>
+{% endblock %}
+
+{% block content %}
+<div class="round">
+<p>Teil II</p>
+</div>
+
+<div class="cont">
+
+<p>{% if player.treatment == "base" %}
+<p>Ihre Anfangsausstattung betr&auml;gt 30 LD. Bitte geben Sie an, welchen Beitrag Sie in LD zum gemeinsamen Projekt leisten m&ouml;chten. Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 30 LD liegen in Werten von [0, 1, 2,&hellip;, 30].
+</p><p>&nbsp;</p>	
+{% else %}
+<p>Ihre Anfangsausstattung beträgt 20 LD. Bitte geben Sie an, welchen Beitrag Sie in LD zum gemeinsamen Projekt leisten möchten. 
+Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20].
+{% endif %} 
+<p> Bitte drücken Sie nach Ihrer Eingabe "Weiter".
+</p><p>&nbsp;</p>
+<br>
+<div class="input-group">    
+               {{ form.contri }}<span class="input-group-addon">LD</span>
+               </div>
+               {{ form.contri.errors }}
+
+
+
+
+</div>
+
+
+
+    {% next_button %}
+
+{% endblock %}

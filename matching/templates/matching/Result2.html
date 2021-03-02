@@ -1,8 +1,8 @@
 {% extends "global/Page.html" %}
-{% load staticfiles otree_tags %}
+{% load staticfiles otree %}
 
 {% block title %}
-    Final Result
+    Vergütung Teil II, Zusatzaufgabe und Auszahlung in Euro
 {% endblock %}
 
 {% block styles %}
@@ -34,55 +34,55 @@
 {% block content %}
 
 <div class="cont">
+<p>Für die Vergütung in Teil II wurde der {% if player.id_in_group == 2 and group.outcome == "heads" %} {{ un }} {% elif player.id_in_group == 2 and group.outcome == "tails" %} {{ be }} {% elif player.id_in_group == 1 and group.outcome == "heads" %} {{ be }} {% else %} {{ un }}  {% endif %} Beitrag zufällig ausgewählt. </p>
 <table border=1 class="centerTable" width = "100%">
          <thead>
             <tr>
-              <td width="(100/x)%" align="center"><b>Eigener Beitrag</b></td>           
-              <td width="(100/x)%" align="center"><b>Beitrag des anderen Spielers</b></td>
-              <td width="(100/x)%" align="center"><b>Subventions- rate</b></td>
-              <td width="(100/x)%" align="center"><b>{% if player.endowment == 10 %}
-				Subvention zum gemeinsamen Projekt {% else %} Subvention des anderen Spielers {% endif %}</b></td>
-
-              <td width="(100/x)%" align="center"><b>Ertrag aus gemeinsamen Projekt</b></td>
-              <td width="(100/x)%" align="center"><b>Eigene Auszahlung</b></td>
-              <td width="(100/x)%" align="center"><b>Auszahlung des anderen Spielers</b></td>
-              <td width="(100/x)%" align="center"><b>Gesamte Auszahlung (Runde 1,2)</b></td>
-              <td width="(100/x)%" align="center"><b>Gesamte Auszahlung in €</b></td>
-
-
+              <td width="(100/x)%" align="center"><b>Eigener Beitrag zum gemeinsamen Projekt in LD</b></td>          
+              <td width="(100/x)%" align="center"><b>Beitrag des anderen Spielers zum gemeinsamen Projekt in LD</b></td>
+              <td width="(100/x)%" align="center"><b>Ertrag aus gemeinsamen Projekt in LD</b></td>
+              <td width="(100/x)%" align="center"><b>Eigene Vergütung aus Teil II in LD</b></td>
+              <td width="(100/x)%" align="center"><b>Vergütung des anderen Spielers aus Teil II in LD</b></td>
             </tr>
             <tr>
-              <td width="(100/x)%" align="center"> {% if player.endowment == 10 %}
-        {{ own_contri }} {% else %} {{ own_cond }} {% endif %} </td>
-              <td width="(100/x)%" align="center">{% if player.endowment == 10 %}
-        {{ others_cond }} {% else %} {{ others_contri1 }} {% endif %}</td>
-              <td width="(100/x)%" align="center">{% if player.endowment == 10 %}
-        {{ player.t }}% {% else %} {{ player.other_t }}% {% endif %}</td>              
-              <td width="(100/x)%" align="center">{{ group.amount_subsidy }}</td>
-              <td width="(100/x)%" align="center">{{ group.pay_proj }}</td>
-              <td width="(100/x)%" align="center">{{ player.payoff }}</td>
-              <td width="(100/x)%" align="center">{{ others_payoff1 }}</td>
-              <td width="(100/x)%" align="center">{{ total_payoff }}</td>
-              <td width="(100/x)%" align="center">{{ real_payoff }}</td>
-
-
+              <td width="(100/x)%" align="center" height="70px">{% if player.id_in_group == 2 and group.outcome == "heads" %} {{ own_contri }} {% elif player.id_in_group == 2 and group.outcome == "tails" %} {{ cond }} {% else %} {{ amount_subsidy }}  {% endif %}</td>
+              <td width="(100/x)%" align="center" height="70px">{% if player.id_in_group == 1 and group.outcome == "heads" %}
+        {{ others_contri1 }} {% elif player.id_in_group == 1 and group.outcome == "tails"  %} {{ others_cond }} {% else %} {{ amount_subsidy }} {% endif %}</td>  
+              <td width="(100/x)%" align="center" height="70px">{{ pay_proj }}</td>
+              <td width="(100/x)%" align="center" height="70px">{{ payoff2 }}</td>
+              <td width="(100/x)%" align="center" height="70px">{{ others_payoff1 }}</td>
             </tr>
 
          </tbody>
          
       </table>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+<p>Berechnung Ihrer Auszahlung:</p>
+<table border=1 class="centerTable" width = "100%">
+         <thead>
+            <tr>
+              <td width="(100/x)%" align="center"><b>Vergütung aus Teil I in LD</b></td>          
+              <td width="(100/x)%" align="center"><b>Vergütung aus Teil II in LD</b></td>
+              <td width="(100/x)%" align="center"><b>Vergütung aus Zusatzaufgabe in LD</b></td>
+              <td width="(100/x)%" align="center"><b>Gesamte Vergütung in LD</b></td>
+              <td width="(100/x)%" align="center"><b>Auszahlung in Euro</b></td>
+            </tr>
+            <tr>
+              <td width="(100/x)%" align="center" height="70px">{{ round1_payoff }}</td>
+              <td width="(100/x)%" align="center" height="70px">{{ payoff2 }}</td>  
+              <td width="(100/x)%" align="center" height="70px">{{ player.payoff }}</td>
+              <td width="(100/x)%" align="center" height="70px">{{ total_payoff }}</td>
+              <td width="(100/x)%" align="center" height="70px">{{ real_payoff }}</td>
+            </tr>
+
+         </tbody>
+         
+      </table>
+      <p>&nbsp;</p>
 </div>
 
 
-
-<!--
-Documentation on how to write a django template here:
-https://docs.djangoproject.com/en/1.8/ref/templates/language/
-
-Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
-http://getbootstrap.com/components/
-
--->
 
     {% next_button %}
 

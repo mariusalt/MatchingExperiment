@@ -1,0 +1,103 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Entscheidungssituation Teil II Spieler 2
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	img {
+    display: block;
+    margin: 0 auto;
+    }
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+<div class="cont">
+<p><strong><em>Unbedingter Beitrag Spieler 2</em></strong></p>
+<p>{% if player.treatment == "base" %} 
+Spieler 2 hat eine Anfangsausstattung von 30 LD. Beim <strong>unbedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zu einem gemeinsamen Projekt beitragen m&ouml;chte. Der Beitrag zum gemeinsamen Projekt kann zwischen 0 und 30 LD liegen in Werten von [0, 1, 2,&hellip;, 30].</p>
+{% else %} 
+Spieler 2 hat eine Anfangsausstattung von 20 LD. Beim <strong>unbedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zu einem gemeinsamen Projekt beitragen m&ouml;chte. Der Beitrag zum gemeinsamen Projekt kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20].</p>
+{% endif %} 
+
+<p><strong><em>Bedingter Beitrag Spieler 2</em></strong></p>
+{% if player.treatment == "base" %} <p>
+Spieler 2 hat eine Anfangsausstattung von 30 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, mit welchem Faktor Spieler 1 seinen Beitrag zum gemeinsamen Projekt unterst&uuml;tzt. Die Aufgabe von Spieler 2 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 2 f&uuml;r jeden m&ouml;glichen Prozentsatz von Spieler 1 an, welchen Beitrag er in LD zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 30 LD liegen in Werten von [0, 1, 2,&hellip;, 30]. Spieler 2 muss f&uuml;r jeden m&ouml;glichen Faktor von Spieler 1 einen Beitrag im entsprechenden Eingabefeld angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 2 </strong>sieht wie folgt aus:
+
+</p>
+<p>&nbsp;</p>
+<img src="{% static "matching/poordiff.png" %}" align="middle"/>
+<p>&nbsp;</p>
+{% elif player.treatment == "baseline" %} 
+<p>Spieler 2 hat eine Anfangsausstattung von 20 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, mit welchem Faktor Spieler 1 seinen Beitrag zum gemeinsamen Projekt unterst&uuml;tzt. Die Aufgabe von Spieler 2 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 2 f&uuml;r jeden m&ouml;glichen Prozentsatz von Spieler 1 an, welchen Beitrag er in LD zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20]. Spieler 2 muss f&uuml;r jeden m&ouml;glichen Faktor von Spieler 1 einen Beitrag im entsprechenden Eingabefeld angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 2 </strong>sieht wie folgt aus:
+<!--Tabelle einfügen-->
+</p>
+<p>&nbsp;</p>
+<img src="{% static "matching/poordiff.png" %}" align="middle"/>
+<p>&nbsp;</p>
+{% elif player.treatment == "lowthres" %} 
+<p>Spieler 2 hat eine Anfangsausstattung von 20 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, mit welchem Faktor Spieler 1 seinen Beitrag ab 4 LD zum gemeinsamen Projekt unterst&uuml;tzt. Die Aufgabe von Spieler 2 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 2 f&uuml;r jeden m&ouml;glichen Prozentsatz von Spieler 1 an, welchen Beitrag er in LD zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20]. Spieler 2 muss f&uuml;r jeden m&ouml;glichen Faktor von Spieler 1 einen Beitrag im entsprechenden Eingabefeld angeben. Der Beitrag von Spieler 1 wird nur geleistet, wenn Spieler 2 einen Beitrag von 4 LD oder mehr leistet. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 2 </strong>sieht wie folgt aus:</p>
+<!--Tabelle einfügen-->
+<p>&nbsp;</p>
+<img src="{% static "matching/poordiff.png" %}" align="middle"/>
+<p>&nbsp;</p>
+{% else %}
+<p>Spieler 2 hat eine Anfangsausstattung von 20 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, mit welchem Faktor Spieler 1 seinen Beitrag ab 12 LD zum gemeinsamen Projekt unterst&uuml;tzt. Die Aufgabe von Spieler 2 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 2 f&uuml;r jeden m&ouml;glichen Prozentsatz von Spieler 1 an, welchen Beitrag er in LD zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20]. Spieler 2 muss f&uuml;r jeden m&ouml;glichen Faktor von Spieler 1 einen Beitrag im entsprechenden Eingabefeld angeben. Der Beitrag von Spieler 1 wird nur geleistet, wenn Spieler 2 einen Beitrag von 12 LD oder mehr leistet. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 2 </strong>sieht wie folgt aus:
+<!--Tabelle einfügen-->
+</p>
+<p>&nbsp;</p>
+<img src="{% static "matching/poordiff.png" %}" align="middle"/>
+<p>&nbsp;</p>
+{% endif %} 
+
+</div>
+	
+
+
+    {% next_button %}
+
+{% endblock %}

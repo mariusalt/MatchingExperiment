@@ -1,0 +1,68 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Ablauf des Experiments
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+<div class="cont">
+<p>Das Experiment besteht aus <strong>zwei Teilen: Teil I</strong> und <strong>Teil II</strong> sowie einer kurzen Zusatzaufgabe.</p>
+<p>F&uuml;r den Verlauf des Experiments werden Sie in <strong>Gruppen von jeweils zwei Spielern</strong> (Spieler 1 und Spieler 2) zusammengefasst. Die Zusammensetzung Ihrer Gruppe wird jeweils f&uuml;r Teil I und Teil II zuf&auml;llig zugeordnet. D.h. f&uuml;r Teil II werden die Gruppen neu aus zwei Spielern zuf&auml;llig zusammengefasst. Die Rolle als Spieler 1 oder Spieler 2 wird zuf&auml;llig in Teil I zugeordnet. Diese Zuordnung bleibt f&uuml;r Teil II bestehen.</p>
+<p>&nbsp;</p>
+<p>Sowohl in Teil I als auch in Teil II erhalten Sie eine Anfangsausstattung &uuml;ber die Sie jeweils in Teil I und Teil II entscheiden k&ouml;nnen. Die gesamte Auszahlung setzt sich bei jedem Spieler aus der Verg&uuml;tung in Teil I, der Verg&uuml;tung in Teil II und der Verg&uuml;tung der Zusatzaufgabe zusammen.</p>
+<p>&nbsp;</p>
+<p>Vor jedem Teil werden Sie Instruktionen am Bildschirm erhalten. Als erstes erhalten Sie die Instruktionen zu Teil I. Nach dem ersten Teil erhalten Sie die Instruktionen f&uuml;r Teil II. Nach dem zweiten Teil II folgt die Zusatzaufgabe. Im Folgenden wird die Entscheidungssituation f&uuml;r Teil I erkl&auml;rt. Lesen Sie diese bitte aufmerksam durch.</p>
+</div>
+	
+
+
+    {% next_button %}
+
+{% endblock %}

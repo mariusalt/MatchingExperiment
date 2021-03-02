@@ -1,0 +1,132 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Vergütung Teil I
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	.cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+<div class="cont">
+
+<p>F&uuml;r die individuelle <strong>Verg&uuml;tung in Teil I</strong> (in LD) wird zuf&auml;llig ausgew&auml;hlt, ob von Spieler 1 oder von Spieler 2 der unbedingte Beitrag herangezogen wird. Darauf basierend wird der bedingte Beitrag des anderen Spielers ausgew&auml;hlt und die Verg&uuml;tung in Teil I f&uuml;r beide Spieler berechnet. Durch die zuf&auml;llige Auswahl ergeben sich zwei M&ouml;glichkeiten f&uuml;r die Verg&uuml;tung:</p>
+<p>Wird der <strong>unbedingte Beitrag von Spieler 1</strong> zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt, ergibt sich die <strong>Verg&uuml;tung in Teil I</strong> folgenderma&szlig;en:</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil I f&uuml;r Spieler 1</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (40
+              {% endif %}
+               &ndash; unbedingter Beitrag Spieler 1) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 1 + bedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil I Spieler 2</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (20
+              {% endif %}
+               &ndash; bedingter Beitrag Spieler 2) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 1 + bedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+
+Wird der <strong>unbedingte Beitrag von Spieler 2 </strong>zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt, ergibt sich die <strong>Verg&uuml;tung in Teil I</strong> entsprechend:</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil I f&uuml;r Spieler 1</strong> =
+              {% if player.treatment == "base" %} (30
+              {% else %} (40
+              {% endif %}
+               &ndash; bedingter Beitrag Spieler 1) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 2 + bedingter Beitrag Spieler 1)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil I f&uuml;r Spieler 2</strong> =
+              {% if player.treatment == "base" %} (30
+              {% else %} (20
+              {% endif %}
+               &ndash; unbedingter Beitrag Spieler 2) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 2 + bedingter Beitrag Spieler 1)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+
+<p>Sie werden dar&uuml;ber informiert, ob der unbedingte Beitrag von Spieler 1 oder von Spieler 2 ausgew&auml;hlt wurde. Am Ende von Teil I werden Sie &uuml;ber Ihre Verg&uuml;tung und die Ihres Mitspielers aus Teil I informiert.</p>
+
+
+</div>
+
+   {% next_button %}
+
+{% endblock %}

@@ -1,0 +1,529 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Kontrollfragen
+{% endblock %}
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.otree-title{
+		font-size: 22px;
+		padding-top: 80px;
+	}
+	.otree-timer{
+		position: absolute;
+    	right: 20%;
+    	width: 15%;
+    	top:50px;
+    	padding: 10px;
+	}
+	#cont{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	.calc{
+		position: fixed;
+    	right: 3%;
+    	width: 15%;
+    	top:60%;
+    	padding: 10px;
+	}
+	.qs{
+		padding-top: 50px ;
+		padding-bottom: 50px ;
+	}
+	#button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #c7cbd6;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #c7cbd6;
+	box-shadow:inset 0px 1px 0px 0px #c7cbd6;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #b7bac2), color-stop(1, #7c858f));
+	background:-moz-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:-webkit-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:-o-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:-ms-linear-gradient(top, #b7bac2 5%, #7c858f 100%);
+	background:linear-gradient(to bottom, #b7bac2 5%, #7c858f 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b7bac2', endColorstr='#7c858f',GradientType=0);
+	background-color:#b7bac2;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #7c7f87;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	padding:5px 76px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #1c2847;
+	}
+	#button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7c858f), color-stop(1, #b7bac2));
+	background:-moz-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:-webkit-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:-o-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:-ms-linear-gradient(top, #7c858f 5%, #b7bac2 100%);
+	background:linear-gradient(to bottom, #7c858f 5%, #b7bac2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c858f', endColorstr='#b7bac2',GradientType=0);
+	background-color:#7c858f;
+	}
+	#button:active {
+	position:relative;
+	top:1px;
+	}
+  .errorlist
+    {
+        color: red;
+    }
+	</style>
+	<style media="screen">
+      .input-group {
+        max-width: 100px;
+      }
+    
+
+	</style>
+
+{% endblock %}
+
+{% block scripts %}
+<script language="javascript" type="text/javascript">  
+
+
+	    function update(value){
+
+	        document.getElementById("screen").value += value;
+
+	    }
+     
+
+	    function result(){
+
+	        document.getElementById("screen").value = eval(document.getElementById("screen").value);
+
+	    }
+
+	     
+	    
+
+
+	    function del(){
+
+	        document.getElementById("screen").value = '';
+
+	    }
+
+	    document.getElementById("cont").style.display="none";
+	    function showhide()
+ 		{
+       	var div = document.getElementById("cont");
+		if (div.style.display === "none") {
+        div.style.display = "block";
+    	} else {
+        div.style.display = "none";
+    	}
+		} 
+
+
+		</script>
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+
+-->
+
+
+<div id='button' onclick="showhide()">Instruktionen</div>
+<div id="cont">
+<p>Das Experiment besteht aus <strong>zwei Teilen: Teil I</strong> und <strong>Teil II</strong> als auch einer kurzen Zusatzaufgabe.</p>
+<p>F&uuml;r den Verlauf des Experiments werden Sie in <strong>Gruppen von jeweils zwei Spielern</strong> (Spieler 1 und Spieler 2) zusammengefasst. Die Zusammensetzung Ihrer Gruppe wird jeweils f&uuml;r Teil I und Teil II zuf&auml;llig zugeordnet. D.h. f&uuml;r Teil II werden die Gruppen neu aus zwei Spielern zuf&auml;llig zusammengefasst. Die Rolle als Spieler 1 oder Spieler 2 wird zuf&auml;llig in Teil I zugeordnet. Diese Zuordnung bleibt f&uuml;r Teil II bestehen.</p>
+<p>&nbsp;</p>
+<p>Sowohl in Teil I als auch in Teil II erhalten Sie eine Anfangsausstattung &uuml;ber die Sie jeweils in Teil I und Teil II entscheiden k&ouml;nnen. Die gesamte Auszahlung setzt sich bei jedem Spieler aus der Verg&uuml;tung in Teil I, der Verg&uuml;tung in Teil II und der Verg&uuml;tung der Zusatzaufgabe zusammen.</p>
+<p>&nbsp;</p>
+<p>Vor jedem Teil werden Sie Instruktionen am Bildschirm erhalten. Als erstes erhalten Sie die Instruktionen zu Teil I. Nach dem ersten Teil erhalten Sie die Instruktionen f&uuml;r Teil II. Nach dem zweiten Teil II folgt die Zusatzaufgabe. Im Folgenden wird die Entscheidungssituation f&uuml;r Teil I erkl&auml;rt. Lesen Sie diese bitte aufmerksam durch.</p>
+
+<p>&nbsp;</p>
+
+<p>{% if player.treatment == "base" %}
+	
+<p><strong><em>Unbedingter Beitrag</em></strong></p>
+<p>Beim <strong>unbedingten Beitrag</strong> entscheiden Sie, wie viele LD Sie zum gemeinsamen Projekt beitragen m&ouml;chten. Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 30 LD liegen in Werten von [0, 1, 2,&hellip;, 30].</p>
+<p><strong><em>Bedingter Beitrag</em></strong></p>
+<p>Beim <strong>bedingten Beitrag</strong> entscheiden Sie, wie viele LD Sie zum gemeinsamen Projekt beitragen m&ouml;chten, abh&auml;ngig davon, wie viel Ihr Mitspieler zum gemeinsamen Projekt beitr&auml;gt. Ihre Aufgabe ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle geben Sie f&uuml;r jeden m&ouml;glichen Beitrag Ihres Mitspielers an, welchen Beitrag Sie in LD zum gemeinsamen Projekt leisten m&ouml;chten. Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 30 LD liegen in Werten von [0, 1, 2,&hellip;, 30]. Sie m&uuml;ssen f&uuml;r jeden m&ouml;glichen Beitrag Ihres Mitspielers einen bedingten Beitrag im entsprechenden Eingabefeld angeben. Die Beitragstabelle zum <strong>bedingten Beitrag</strong> sieht wie folgt aus:</p>
+
+<!-- Hier fehlt noch die Tabelle für Base-->
+
+{% else %}
+<p><strong><em>Unbedingter Beitrag Spieler 1</em></strong></p>
+<p>Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>unbedingten Beitrag</strong> entscheidet Spieler 1, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte. Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 40 LD liegen in Werten von [0, 1, 2,&hellip;, 40].</p>
+<p>&nbsp;</p>
+<p><strong><em>Bedingter Beitrag Spieler 1</em></strong></p>
+<p>Spieler 1 hat eine Anfangsausstattung von 40 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 1, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 2 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 1 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 1 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 an, welchen Beitrag er zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 40 LD liegen in Werten von [0, 1, 2,&hellip;, 40]. Spieler 1 muss f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 2 einen Beitrag im entsprechenden Eingabefeld angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 1</strong> sieht wie folgt aus:</p>
+
+<!-- Hier fehlt noch die Tabelle für Treatment Spieler 1-->
+
+<p><strong><em>Unbedingter Beitrag Spieler 2</em></strong></p>
+<p>Spieler 1 hat eine Anfangsausstattung von 20 LD. Beim <strong>unbedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte. Ihr Beitrag zum gemeinsamen Projekt kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20].</p>
+<p>&nbsp;</p>
+<p><strong><em>Bedingter Beitrag Spieler 2</em></strong></p>
+<p>Spieler 2 hat eine Anfangsausstattung von 20 LD. Beim <strong>bedingten Beitrag</strong> entscheidet Spieler 2, wie viele LD er zum gemeinsamen Projekt beitragen m&ouml;chte, abh&auml;ngig davon, wie viel Spieler 1 zum gemeinsamen Projekt beitr&auml;gt. Die Aufgabe von Spieler 2 ist es eine &bdquo;Beitragstabelle&ldquo; auszuf&uuml;llen. In dieser Beitragstabelle gibt Spieler 2 f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 1 an, welchen Beitrag er zum gemeinsamen Projekt leisten m&ouml;chte. Dieser Beitrag kann zwischen 0 und 20 LD liegen in Werten von [0, 1, 2,&hellip;, 20]. Spieler 2 muss f&uuml;r jeden m&ouml;glichen Beitrag von Spieler 1 einen Beitrag im entsprechenden Eingabefeld angeben. Die Beitragstabelle zum <strong>bedingten Beitrag von Spieler 2</strong> sieht wie folgt aus:</p>
+
+<!-- Hier fehlt noch die Tabelle für Treatment Spieler 2-->
+
+{% endif %} 
+
+<p>&nbsp;</p>
+
+<p>F&uuml;r die individuelle <strong>Verg&uuml;tung in Teil I</strong> (in LD) wird zuf&auml;llig ausgew&auml;hlt, ob von Spieler 1 oder von Spieler 2 der unbedingte Beitrag herangezogen wird. Darauf basierend wird der bedingte Beitrag des anderen Spielers ausgew&auml;hlt und die Verg&uuml;tung in Teil I f&uuml;r beide Spieler berechnet. Durch die zuf&auml;llige Auswahl ergeben sich zwei M&ouml;glichkeiten f&uuml;r die Verg&uuml;tung:</p>
+<p>Wird der <strong>unbedingte Beitrag von Spieler 1</strong> zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt, ergibt sich die <strong>Verg&uuml;tung in Teil I</strong> folgenderma&szlig;en:</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil I f&uuml;r Spieler 1</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (40
+              {% endif %}
+               &ndash; unbedingter Beitrag Spieler 1) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 1 + bedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil I Spieler 2</strong> = 
+              {% if player.treatment == "base" %} (30
+              {% else %} (20
+              {% endif %}
+               &ndash; bedingter Beitrag Spieler 2) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 1 + bedingter Beitrag Spieler 2)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+
+Wird der <strong>unbedingte Beitrag von Spieler 2 </strong>zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt, ergibt sich die <strong>Verg&uuml;tung in Teil I</strong> entsprechend:</p>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil I f&uuml;r Spieler 1</strong> =
+              {% if player.treatment == "base" %} (30
+              {% else %} (40
+              {% endif %}
+               &ndash; bedingter Beitrag Spieler 1) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 2 + bedingter Beitrag Spieler 1)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+
+<table border=1 class="centerTable" width = "100%">
+       <thead>
+          <tr>
+          <td valign="center" align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+              <p><strong>Verg&uuml;tung Teil I f&uuml;r Spieler 2</strong> =
+              {% if player.treatment == "base" %} (30
+              {% else %} (20
+              {% endif %}
+               &ndash; unbedingter Beitrag Spieler 2) + 0,7 <strong>&middot; </strong>(unbedingter Beitrag Spieler 2 + bedingter Beitrag Spieler 1)</p>
+         </td> 
+         </tr>
+       </tbody>  
+</table>
+<p>&nbsp;</p>
+
+<p>Sie werden dar&uuml;ber informiert, ob der unbedingte Beitrag von Spieler 1 oder von Spieler 2 ausgew&auml;hlt wurde. Am Ende von Teil I werden Sie &uuml;ber Ihre Verg&uuml;tung und die Ihres Mitspielers aus Teil I informiert.</p>
+
+
+</div>
+	
+<div class="qs">
+<p>Bitte beantworten Sie die folgenden Kontrollfragen zu Teil I. Sie dienen Ihrem Verst&auml;ndnis der Entscheidungssituation in Teil I. Teil I beginnt, wenn alle Teilnehmer die Kontrollfragen erfolgreich beantwortet haben. Sie können als Hilfestellung auf "Instruktionen" klicken, um nochmals die ausführliche Erklärung nachzulesen. Falls Sie Fragen haben, melden Sie sich bitte per Handzeichen.</p>
+<p>&nbsp;</p>
+<p>1. Angenommen Sie sind Spieler 1 und Ihr unbedingter Beitrag wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Ihr unbedingter Beitrag betr&auml;gt 15 LD zum gemeinsamen Projekt. Der bedingte Beitrag Ihres Mitspielers (Spieler 2) zum gemeinsamen Projekt betr&auml;gt 15 LD. Wie hoch ist Ihre individuelle Verg&uuml;tung und die Ihres Mitspielers?</p>
+  
+
+              <p>Ihre individuelle Vergütung:</p> 
+        <div class="input-group">
+               {{ form.Q1_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q1_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1 = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% endif %}
+                </li>
+               </ul>
+               
+        
+               <br>
+              <p>Vergütung Ihres Mitspielers:</p> 
+               <div class="input-group">
+               {{ form.Q1_2 }}<span class="input-group-addon">LD</span>
+               </div>
+               {{ form.Q1_2.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 2  = (30 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 2 = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% endif %}
+                </li>
+               </ul>  
+               <br>
+               
+<p>&nbsp;</p>
+<p>2. Angenommen Sie sind Spieler 2 und Ihr unbedingter Beitrag wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Ihr unbedingter Beitrag betr&auml;gt 0 LD zum gemeinsamen Projekt. Der bedingte Beitrag Ihres Mitspielers (Spieler 1) zum gemeinsamen Projekt betr&auml;gt 0 LD. Wie hoch ist Ihre individuelle Verg&uuml;tung und die Ihres Mitspielers?</p>
+  
+
+              <p>Ihre individuelle Vergütung:</p> 
+        <div class="input-group">
+               {{ form.Q2_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q2_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 2  = (30 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 2  = (20 - Beitrag Spieler 2) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% endif %}
+                </li>
+               </ul>  
+               <br>
+              <p>Vergütung Ihres Mitspielers:</p> 
+               <div class="input-group">
+               {{ form.Q2_2 }}<span class="input-group-addon">LD</span>
+               </div>
+               {{ form.Q2_2.errors }}
+               <br> 
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1 = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2)
+                {% endif %}
+                </li>
+               </ul>  
+               <br>
+
+<p>&nbsp;</p>
+<p>3. Angenommen Sie sind Spieler 1 und der unbedingte Beitrag Ihres Mitspielers (Spieler 2) wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Der unbedingte Beitrag Ihres Mitspielers betr&auml;gt 20 LD zum gemeinsamen Projekt. Mit welchem Beitrag in LD erzielen Sie Ihre h&ouml;chste individuelle Verg&uuml;tung?</p>
+  
+
+              <p>Ihr Beitrag in LD:</p> 
+        <div class="input-group">
+               {{ form.Q3_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q3_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2).
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2).
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnen Sie mit der Formel Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste individuelle Vergütung erzielen.
+                {% else %}
+                Tipp: Berechnen Sie mit der Formel Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste individuelle Vergütung erzielen.
+                {% endif %}
+                </li>
+               </ul>  
+               <br>
+              
+<p>&nbsp;</p>
+  <p>4. Angenommen Sie sind Spieler 1 und der unbedingte Beitrag Ihres Mitspielers (Spieler 2) wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Der unbedingte Beitrag Ihres Mitspielers betr&auml;gt 20 LD zum gemeinsamen Projekt. Mit welchem Beitrag in LD erzielen Sie die h&ouml;chste Verg&uuml;tung f&uuml;r Ihre Gruppe?</p>
+  
+
+              <p>Ihr Beitrag in LD:</p> 
+        <div class="input-group">
+               {{ form.Q4_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q4_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2).
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnen Sie mit der Formel Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste Vergütung für Ihre Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% else %}
+                Tipp: Berechnen Sie mit der Formel Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste Vergütung für Ihre Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% endif %}
+                </li>
+               </ul>  
+               <br>
+ <p>&nbsp;</p>                          
+<p>5. Angenommen Sie sind Spieler 1 und der unbedingte Beitrag Ihres Mitspielers (Spieler 2) wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Der unbedingte Beitrag Ihres Mitspielers betr&auml;gt 0 LD zum gemeinsamen Projekt. Mit welchem Beitrag in LD erzielen Sie Ihre h&ouml;chste individuelle Verg&uuml;tung?</p>
+  
+
+              <p>Ihr Beitrag in LD:</p> 
+        <div class="input-group">
+               {{ form.Q5_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q5_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnen Sie mit der Formel Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste individuelle Vergütung erzielen.
+                {% else %}
+                Tipp: Berechnen Sie mit der Formel Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste individuelle Vergütung erzielen.
+                {% endif %}
+                </li>
+               </ul>  
+               <br>
+<p>&nbsp;</p>
+<p>6. Angenommen Sie sind Spieler 1 und der unbedingte Beitrag Ihres Mitspielers (Spieler 2) wird zuf&auml;llig f&uuml;r die Berechnung ausgew&auml;hlt. Der unbedingte Beitrag Ihres Mitspielers betr&auml;gt 0 LD zum gemeinsamen Projekt. Mit welchem Beitrag in LD erzielen Sie die h&ouml;chste Verg&uuml;tung f&uuml;r Ihre Gruppe?</p>
+  
+
+              <p>Ihr Beitrag in LD:</p> 
+        <div class="input-group">
+               {{ form.Q6_1 }}<span class="input-group-addon">LD</span>
+               </div> 
+               {{ form.Q6_1.errors }}
+               <br>
+               <ul class="li">
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (30 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% else %}
+                Tipp: Berechnung der Vergütung Teil I für Spieler 1  = (40 - Beitrag Spieler 1) + 0,7·(Beitrag Spieler 1 + Beitrag Spieler 2). 
+                {% endif %}
+                </li>
+                <li>
+                {% if player.treatment == "base" %}
+                Tipp: Berechnen Sie mit der Formel Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste Vergütung für Ihre Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% else %}
+                Tipp: Berechnen Sie mit der Formel Ihren niedrigsten und höchsten Beitrag und entscheiden Sie dann mit welchem Beitrag Sie die höchste Vergütung für Ihre Gruppe erzielen. Addieren Sie dazu die Vergütung von Spieler 1 und Spieler 2.
+                {% endif %}
+                </li>
+               </ul>  
+               <br>
+
+           
+</div>
+
+
+<aside class="calc">
+
+	              <FORM NAME="myForm">
+
+	            <TABLE BORDER=2>
+
+	                <TR>
+
+	                    <TD align="center">
+	                        <INPUT TYPE="text" ID="screen" NAME="screen" style="width:99%"><br>
+                      </TD>
+                  </TR>
+                  <TR>
+
+	                <TD>
+                          <INPUT TYPE="button" NAME="c" VALUE="  c  " onclick="del();">
+
+                          <INPUT TYPE="button" NAME="("   VALUE="  (  " onclick="update('(')">
+
+                          <INPUT TYPE="button" NAME=")" VALUE="  )  " onclick="update(')')">
+
+                          <br>
+
+                          <INPUT TYPE="button" NAME="7"   VALUE="  7  " onclick="update(7)">
+
+                          <INPUT TYPE="button" NAME="8"   VALUE="  8  " onclick="update(8)">
+
+                          <INPUT TYPE="button" NAME="9" VALUE="  9  " onclick="update(9)">
+
+                          <INPUT TYPE="button" NAME="+"  VALUE="  +  " onclick="update('+')">
+
+                          <br>
+
+                          <INPUT TYPE="button" NAME="4"  VALUE="  4  " onclick="update(4)">
+
+                          <INPUT TYPE="button" NAME="5"  VALUE="  5  " onclick="update(5)">
+
+                          <INPUT TYPE="button" NAME="6"   VALUE="  6  " onclick="update(6)">
+
+                          <INPUT TYPE="button" NAME="-" VALUE="  -  " onclick="update('-')">
+
+                          <br>
+
+                          <INPUT TYPE="button" NAME="1" VALUE="  1  " onclick="update(1)">
+
+                          <INPUT TYPE="button" NAME="2" VALUE="  2  " onclick="update(2)">
+
+                          <INPUT TYPE="button" NAME="3"  VALUE="  3  " onclick="update(3)">
+
+                          <INPUT TYPE="button" NAME="*" VALUE="  x  " onclick="update('*')">
+
+
+                          <br>
+
+                          <INPUT TYPE="button" NAME="." VALUE="  .  " onclick="update('.');">
+
+                          <INPUT TYPE="button" NAME="0"  VALUE="  0  " onclick="update(0)">
+
+                          <INPUT TYPE="button" NAME="="  VALUE="  =  " onclick="result();">
+
+                          <INPUT TYPE="button" NAME="/"   VALUE="  /  " onclick="update('/')">
+
+                      </TD>
+
+	                </TR>
+
+	            </TABLE>
+
+	        </FORM>
+
+	    </aside>
+
+    {% next_button %}
+
+{% endblock %}

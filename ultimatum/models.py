@@ -28,7 +28,7 @@ class Group(BaseGroup):
     offer = models.PositiveIntegerField(
     	max=Constants.pot_size,
     	min=0,
-    	widget=widgets.SliderInput(attrs={'step':'1'}),
+    	widget=widgets.Slider(attrs={'step':'1'}),
     	verbose_name="Please decide about the quantity to share with the other player")
     accepted = models.BooleanField(
     	choices=[(True, 'Yes'),(False,'No')],
